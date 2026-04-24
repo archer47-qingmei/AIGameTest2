@@ -1,0 +1,6 @@
+# Godot 编辑器缓存和导入数据，不需要提交
+.godot/
+
+# 系统文件
+.DS_Store
+Thumbs.db
