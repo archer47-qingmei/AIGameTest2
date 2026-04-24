@@ -31,11 +31,13 @@ func setup() -> void:
 	var strike: CardData = preload("res://data/cards/strike.tres")
 	var defend: CardData = preload("res://data/cards/defend.tres")
 	var bash: CardData = preload("res://data/cards/bash.tres")
+	var slash: CardData = preload("res://data/cards/slash.tres")
 	for i in 4:
 		_draw_pile.append(strike.duplicate())
 	for i in 4:
 		_draw_pile.append(defend.duplicate())
 	_draw_pile.append(bash.duplicate())
+	_draw_pile.append(slash.duplicate())
 
 	_draw_pile.shuffle()
 	_start_player_turn()
