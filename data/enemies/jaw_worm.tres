@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3]
+
+[ext_resource type="Script" uid="uid://bp7tc2xnj6g4e" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" uid="uid://dkqvfnm3r8w5y" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_attack"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 11
+
+[sub_resource type="Resource" id="Action_block"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 6
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "颚虫"
+hp = 44
+actions = [SubResource("Action_attack"), SubResource("Action_block")]
