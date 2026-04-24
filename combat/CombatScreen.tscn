@@ -25,37 +25,37 @@ text = "Enemy"
 
 [node name="LblEnemyHP" type="Label" parent="VBoxContainer/EnemyPanel"]
 layout_mode = 2
-text = "HP: ?"
+text = "生命：?"
 
 [node name="LblEnemyBlock" type="Label" parent="VBoxContainer/EnemyPanel"]
 layout_mode = 2
-text = "Block: 0"
+text = "格挡：0"
 
 [node name="LblEnemyIntent" type="Label" parent="VBoxContainer/EnemyPanel"]
 layout_mode = 2
-text = "Intent: ?"
+text = "意图：?"
 
 [node name="PlayerPanel" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
 [node name="LblPlayerHP" type="Label" parent="VBoxContainer/PlayerPanel"]
 layout_mode = 2
-text = "HP: ?"
+text = "生命：?"
 
 [node name="LblPlayerBlock" type="Label" parent="VBoxContainer/PlayerPanel"]
 layout_mode = 2
-text = "Block: 0"
+text = "格挡：0"
 
 [node name="LblEnergy" type="Label" parent="VBoxContainer/PlayerPanel"]
 layout_mode = 2
-text = "Energy: 3 / 3"
+text = "能量：3 / 3"
 
 [node name="HandContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
 [node name="BtnEndTurn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "End Turn"
+text = "结束回合"
 
 [node name="LblResult" type="Label" parent="."]
 layout_mode = 1

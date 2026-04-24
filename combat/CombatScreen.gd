@@ -29,7 +29,7 @@ func _ready() -> void:
 
 func _setup() -> void:
 	_player = Combatant.new()
-	_player.display_name = "Player"
+	_player.display_name = "玩家"
 	_player.hp = 70
 	_player.max_hp = 70
 	_player.block = 0
@@ -138,14 +138,14 @@ func _do_enemy_turn() -> void:
 
 func _check_end() -> bool:
 	if _enemy.hp <= 0:
-		_lbl_result.text = "Victory!"
+		_lbl_result.text = "胜利！"
 		_lbl_result.visible = true
 		_btn_end_turn.disabled = true
 		for btn: Button in _hand_buttons:
 			btn.disabled = true
 		return true
 	if _player.hp <= 0:
-		_lbl_result.text = "Game Over"
+		_lbl_result.text = "游戏结束"
 		_lbl_result.visible = true
 		_btn_end_turn.disabled = true
 		for btn: Button in _hand_buttons:
@@ -155,10 +155,10 @@ func _check_end() -> bool:
 
 func _refresh_ui() -> void:
 	_lbl_enemy_name.text = _enemy.display_name
-	_lbl_enemy_hp.text = "HP: %d / %d" % [_enemy.hp, _enemy.max_hp]
-	_lbl_enemy_block.text = "Block: %d" % _enemy.block
+	_lbl_enemy_hp.text = "生命：%d / %d" % [_enemy.hp, _enemy.max_hp]
+	_lbl_enemy_block.text = "格挡：%d" % _enemy.block
 	var intent: String = "攻击 11" if _turn_number % 2 == 1 else "格挡 6"
-	_lbl_enemy_intent.text = "Intent: " + intent
-	_lbl_player_hp.text = "HP: %d / %d" % [_player.hp, _player.max_hp]
-	_lbl_player_block.text = "Block: %d" % _player.block
-	_lbl_energy.text = "Energy: %d / 3" % _energy
+	_lbl_enemy_intent.text = "意图：" + intent
+	_lbl_player_hp.text = "生命：%d / %d" % [_player.hp, _player.max_hp]
+	_lbl_player_block.text = "格挡：%d" % _player.block
+	_lbl_energy.text = "能量：%d / 3" % _energy
