@@ -35,7 +35,7 @@ func _setup() -> void:
 	_player.block = 0
 
 	_enemy = Combatant.new()
-	_enemy.display_name = "Jaw Worm"
+	_enemy.display_name = "颚虫"
 	_enemy.hp = 44
 	_enemy.max_hp = 44
 	_enemy.block = 0
@@ -43,7 +43,7 @@ func _setup() -> void:
 	# 硬编码牌库
 	for i in 4:
 		var c: CardData = CardData.new()
-		c.card_name = "Strike"
+		c.card_name = "打击"
 		c.cost = 1
 		c.damage = 6
 		c.block = 0
@@ -51,14 +51,14 @@ func _setup() -> void:
 
 	for i in 4:
 		var c: CardData = CardData.new()
-		c.card_name = "Defend"
+		c.card_name = "防御"
 		c.cost = 1
 		c.damage = 0
 		c.block = 5
 		_draw_pile.append(c)
 
 	var bash: CardData = CardData.new()
-	bash.card_name = "Bash"
+	bash.card_name = "重击"
 	bash.cost = 2
 	bash.damage = 8
 	bash.block = 0
