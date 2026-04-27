@@ -5,7 +5,7 @@ extends Control
 func _ready() -> void:
 	var options: Array[CardData] = RewardEngine.get_options()
 	for card: CardData in options:
-		var btn := Button.new()
+		var btn: Button = Button.new()
 		btn.text = card.get_description()
 		btn.pressed.connect(_on_card_selected.bind(card))
 		_card_container.add_child(btn)
