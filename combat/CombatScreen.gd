@@ -10,6 +10,7 @@ extends Control
 @onready var _hand_container: HBoxContainer = $VBoxContainer/HandContainer
 @onready var _btn_end_turn: Button     = $VBoxContainer/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
+@onready var _btn_return_menu: Button  = $BtnReturnMenu
 
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
@@ -19,6 +20,7 @@ func _ready() -> void:
 	_engine.state_changed.connect(_refresh_ui)
 	_engine.combat_ended.connect(_on_combat_ended)
 	_btn_end_turn.pressed.connect(_engine.end_turn)
+	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
 	_engine.setup()
 
 func _on_card_pressed(card: CardData) -> void:
@@ -58,5 +60,6 @@ func _on_combat_ended(result: String) -> void:
 	_lbl_result.text = "胜利！" if result == "victory" else "游戏结束"
 	_lbl_result.visible = true
 	_btn_end_turn.disabled = true
+	_btn_return_menu.visible = true
 	for btn: Button in _hand_buttons:
 		btn.disabled = true
