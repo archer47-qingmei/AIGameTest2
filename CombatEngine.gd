@@ -14,8 +14,8 @@ var _draw_pile: Array[CardData] = []
 var _discard_pile: Array[CardData] = []
 var _enemy_data: EnemyData
 
-func setup(initial_deck: Array[CardData]) -> void:
-	_enemy_data = preload("res://data/enemies/jaw_worm.tres")
+func setup(initial_deck: Array[CardData], enemy_data: EnemyData) -> void:
+	_enemy_data = enemy_data
 	enemy = Combatant.new()
 	enemy.display_name = _enemy_data.display_name
 	enemy.hp = _enemy_data.hp
