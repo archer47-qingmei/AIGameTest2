@@ -6,4 +6,4 @@ func _ready() -> void:
 	_btn_start.pressed.connect(_on_start_pressed)
 
 func _on_start_pressed() -> void:
-	GameManager.go_to_combat()
+	GameManager.start_new_run()

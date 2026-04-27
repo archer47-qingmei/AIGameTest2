@@ -12,4 +12,4 @@ func _ready() -> void:
 
 func _on_card_selected(card: CardData) -> void:
 	GameManager.player_state.deck.append(card.duplicate())
-	GameManager.go_to_menu()
+	GameManager.go_to_map()
