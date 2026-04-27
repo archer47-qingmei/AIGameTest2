@@ -46,14 +46,7 @@ func _rebuild_hand() -> void:
 	_hand_buttons.clear()
 	for card: CardData in _engine.hand:
 		var btn: Button = Button.new()
-		var dmg: int = 0
-		var blk: int = 0
-		for effect: CardEffectData in card.effects:
-			if effect.type == "damage":
-				dmg = effect.value
-			elif effect.type == "block":
-				blk = effect.value
-		btn.text = "%s\n费用:%d  攻:%d  挡:%d" % [card.card_name, card.cost, dmg, blk]
+		btn.text = card.get_description()
 		btn.pressed.connect(_on_card_pressed.bind(card))
 		_hand_container.add_child(btn)
 		_hand_buttons.append(btn)
