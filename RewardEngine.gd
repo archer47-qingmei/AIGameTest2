@@ -14,5 +14,6 @@ static func get_options() -> Array[CardData]:
 			if card != null:
 				options.append(card)
 		file_name = dir.get_next()
+	dir.list_dir_end()
 	options.shuffle()
 	return options.slice(0, mini(3, options.size()))
