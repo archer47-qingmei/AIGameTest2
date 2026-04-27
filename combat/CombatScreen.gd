@@ -11,6 +11,7 @@ extends Control
 @onready var _btn_end_turn: Button     = $VBoxContainer/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
 @onready var _btn_return_menu: Button  = $BtnReturnMenu
+@onready var _btn_get_reward: Button   = $BtnGetReward
 
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
@@ -21,7 +22,8 @@ func _ready() -> void:
 	_engine.combat_ended.connect(_on_combat_ended)
 	_btn_end_turn.pressed.connect(_engine.end_turn)
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
-	_engine.setup()
+	_btn_get_reward.pressed.connect(GameManager.go_to_reward)
+	_engine.setup(GameManager.player_state.deck)
 
 func _on_card_pressed(card: CardData) -> void:
 	_engine.play_card(card)
@@ -60,6 +62,9 @@ func _on_combat_ended(result: String) -> void:
 	_lbl_result.text = "胜利！" if result == "victory" else "游戏结束"
 	_lbl_result.visible = true
 	_btn_end_turn.disabled = true
-	_btn_return_menu.visible = true
+	if result == "victory":
+		_btn_get_reward.visible = true
+	else:
+		_btn_return_menu.visible = true
 	for btn: Button in _hand_buttons:
 		btn.disabled = true
