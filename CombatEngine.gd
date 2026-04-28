@@ -36,6 +36,12 @@ func setup(initial_deck: Array[CardData], enemy_data: EnemyData, initial_hp: int
 func get_current_enemy_action() -> EnemyActionData:
 	return _enemy_data.actions[(turn_number - 1) % _enemy_data.actions.size()]
 
+func get_draw_pile() -> Array[CardData]:
+	return _draw_pile
+
+func get_discard_pile() -> Array[CardData]:
+	return _discard_pile
+
 func play_card(card: CardData) -> void:
 	if energy < card.cost:
 		return
