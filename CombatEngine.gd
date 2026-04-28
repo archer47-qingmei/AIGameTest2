@@ -65,6 +65,7 @@ func end_turn() -> void:
 		_start_player_turn()
 
 func _start_player_turn() -> void:
+	player.weak = max(0, player.weak - 1)
 	turn_number += 1
 	energy = 3
 	player.block = 0
@@ -106,7 +107,8 @@ func _do_enemy_turn() -> void:
 	enemy.block = 0
 	var action: EnemyActionData = get_current_enemy_action()
 	if action.type == "attack":
-		player.take_damage(action.value)
+		EffectResolver.apply_damage(enemy, player, action.value)
+		enemy.weak = max(0, enemy.weak - 1)
 	else:
 		enemy.add_block(action.value)
 
