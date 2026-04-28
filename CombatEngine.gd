@@ -14,7 +14,7 @@ var _draw_pile: Array[CardData] = []
 var _discard_pile: Array[CardData] = []
 var _enemy_data: EnemyData
 
-func setup(initial_deck: Array[CardData], enemy_data: EnemyData) -> void:
+func setup(initial_deck: Array[CardData], enemy_data: EnemyData, initial_hp: int) -> void:
 	_enemy_data = enemy_data
 	enemy = Combatant.new()
 	enemy.display_name = _enemy_data.display_name
@@ -24,7 +24,7 @@ func setup(initial_deck: Array[CardData], enemy_data: EnemyData) -> void:
 
 	player = Combatant.new()
 	player.display_name = "玩家"
-	player.hp = 70
+	player.hp = initial_hp
 	player.max_hp = 70
 	player.block = 0
 
