@@ -41,6 +41,7 @@ func play_card(card: CardData) -> void:
 		return
 	energy -= card.cost
 	EffectResolver.resolve(card, player, enemy)
+	_apply_engine_effects(card)
 	var idx: int = hand.find(card)
 	if idx >= 0:
 		hand.remove_at(idx)
@@ -67,6 +68,27 @@ func _start_player_turn() -> void:
 func _draw_hand() -> void:
 	hand.clear()
 	for i in 5:
+		if _draw_pile.is_empty():
+			if _discard_pile.is_empty():
+				break
+			for card: CardData in _discard_pile:
+				_draw_pile.append(card)
+			_discard_pile.clear()
+			_draw_pile.shuffle()
+		if _draw_pile.is_empty():
+			break
+		var card: CardData = _draw_pile.pop_back()
+		hand.append(card)
+
+func _apply_engine_effects(card: CardData) -> void:
+	for effect: CardEffectData in card.effects:
+		if effect.type == "draw":
+			_draw_cards(effect.value)
+		elif effect.type == "energy":
+			energy += effect.value
+
+func _draw_cards(n: int) -> void:
+	for i: int in n:
 		if _draw_pile.is_empty():
 			if _discard_pile.is_empty():
 				break
