@@ -4,7 +4,7 @@ const NODE_LABELS: Array[String] = ["关卡一：颚虫", "关卡二：精英守
 
 func _ready() -> void:
 	var current: int = GameManager.player_state.current_node
-	for i in NODE_LABELS.size():
+	for i: int in NODE_LABELS.size():
 		var btn: Button = Button.new()
 		if i < current:
 			btn.text = NODE_LABELS[i] + "（已完成）"
