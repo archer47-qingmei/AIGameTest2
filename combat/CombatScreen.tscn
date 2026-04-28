@@ -31,6 +31,10 @@ text = "生命：?"
 layout_mode = 2
 text = "格挡：0"
 
+[node name="LblEnemyWeak" type="Label" parent="VBoxContainer/EnemyPanel"]
+layout_mode = 2
+text = "虚弱：0"
+
 [node name="LblEnemyIntent" type="Label" parent="VBoxContainer/EnemyPanel"]
 layout_mode = 2
 text = "意图：?"
