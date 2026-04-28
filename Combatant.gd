@@ -5,6 +5,7 @@ var display_name: String
 var hp: int
 var max_hp: int
 var block: int
+var weak: int = 0
 
 func take_damage(amount: int) -> void:
 	if amount <= block:
@@ -17,3 +18,6 @@ func take_damage(amount: int) -> void:
 
 func add_block(amount: int) -> void:
 	block += amount
+
+func add_weak(n: int) -> void:
+	weak += n
