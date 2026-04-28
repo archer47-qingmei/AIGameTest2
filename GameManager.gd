@@ -2,10 +2,11 @@ extends Node
 
 enum Phase { MENU, MAP, COMBAT, REWARD, WIN }
 
-const STAGE_ENEMIES: Array[String] = [
+const NORMAL_POOL: Array[String] = [
 	"res://data/enemies/jaw_worm.tres",
-	"res://data/enemies/boss.tres"
+	"res://data/enemies/fire_lizard.tres",
 ]
+const BOSS_ENEMY: String = "res://data/enemies/boss.tres"
 
 var current_phase: Phase = Phase.MENU
 var player_state: PlayerState
@@ -22,6 +23,10 @@ func start_new_run() -> void:
 		player_state.deck.append(defend.duplicate())
 	player_state.deck.append(bash.duplicate())
 	player_state.deck.append(slash.duplicate())
+	var pool: Array[String] = NORMAL_POOL.duplicate()
+	pool.shuffle()
+	player_state.enemy_sequence.assign(pool)
+	player_state.enemy_sequence.append(BOSS_ENEMY)
 	current_phase = Phase.MAP
 	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
 
@@ -48,7 +53,7 @@ func go_to_menu() -> void:
 	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
 
 func get_current_enemy_data() -> EnemyData:
-	return load(STAGE_ENEMIES[player_state.current_node]) as EnemyData
+	return load(player_state.enemy_sequence[player_state.current_node]) as EnemyData
 
 func is_final_node() -> bool:
-	return player_state.current_node == STAGE_ENEMIES.size() - 1
+	return player_state.current_node == player_state.enemy_sequence.size() - 1
