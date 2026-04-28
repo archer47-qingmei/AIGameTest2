@@ -65,16 +65,17 @@ func _start_player_turn() -> void:
 	_draw_hand()
 	state_changed.emit()
 
+func _refill_draw_pile_if_needed() -> void:
+	if _draw_pile.is_empty() and not _discard_pile.is_empty():
+		for card: CardData in _discard_pile:
+			_draw_pile.append(card)
+		_discard_pile.clear()
+		_draw_pile.shuffle()
+
 func _draw_hand() -> void:
 	hand.clear()
 	for i in 5:
-		if _draw_pile.is_empty():
-			if _discard_pile.is_empty():
-				break
-			for card: CardData in _discard_pile:
-				_draw_pile.append(card)
-			_discard_pile.clear()
-			_draw_pile.shuffle()
+		_refill_draw_pile_if_needed()
 		if _draw_pile.is_empty():
 			break
 		var card: CardData = _draw_pile.pop_back()
@@ -89,13 +90,7 @@ func _apply_engine_effects(card: CardData) -> void:
 
 func _draw_cards(n: int) -> void:
 	for i: int in n:
-		if _draw_pile.is_empty():
-			if _discard_pile.is_empty():
-				break
-			for card: CardData in _discard_pile:
-				_draw_pile.append(card)
-			_discard_pile.clear()
-			_draw_pile.shuffle()
+		_refill_draw_pile_if_needed()
 		if _draw_pile.is_empty():
 			break
 		var card: CardData = _draw_pile.pop_back()
@@ -103,7 +98,7 @@ func _draw_cards(n: int) -> void:
 
 func _do_enemy_turn() -> void:
 	enemy.block = 0
-	var action: EnemyActionData = _enemy_data.actions[(turn_number - 1) % _enemy_data.actions.size()]
+	var action: EnemyActionData = get_current_enemy_action()
 	if action.type == "attack":
 		player.take_damage(action.value)
 	else:
