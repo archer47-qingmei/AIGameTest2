@@ -2,6 +2,8 @@ extends Control
 
 const NODE_LABELS: Array[String] = ["关卡一：颚虫", "关卡二：精英守卫"]
 
+@onready var _node_container: VBoxContainer = $VBoxContainer/NodeContainer
+
 func _ready() -> void:
 	var current: int = GameManager.player_state.current_node
 	for i: int in NODE_LABELS.size():
@@ -15,4 +17,4 @@ func _ready() -> void:
 		else:
 			btn.text = NODE_LABELS[i] + "（未解锁）"
 			btn.disabled = true
-		$NodeContainer.add_child(btn)
+		_node_container.add_child(btn)
