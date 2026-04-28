@@ -7,10 +7,11 @@ var max_hp: int
 var block: int
 
 func take_damage(amount: int) -> void:
-	var remaining: int = amount - block
-	block = 0
-	if remaining > 0:
-		hp -= remaining
+	if amount <= block:
+		block -= amount
+	else:
+		hp -= amount - block
+		block = 0
 	if hp < 0:
 		hp = 0
 
