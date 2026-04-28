@@ -13,6 +13,12 @@ extends Control
 @onready var _btn_return_menu: Button  = $BtnReturnMenu
 @onready var _btn_get_reward: Button   = $BtnGetReward
 @onready var _btn_win: Button          = $BtnWin
+@onready var _btn_view_deck: Button    = $VBoxContainer/BtnViewDeck
+@onready var _deck_view_panel: Panel   = $DeckViewPanel
+@onready var _btn_close_deck: Button   = $DeckViewPanel/VBoxContainer/BtnCloseDeck
+@onready var _all_cards_list: VBoxContainer = $DeckViewPanel/VBoxContainer/TabContainer/完整牌组/AllCardsList
+@onready var _draw_list: VBoxContainer      = $DeckViewPanel/VBoxContainer/TabContainer/抽牌堆/DrawList
+@onready var _discard_list: VBoxContainer   = $DeckViewPanel/VBoxContainer/TabContainer/弃牌堆/DiscardList
 
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
@@ -25,6 +31,8 @@ func _ready() -> void:
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
 	_btn_get_reward.pressed.connect(GameManager.go_to_reward)
 	_btn_win.pressed.connect(GameManager.go_to_win)
+	_btn_view_deck.pressed.connect(_on_view_deck_pressed)
+	_btn_close_deck.pressed.connect(_deck_view_panel.hide)
 	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data(), GameManager.player_state.hp)
 
 func _on_card_pressed(card: CardData) -> void:
@@ -67,3 +75,24 @@ func _on_combat_ended(result: String) -> void:
 		_btn_return_menu.visible = true
 	for btn: Button in _hand_buttons:
 		btn.disabled = true
+
+func _on_view_deck_pressed() -> void:
+	var all_cards: Array[CardData] = []
+	for card: CardData in _engine.hand:
+		all_cards.append(card)
+	for card: CardData in _engine.get_draw_pile():
+		all_cards.append(card)
+	for card: CardData in _engine.get_discard_pile():
+		all_cards.append(card)
+	_populate_list(_all_cards_list, all_cards)
+	_populate_list(_draw_list, _engine.get_draw_pile())
+	_populate_list(_discard_list, _engine.get_discard_pile())
+	_deck_view_panel.show()
+
+func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
+	for child in container.get_children():
+		child.queue_free()
+	for card: CardData in cards:
+		var lbl: Label = Label.new()
+		lbl.text = card.get_description()
+		container.add_child(lbl)

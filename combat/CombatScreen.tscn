@@ -57,6 +57,10 @@ layout_mode = 2
 layout_mode = 2
 text = "结束回合"
 
+[node name="BtnViewDeck" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "查看牌组"
+
 [node name="LblResult" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -108,3 +112,44 @@ offset_right = 50.0
 offset_bottom = -25.0
 visible = false
 text = "通关！"
+
+[node name="DeckViewPanel" type="Panel" parent="."]
+layout_mode = 1
+anchor_left = 0.1
+anchor_top = 0.05
+anchor_right = 0.9
+anchor_bottom = 0.95
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeckViewPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 5
+
+[node name="TabContainer" type="TabContainer" parent="DeckViewPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="完整牌组" type="ScrollContainer" parent="DeckViewPanel/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="AllCardsList" type="VBoxContainer" parent="DeckViewPanel/VBoxContainer/TabContainer/完整牌组"]
+layout_mode = 2
+
+[node name="抽牌堆" type="ScrollContainer" parent="DeckViewPanel/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="DrawList" type="VBoxContainer" parent="DeckViewPanel/VBoxContainer/TabContainer/抽牌堆"]
+layout_mode = 2
+
+[node name="弃牌堆" type="ScrollContainer" parent="DeckViewPanel/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="DiscardList" type="VBoxContainer" parent="DeckViewPanel/VBoxContainer/TabContainer/弃牌堆"]
+layout_mode = 2
+
+[node name="BtnCloseDeck" type="Button" parent="DeckViewPanel/VBoxContainer"]
+layout_mode = 2
+text = "关闭"
