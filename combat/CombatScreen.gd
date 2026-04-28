@@ -45,7 +45,8 @@ func _refresh_ui() -> void:
 	_lbl_enemy_block.text = "格挡：%d" % _engine.enemy.block
 	_lbl_enemy_weak.text = "虚弱：%d" % _engine.enemy.weak
 	var action: EnemyActionData = _engine.get_current_enemy_action()
-	var intent: String = "攻击 %d" % action.value if action.type == "attack" else "格挡 %d" % action.value
+	var attack_value: int = int(action.value * 0.75) if action.type == "attack" and _engine.enemy.weak > 0 else action.value
+	var intent: String = "攻击 %d" % attack_value if action.type == "attack" else "格挡 %d" % action.value
 	_lbl_enemy_intent.text = "意图：" + intent
 	_lbl_player_hp.text = "生命：%d / %d" % [_engine.player.hp, _engine.player.max_hp]
 	_lbl_player_block.text = "格挡：%d" % _engine.player.block
