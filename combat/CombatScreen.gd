@@ -25,7 +25,7 @@ func _ready() -> void:
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
 	_btn_get_reward.pressed.connect(GameManager.go_to_reward)
 	_btn_win.pressed.connect(GameManager.go_to_win)
-	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data())
+	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data(), GameManager.player_state.hp)
 
 func _on_card_pressed(card: CardData) -> void:
 	_engine.play_card(card)
@@ -58,6 +58,7 @@ func _on_combat_ended(result: String) -> void:
 	_lbl_result.visible = true
 	_btn_end_turn.disabled = true
 	if result == "victory":
+		GameManager.player_state.hp = _engine.player.hp
 		if GameManager.is_final_node():
 			_btn_win.visible = true
 		else:
