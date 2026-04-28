@@ -91,6 +91,7 @@ func _on_view_deck_pressed() -> void:
 
 func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
 	for child in container.get_children():
+		container.remove_child(child)
 		child.queue_free()
 	for card: CardData in cards:
 		var lbl: Label = Label.new()
