@@ -37,10 +37,10 @@ func get_current_enemy_action() -> EnemyActionData:
 	return _enemy_data.actions[(turn_number - 1) % _enemy_data.actions.size()]
 
 func get_draw_pile() -> Array[CardData]:
-	return _draw_pile
+	return _draw_pile.duplicate()
 
 func get_discard_pile() -> Array[CardData]:
-	return _discard_pile
+	return _discard_pile.duplicate()
 
 func play_card(card: CardData) -> void:
 	if energy < card.cost:
