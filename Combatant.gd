@@ -6,6 +6,7 @@ var hp: int
 var max_hp: int
 var block: int
 var weak: int = 0
+var vulnerable: int = 0
 
 func take_damage(amount: int) -> void:
 	if amount <= block:
@@ -21,3 +22,6 @@ func add_block(amount: int) -> void:
 
 func add_weak(n: int) -> void:
 	weak += n
+
+func add_vulnerable(n: int) -> void:
+	vulnerable += n

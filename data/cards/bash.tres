@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3]
 
 [ext_resource type="Script" uid="uid://13mprie5g221" path="res://CardData.gd" id="1_CardData"]
 [ext_resource type="Script" uid="uid://cxv8nrm4tp7dk" path="res://CardEffectData.gd" id="2_CardEffectData"]
@@ -9,8 +9,14 @@ type = "damage"
 value = 8
 upgrade_bonus = 3
 
+[sub_resource type="Resource" id="Effect_vulnerable"]
+script = ExtResource("2_CardEffectData")
+type = "vulnerable"
+value = 2
+upgrade_bonus = 1
+
 [resource]
 script = ExtResource("1_CardData")
 card_name = "重击"
 cost = 2
-effects = [SubResource("Effect_damage")]
+effects = [SubResource("Effect_damage"), SubResource("Effect_vulnerable")]

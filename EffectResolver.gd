@@ -9,9 +9,13 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 			attacker.add_block(effect.value)
 		elif effect.type == "weak":
 			defender.add_weak(effect.value)
+		elif effect.type == "vulnerable":
+			defender.add_vulnerable(effect.value)
 
 static func apply_damage(source: Combatant, target: Combatant, amount: int) -> void:
 	var dmg: int = amount
 	if source.weak > 0:
 		dmg = int(dmg * 0.75)
+	if target.vulnerable > 0:
+		dmg = int(dmg * 1.5)
 	target.take_damage(dmg)

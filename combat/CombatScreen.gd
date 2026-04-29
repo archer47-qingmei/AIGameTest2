@@ -3,8 +3,9 @@ extends Control
 @onready var _lbl_enemy_name: Label    = $VBoxContainer/EnemyPanel/LblEnemyName
 @onready var _lbl_enemy_hp: Label      = $VBoxContainer/EnemyPanel/LblEnemyHP
 @onready var _lbl_enemy_block: Label   = $VBoxContainer/EnemyPanel/LblEnemyBlock
-@onready var _lbl_enemy_weak: Label    = $VBoxContainer/EnemyPanel/LblEnemyWeak
-@onready var _lbl_enemy_intent: Label  = $VBoxContainer/EnemyPanel/LblEnemyIntent
+@onready var _lbl_enemy_weak: Label       = $VBoxContainer/EnemyPanel/LblEnemyWeak
+@onready var _lbl_enemy_vulnerable: Label = $VBoxContainer/EnemyPanel/LblEnemyVulnerable
+@onready var _lbl_enemy_intent: Label     = $VBoxContainer/EnemyPanel/LblEnemyIntent
 @onready var _lbl_player_hp: Label     = $VBoxContainer/PlayerPanel/LblPlayerHP
 @onready var _lbl_player_block: Label  = $VBoxContainer/PlayerPanel/LblPlayerBlock
 @onready var _lbl_energy: Label        = $VBoxContainer/PlayerPanel/LblEnergy
@@ -44,6 +45,7 @@ func _refresh_ui() -> void:
 	_lbl_enemy_hp.text = "生命：%d / %d" % [_engine.enemy.hp, _engine.enemy.max_hp]
 	_lbl_enemy_block.text = "格挡：%d" % _engine.enemy.block
 	_lbl_enemy_weak.text = "虚弱：%d" % _engine.enemy.weak
+	_lbl_enemy_vulnerable.text = "脆弱：%d" % _engine.enemy.vulnerable
 	var action: EnemyActionData = _engine.get_current_enemy_action()
 	var attack_value: int = int(action.value * 0.75) if action.type == "attack" and _engine.enemy.weak > 0 else action.value
 	var intent: String = "攻击 %d" % attack_value if action.type == "attack" else "格挡 %d" % action.value

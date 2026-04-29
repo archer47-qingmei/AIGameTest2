@@ -105,6 +105,7 @@ func _draw_cards(n: int) -> void:
 
 func _do_enemy_turn() -> void:
 	enemy.block = 0
+	enemy.vulnerable = max(0, enemy.vulnerable - 1)
 	var action: EnemyActionData = get_current_enemy_action()
 	if action.type == "attack":
 		EffectResolver.apply_damage(enemy, player, action.value)
