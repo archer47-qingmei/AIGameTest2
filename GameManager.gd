@@ -7,6 +7,7 @@ const NORMAL_POOL: Array[String] = [
 	"res://data/enemies/fire_lizard.tres",
 ]
 const BOSS_ENEMY: String = "res://data/enemies/boss.tres"
+const REST_NODE: String = "rest"
 
 var current_phase: Phase = Phase.MENU
 var player_state: PlayerState
@@ -26,7 +27,7 @@ func start_new_run() -> void:
 	var pool: Array[String] = NORMAL_POOL.duplicate()
 	pool.shuffle()
 	player_state.enemy_sequence.assign(pool)
-	player_state.enemy_sequence.append("rest")
+	player_state.enemy_sequence.append(REST_NODE)
 	player_state.enemy_sequence.append(BOSS_ENEMY)
 	current_phase = Phase.MAP
 	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
