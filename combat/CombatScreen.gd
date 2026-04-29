@@ -34,7 +34,7 @@ func _ready() -> void:
 	_btn_win.pressed.connect(GameManager.go_to_win)
 	_btn_view_deck.pressed.connect(_on_view_deck_pressed)
 	_btn_close_deck.pressed.connect(_deck_view_panel.hide)
-	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data(), GameManager.player_state.hp)
+	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data(), GameManager.player_state.hp, GameManager.player_state.max_hp)
 
 func _on_card_pressed(card: CardData) -> void:
 	_engine.play_card(card)
