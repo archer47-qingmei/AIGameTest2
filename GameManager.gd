@@ -1,6 +1,6 @@
 extends Node
 
-enum Phase { MENU, MAP, COMBAT, REWARD, WIN }
+enum Phase { MENU, MAP, COMBAT, REWARD, REST, WIN }
 
 const NORMAL_POOL: Array[String] = [
 	"res://data/enemies/jaw_worm.tres",
@@ -26,6 +26,7 @@ func start_new_run() -> void:
 	var pool: Array[String] = NORMAL_POOL.duplicate()
 	pool.shuffle()
 	player_state.enemy_sequence.assign(pool)
+	player_state.enemy_sequence.append("rest")
 	player_state.enemy_sequence.append(BOSS_ENEMY)
 	current_phase = Phase.MAP
 	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
@@ -37,6 +38,10 @@ func go_to_combat() -> void:
 func go_to_reward() -> void:
 	current_phase = Phase.REWARD
 	get_tree().change_scene_to_file("res://reward/RewardScreen.tscn")
+
+func go_to_rest() -> void:
+	current_phase = Phase.REST
+	get_tree().change_scene_to_file("res://rest/RestScreen.tscn")
 
 func go_to_map() -> void:
 	player_state.current_node += 1
