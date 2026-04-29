@@ -7,6 +7,7 @@
 script = ExtResource("2_CardEffectData")
 type = "weak"
 value = 2
+upgrade_bonus = 1
 
 [resource]
 script = ExtResource("1_CardData")

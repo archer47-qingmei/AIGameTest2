@@ -7,11 +7,13 @@
 script = ExtResource("2_CardEffectData")
 type = "damage"
 value = 4
+upgrade_bonus = 3
 
 [sub_resource type="Resource" id="Effect_draw"]
 script = ExtResource("2_CardEffectData")
 type = "draw"
 value = 1
+upgrade_bonus = 1
 
 [resource]
 script = ExtResource("1_CardData")
