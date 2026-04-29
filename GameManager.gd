@@ -1,6 +1,6 @@
 extends Node
 
-enum Phase { MENU, MAP, COMBAT, REWARD, REST, WIN }
+enum Phase { MENU, MAP, COMBAT, REWARD, REST, WIN, GAME_OVER }
 
 func _ready() -> void:
 	var font: FontFile = load("res://data/fonts/NotoSansSC-Regular.otf") as FontFile
@@ -72,6 +72,10 @@ func go_to_map() -> void:
 func go_to_win() -> void:
 	current_phase = Phase.WIN
 	get_tree().change_scene_to_file("res://win/WinScreen.tscn")
+
+func go_to_game_over() -> void:
+	current_phase = Phase.GAME_OVER
+	get_tree().change_scene_to_file("res://game_over/GameOverScreen.tscn")
 
 func go_to_menu() -> void:
 	player_state = null

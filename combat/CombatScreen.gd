@@ -67,19 +67,19 @@ func _rebuild_hand() -> void:
 		_hand_buttons.append(btn)
 
 func _on_combat_ended(result: String) -> void:
-	_lbl_result.text = "胜利！" if result == "victory" else "游戏结束"
-	_lbl_result.visible = true
 	_btn_end_turn.disabled = true
+	for btn: Button in _hand_buttons:
+		btn.disabled = true
 	if result == "victory":
+		_lbl_result.text = "胜利！"
+		_lbl_result.visible = true
 		GameManager.player_state.hp = _engine.player.hp
 		if GameManager.is_final_node():
 			_btn_win.visible = true
 		else:
 			_btn_get_reward.visible = true
 	else:
-		_btn_return_menu.visible = true
-	for btn: Button in _hand_buttons:
-		btn.disabled = true
+		GameManager.go_to_game_over()
 
 func _on_view_deck_pressed() -> void:
 	var all_cards: Array[CardData] = []
