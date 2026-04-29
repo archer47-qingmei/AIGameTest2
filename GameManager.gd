@@ -36,26 +36,31 @@ func start_new_run() -> void:
 	var a1: NodeData = NodeData.new()
 	a1.type = NodeData.Type.COMBAT
 	a1.enemy_data = load(NORMAL_POOL[0]) as EnemyData
-	a1.column = 0; a1.row = 0
+	a1.column = 0
+	a1.row = 0
 
 	var a2: NodeData = NodeData.new()
 	a2.type = NodeData.Type.COMBAT
 	a2.enemy_data = load(NORMAL_POOL[1]) as EnemyData
-	a2.column = 0; a2.row = 1
+	a2.column = 0
+	a2.row = 1
 
 	var b1: NodeData = NodeData.new()
 	b1.type = NodeData.Type.REST
-	b1.column = 1; b1.row = 0
+	b1.column = 1
+	b1.row = 0
 
 	var b2: NodeData = NodeData.new()
 	b2.type = NodeData.Type.COMBAT
-	b2.enemy_data = load(NORMAL_POOL[0]) as EnemyData
-	b2.column = 1; b2.row = 1
+	b2.enemy_data = load(NORMAL_POOL[1]) as EnemyData
+	b2.column = 1
+	b2.row = 1
 
 	var c1: NodeData = NodeData.new()
 	c1.type = NodeData.Type.COMBAT
 	c1.enemy_data = load(BOSS_ENEMY) as EnemyData
-	c1.column = 2; c1.row = 0
+	c1.column = 2
+	c1.row = 0
 
 	a1.connections.assign([b1, b2])
 	a2.connections.assign([b1, b2])
