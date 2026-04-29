@@ -4,7 +4,7 @@ extends Control
 
 func _ready() -> void:
 	var current: int = GameManager.player_state.current_node
-	var sequence: Array[String] = GameManager.player_state.enemy_sequence
+	var sequence: Array[NodeData] = GameManager.player_state.node_sequence
 	var total: int = sequence.size()
 	for i: int in total:
 		var btn: Button = Button.new()
@@ -14,7 +14,7 @@ func _ready() -> void:
 			btn.disabled = true
 		elif i == current:
 			btn.text = label
-			if sequence[i] == GameManager.REST_NODE:
+			if sequence[i].type == NodeData.Type.REST:
 				btn.pressed.connect(GameManager.go_to_rest)
 			else:
 				btn.pressed.connect(GameManager.go_to_combat)
@@ -23,8 +23,8 @@ func _ready() -> void:
 			btn.disabled = true
 		_node_container.add_child(btn)
 
-func _get_node_label(i: int, sequence: Array[String], total: int) -> String:
-	if sequence[i] == GameManager.REST_NODE:
+func _get_node_label(i: int, sequence: Array[NodeData], total: int) -> String:
+	if sequence[i].type == NodeData.Type.REST:
 		return "休息站"
 	elif i == total - 1:
 		return "关卡 %d（Boss）" % (i + 1)
