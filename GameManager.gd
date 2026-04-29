@@ -7,7 +7,6 @@ const NORMAL_POOL: Array[String] = [
 	"res://data/enemies/fire_lizard.tres",
 ]
 const BOSS_ENEMY: String = "res://data/enemies/boss.tres"
-const REST_NODE: String = "rest"
 
 var current_phase: Phase = Phase.MENU
 var player_state: PlayerState
@@ -25,11 +24,21 @@ func start_new_run() -> void:
 		player_state.deck.append(defend.duplicate())
 	player_state.deck.append(bash.duplicate())
 	player_state.deck.append(slash.duplicate())
-	var pool: Array[String] = NORMAL_POOL.duplicate()
+	var pool: Array[NodeData] = []
+	for path: String in NORMAL_POOL:
+		var nd: NodeData = NodeData.new()
+		nd.type = NodeData.Type.COMBAT
+		nd.enemy_data = load(path) as EnemyData
+		pool.append(nd)
 	pool.shuffle()
-	player_state.enemy_sequence.assign(pool)
-	player_state.enemy_sequence.append(REST_NODE)
-	player_state.enemy_sequence.append(BOSS_ENEMY)
+	player_state.node_sequence.assign(pool)
+	var rest_nd: NodeData = NodeData.new()
+	rest_nd.type = NodeData.Type.REST
+	player_state.node_sequence.append(rest_nd)
+	var boss_nd: NodeData = NodeData.new()
+	boss_nd.type = NodeData.Type.COMBAT
+	boss_nd.enemy_data = load(BOSS_ENEMY) as EnemyData
+	player_state.node_sequence.append(boss_nd)
 	current_phase = Phase.MAP
 	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
 
@@ -62,7 +71,7 @@ func go_to_menu() -> void:
 	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
 
 func get_current_enemy_data() -> EnemyData:
-	return load(player_state.enemy_sequence[player_state.current_node]) as EnemyData
+	return player_state.node_sequence[player_state.current_node].enemy_data
 
 func is_final_node() -> bool:
-	return player_state.current_node == player_state.enemy_sequence.size() - 1
+	return player_state.current_node == player_state.node_sequence.size() - 1
