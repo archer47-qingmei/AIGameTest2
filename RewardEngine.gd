@@ -1,19 +1,23 @@
 class_name RewardEngine
 extends RefCounted
 
+const CARD_POOL: Array[String] = [
+	"res://data/cards/strike.tres",
+	"res://data/cards/defend.tres",
+	"res://data/cards/bash.tres",
+	"res://data/cards/slash.tres",
+	"res://data/cards/insight.tres",
+	"res://data/cards/quick_strike.tres",
+	"res://data/cards/energize.tres",
+	"res://data/cards/dash.tres",
+	"res://data/cards/entangle.tres",
+]
+
 static func get_options() -> Array[CardData]:
-	var options: Array[CardData] = []
-	var dir := DirAccess.open("res://data/cards/")
-	if dir == null:
-		return options
-	dir.list_dir_begin()
-	var file_name := dir.get_next()
-	while file_name != "":
-		if file_name.ends_with(".tres"):
-			var card := load("res://data/cards/" + file_name) as CardData
-			if card != null:
-				options.append(card)
-		file_name = dir.get_next()
-	dir.list_dir_end()
-	options.shuffle()
-	return options.slice(0, mini(3, options.size()))
+	var pool: Array[CardData] = []
+	for path: String in CARD_POOL:
+		var card := load(path) as CardData
+		if card != null:
+			pool.append(card)
+	pool.shuffle()
+	return pool.slice(0, mini(3, pool.size()))
