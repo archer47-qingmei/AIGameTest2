@@ -3,9 +3,11 @@ extends Control
 @onready var _lbl_hp: Label = $LblHP
 
 var _node_positions: Dictionary = {}
+var _state: PlayerState = null
 
 func _ready() -> void:
 	var state: PlayerState = GameManager.player_state
+	_state = state
 	_lbl_hp.text = "生命：%d / %d" % [state.hp, state.max_hp]
 	_build_map(state)
 	queue_redraw()
@@ -31,8 +33,9 @@ func _build_map(state: PlayerState) -> void:
 		add_child(btn)
 
 func _draw() -> void:
-	var state: PlayerState = GameManager.player_state
-	for nd: NodeData in state.map_all_nodes:
+	if _state == null:
+		return
+	for nd: NodeData in _state.map_all_nodes:
 		if not _node_positions.has(nd):
 			continue
 		var from: Vector2 = _node_positions[nd]
@@ -40,7 +43,7 @@ func _draw() -> void:
 			if not _node_positions.has(target):
 				continue
 			var to: Vector2 = _node_positions[target]
-			var color: Color = Color(0.4, 1.0, 0.4) if state.completed_nodes.has(nd) \
+			var color: Color = Color(0.4, 1.0, 0.4) if _state.completed_nodes.has(nd) \
 							   else Color(0.5, 0.5, 0.5)
 			draw_line(from, to, color, 2.0)
 
