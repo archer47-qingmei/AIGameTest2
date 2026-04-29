@@ -11,6 +11,7 @@ const REST_NODE: String = "rest"
 
 var current_phase: Phase = Phase.MENU
 var player_state: PlayerState
+var last_rest_heal: int = 0
 
 func start_new_run() -> void:
 	player_state = PlayerState.new()
@@ -41,6 +42,8 @@ func go_to_reward() -> void:
 	get_tree().change_scene_to_file("res://reward/RewardScreen.tscn")
 
 func go_to_rest() -> void:
+	last_rest_heal = int(player_state.max_hp * 0.3)
+	player_state.hp = mini(player_state.hp + last_rest_heal, player_state.max_hp)
 	current_phase = Phase.REST
 	get_tree().change_scene_to_file("res://rest/RestScreen.tscn")
 
