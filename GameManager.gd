@@ -2,6 +2,14 @@ extends Node
 
 enum Phase { MENU, MAP, COMBAT, REWARD, REST, WIN }
 
+func _ready() -> void:
+	var font: FontFile = load("res://data/fonts/NotoSansSC-Regular.otf") as FontFile
+	if font:
+		var theme: Theme = Theme.new()
+		theme.default_font = font
+		theme.default_font_size = 16
+		get_tree().root.theme = theme
+
 const NORMAL_POOL: Array[String] = [
 	"res://data/enemies/jaw_worm.tres",
 	"res://data/enemies/fire_lizard.tres",

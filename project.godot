@@ -18,3 +18,14 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameManager="*res://GameManager.gd"
+
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=854
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom="res://data/theme.tres"
