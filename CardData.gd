@@ -4,6 +4,15 @@ extends Resource
 @export var card_name: String
 @export var cost: int
 @export var effects: Array[CardEffectData]
+var is_upgraded: bool = false
+
+func upgrade() -> void:
+	if is_upgraded:
+		return
+	is_upgraded = true
+	card_name = card_name + "+"
+	for effect: CardEffectData in effects:
+		effect.value += effect.upgrade_bonus
 
 func get_description() -> String:
 	var dmg: int = 0
