@@ -58,7 +58,11 @@ text = "格挡：0"
 layout_mode = 2
 text = "能量：3 / 3"
 
-[node name="HandContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HandScroll" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+
+[node name="HandContainer" type="HBoxContainer" parent="VBoxContainer/HandScroll"]
 layout_mode = 2
 
 [node name="BtnEndTurn" type="Button" parent="VBoxContainer"]
