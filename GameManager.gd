@@ -32,23 +32,48 @@ func start_new_run() -> void:
 		player_state.deck.append(defend.duplicate())
 	player_state.deck.append(bash.duplicate())
 	player_state.deck.append(slash.duplicate())
-	var pool: Array[NodeData] = []
-	for path: String in NORMAL_POOL:
-		var nd: NodeData = NodeData.new()
-		nd.type = NodeData.Type.COMBAT
-		nd.enemy_data = load(path) as EnemyData
-		pool.append(nd)
-	pool.shuffle()
-	player_state.node_sequence.assign(pool)
-	var rest_nd: NodeData = NodeData.new()
-	rest_nd.type = NodeData.Type.REST
-	player_state.node_sequence.append(rest_nd)
-	var boss_nd: NodeData = NodeData.new()
-	boss_nd.type = NodeData.Type.COMBAT
-	boss_nd.enemy_data = load(BOSS_ENEMY) as EnemyData
-	player_state.node_sequence.append(boss_nd)
+
+	var a1: NodeData = NodeData.new()
+	a1.type = NodeData.Type.COMBAT
+	a1.enemy_data = load(NORMAL_POOL[0]) as EnemyData
+	a1.column = 0; a1.row = 0
+
+	var a2: NodeData = NodeData.new()
+	a2.type = NodeData.Type.COMBAT
+	a2.enemy_data = load(NORMAL_POOL[1]) as EnemyData
+	a2.column = 0; a2.row = 1
+
+	var b1: NodeData = NodeData.new()
+	b1.type = NodeData.Type.REST
+	b1.column = 1; b1.row = 0
+
+	var b2: NodeData = NodeData.new()
+	b2.type = NodeData.Type.COMBAT
+	b2.enemy_data = load(NORMAL_POOL[0]) as EnemyData
+	b2.column = 1; b2.row = 1
+
+	var c1: NodeData = NodeData.new()
+	c1.type = NodeData.Type.COMBAT
+	c1.enemy_data = load(BOSS_ENEMY) as EnemyData
+	c1.column = 2; c1.row = 0
+
+	a1.connections.assign([b1, b2])
+	a2.connections.assign([b1, b2])
+	b1.connections.assign([c1])
+	b2.connections.assign([c1])
+
+	player_state.map_all_nodes.assign([a1, a2, b1, b2, c1])
+	player_state.available_nodes.assign([a1, a2])
+
 	current_phase = Phase.MAP
 	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
+
+func select_node(node: NodeData) -> void:
+	player_state.current_node = node
+	if node.type == NodeData.Type.REST:
+		go_to_rest()
+	else:
+		go_to_combat()
 
 func go_to_combat() -> void:
 	current_phase = Phase.COMBAT
@@ -65,7 +90,10 @@ func go_to_rest() -> void:
 	get_tree().change_scene_to_file("res://rest/RestScreen.tscn")
 
 func go_to_map() -> void:
-	player_state.current_node += 1
+	if player_state.current_node != null:
+		player_state.completed_nodes.append(player_state.current_node)
+		player_state.available_nodes.assign(player_state.current_node.connections)
+		player_state.current_node = null
 	current_phase = Phase.MAP
 	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
 
@@ -83,7 +111,7 @@ func go_to_menu() -> void:
 	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
 
 func get_current_enemy_data() -> EnemyData:
-	return player_state.node_sequence[player_state.current_node].enemy_data
+	return player_state.current_node.enemy_data
 
 func is_final_node() -> bool:
-	return player_state.current_node == player_state.node_sequence.size() - 1
+	return player_state.current_node.connections.is_empty()
