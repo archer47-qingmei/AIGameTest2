@@ -4,7 +4,7 @@ extends Control
 @onready var _btn_menu: Button = $VBoxContainer/BtnMenu
 
 func _ready() -> void:
-	var reached: int = GameManager.player_state.current_node + 1
-	var total: int = GameManager.player_state.node_sequence.size()
-	_lbl_node.text = "已抵达第 %d / %d 关" % [reached, total]
+	var completed: int = GameManager.player_state.completed_nodes.size()
+	var total: int = GameManager.player_state.map_all_nodes.size()
+	_lbl_node.text = "已完成 %d / %d 关" % [completed, total]
 	_btn_menu.pressed.connect(GameManager.go_to_menu)
