@@ -56,12 +56,7 @@ func go_to_combat() -> void:
 func end_combat(final_hp: int) -> void:
 	player_state.hp = final_hp
 	pending_gold = RewardEngine.get_gold_reward(is_elite_node(), is_final_node())
-	if is_elite_node():
-		pending_relic = preload("res://data/relics/burning_gem.tres")
-	elif is_final_node():
-		pending_relic = preload("res://data/relics/life_ring.tres")
-	else:
-		pending_relic = null
+	pending_relic = player_state.current_node.config.reward_relic
 	go_to_reward()
 
 func go_to_reward() -> void:

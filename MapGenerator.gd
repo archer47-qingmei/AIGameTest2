@@ -7,6 +7,8 @@ const COMBAT_ENEMY_PATHS: Array[String] = [
 ]
 const ELITE_ENEMY_PATH: String = "res://data/enemies/elite_guard.tres"
 const BOSS_ENEMY_PATH: String = "res://data/enemies/boss.tres"
+const ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"
+const BOSS_REWARD_RELIC_PATH: String = "res://data/relics/life_ring.tres"
 
 static func generate() -> Array[NodeData]:
 	var col0: Array[NodeData] = _make_col0()
@@ -76,6 +78,7 @@ static func _make_col2() -> Array[NodeData]:
 				nd.config.enemy_data = _random_combat_enemy()
 			NodeConfig.Type.ELITE:
 				nd.config.enemy_data = load(ELITE_ENEMY_PATH) as EnemyData
+				nd.config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
 		result.append(nd)
 	return result
 
@@ -84,6 +87,7 @@ static func _make_col3() -> Array[NodeData]:
 	nd.config = NodeConfig.new()
 	nd.config.type = NodeConfig.Type.COMBAT
 	nd.config.enemy_data = load(BOSS_ENEMY_PATH) as EnemyData
+	nd.config.reward_relic = load(BOSS_REWARD_RELIC_PATH) as RelicData
 	nd.config.column = 3
 	nd.config.row = 0
 	var result: Array[NodeData] = [nd]

@@ -7,3 +7,4 @@ enum Type { COMBAT, REST, ELITE, SHOP }
 @export var enemy_data: EnemyData
 @export var column: int = 0
 @export var row: int = 0
+@export var reward_relic: RelicData
