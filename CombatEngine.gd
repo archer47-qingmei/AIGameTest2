@@ -1,6 +1,8 @@
 class_name CombatEngine
 extends RefCounted
 
+const BASE_ENERGY: int = 3
+
 signal state_changed
 signal combat_ended(result: String)
 
@@ -69,7 +71,7 @@ func end_turn() -> void:
 func _start_player_turn() -> void:
 	player.weak = max(0, player.weak - 1)
 	turn_number += 1
-	energy = 3
+	energy = BASE_ENERGY
 	player.block = 0
 	_draw_hand()
 	if turn_number == 1:
