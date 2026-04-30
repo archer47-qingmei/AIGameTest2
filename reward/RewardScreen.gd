@@ -67,9 +67,8 @@ func _show_list() -> void:
 			_btn_gold.hide()
 
 func _on_relic_pressed() -> void:
-	var relic: RelicData = GameManager.pending_relic
-	GameManager.player_state.relics.append(relic.duplicate())
-	GameManager.pending_relic = null
+	_btn_relic.text = "%s — %s" % [GameManager.pending_relic.display_name, GameManager.pending_relic.description]
+	GameManager.collect_relic()
 	_btn_relic.disabled = true
 	_btn_relic.text += " ✓"
 

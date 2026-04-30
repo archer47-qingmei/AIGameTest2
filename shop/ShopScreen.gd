@@ -9,28 +9,9 @@ var _engine: ShopEngine
 
 func _ready() -> void:
 	_engine = ShopEngine.new()
-	_engine.generate(_card_pool(), _relic_pool())
+	_engine.generate()
 	_btn_leave.pressed.connect(GameManager.go_to_map)
 	_rebuild_ui()
-
-func _card_pool() -> Array[CardData]:
-	return [
-		preload("res://data/cards/strike.tres"),
-		preload("res://data/cards/defend.tres"),
-		preload("res://data/cards/bash.tres"),
-		preload("res://data/cards/slash.tres"),
-		preload("res://data/cards/insight.tres"),
-		preload("res://data/cards/quick_strike.tres"),
-		preload("res://data/cards/energize.tres"),
-		preload("res://data/cards/dash.tres"),
-		preload("res://data/cards/entangle.tres"),
-	]
-
-func _relic_pool() -> Array[RelicData]:
-	return [
-		preload("res://data/relics/burning_gem.tres"),
-		preload("res://data/relics/life_ring.tres"),
-	]
 
 func _rebuild_ui() -> void:
 	_lbl_gold.text = "金币：%d" % GameManager.player_state.gold

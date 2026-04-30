@@ -110,3 +110,9 @@ func is_elite_node() -> bool:
 func collect_gold(amount: int) -> void:
 	player_state.gold += amount
 	pending_gold = 0
+
+func collect_relic() -> void:
+	if pending_relic == null:
+		return
+	player_state.relics.append(pending_relic.duplicate())
+	pending_relic = null
