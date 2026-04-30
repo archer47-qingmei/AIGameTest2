@@ -13,6 +13,7 @@ func _ready() -> void:
 var current_phase: Phase = Phase.MENU
 var player_state: PlayerState
 var pending_relic: RelicData = null
+var pending_gold: int = 0
 
 func start_new_run() -> void:
 	player_state = PlayerState.new()
@@ -51,6 +52,7 @@ func go_to_combat() -> void:
 
 func end_combat(final_hp: int) -> void:
 	player_state.hp = final_hp
+	pending_gold = RewardEngine.get_gold_reward(is_elite_node(), is_final_node())
 	if is_elite_node():
 		pending_relic = preload("res://data/relics/burning_gem.tres")
 	elif is_final_node():
@@ -97,3 +99,6 @@ func is_final_node() -> bool:
 
 func is_elite_node() -> bool:
 	return player_state.current_node.config.type == NodeConfig.Type.ELITE
+
+func collect_gold(amount: int) -> void:
+	player_state.gold += amount

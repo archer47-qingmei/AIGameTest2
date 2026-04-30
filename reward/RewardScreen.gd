@@ -6,6 +6,7 @@ enum State { LIST, CARD_PICK }
 
 var _state: State = State.LIST
 var _btn_relic: Button
+var _btn_gold: Button
 var _btn_card: Button
 var _card_container: VBoxContainer
 var _btn_continue: Button
@@ -18,6 +19,10 @@ func _ready() -> void:
 	_btn_relic = Button.new()
 	_vbox.add_child(_btn_relic)
 	_btn_relic.pressed.connect(_on_relic_pressed)
+
+	_btn_gold = Button.new()
+	_vbox.add_child(_btn_gold)
+	_btn_gold.pressed.connect(_on_gold_pressed)
 
 	_btn_card = Button.new()
 	_btn_card.text = "卡牌"
@@ -40,6 +45,7 @@ func _show_list() -> void:
 	_card_container.hide()
 	_btn_card.show()
 	_btn_continue.show()
+
 	if _btn_relic.disabled:
 		_btn_relic.show()
 	else:
@@ -50,6 +56,16 @@ func _show_list() -> void:
 		else:
 			_btn_relic.hide()
 
+	if _btn_gold.disabled:
+		_btn_gold.show()
+	else:
+		var amount: int = GameManager.pending_gold
+		if amount > 0:
+			_btn_gold.text = "拾取 %d 金币" % amount
+			_btn_gold.show()
+		else:
+			_btn_gold.hide()
+
 func _on_relic_pressed() -> void:
 	var relic: RelicData = GameManager.pending_relic
 	GameManager.player_state.relics.append(relic.duplicate())
@@ -57,9 +73,16 @@ func _on_relic_pressed() -> void:
 	_btn_relic.disabled = true
 	_btn_relic.text += " ✓"
 
+func _on_gold_pressed() -> void:
+	GameManager.collect_gold(GameManager.pending_gold)
+	GameManager.pending_gold = 0
+	_btn_gold.disabled = true
+	_btn_gold.text += " ✓"
+
 func _on_card_btn_pressed() -> void:
 	_state = State.CARD_PICK
 	_btn_relic.hide()
+	_btn_gold.hide()
 	_btn_card.hide()
 	_btn_continue.hide()
 	_card_container.show()
