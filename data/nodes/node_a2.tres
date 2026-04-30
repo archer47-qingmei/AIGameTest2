@@ -7,3 +7,4 @@
 script = ExtResource("2_8wn4i")
 enemy_data = ExtResource("1_wqsfo")
 row = 1
+column = 0
