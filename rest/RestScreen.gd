@@ -20,13 +20,12 @@ func _populate_upgrade_list() -> void:
 		var btn: Button = Button.new()
 		btn.text = card.get_description()
 		btn.disabled = card.is_upgraded
-		btn.pressed.connect(_on_upgrade_card.bind(card))
+		btn.pressed.connect(_on_upgrade_card.bind(card, btn))
 		_card_list.add_child(btn)
 		_upgrade_buttons.append(btn)
 
-func _on_upgrade_card(card: CardData) -> void:
+func _on_upgrade_card(card: CardData, btn: Button) -> void:
 	card.upgrade()
-	var deck: Array[CardData] = GameManager.player_state.deck
-	for i: int in _upgrade_buttons.size():
-		_upgrade_buttons[i].text = deck[i].get_description()
-		_upgrade_buttons[i].disabled = true
+	btn.text = card.get_description()
+	for b: Button in _upgrade_buttons:
+		b.disabled = true
