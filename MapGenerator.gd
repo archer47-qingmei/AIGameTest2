@@ -1,6 +1,13 @@
 class_name MapGenerator
 extends RefCounted
 
+const COMBAT_ENEMY_PATHS: Array[String] = [
+	"res://data/enemies/jaw_worm.tres",
+	"res://data/enemies/fire_lizard.tres",
+]
+const ELITE_ENEMY_PATH: String = "res://data/enemies/elite_guard.tres"
+const BOSS_ENEMY_PATH: String = "res://data/enemies/boss.tres"
+
 static func generate() -> Array[NodeData]:
 	var col0: Array[NodeData] = _make_col0()
 	var col1: Array[NodeData] = _make_col1()
@@ -20,10 +27,7 @@ static func generate() -> Array[NodeData]:
 	return all
 
 static func _make_col0() -> Array[NodeData]:
-	var enemy_paths: Array[String] = [
-		"res://data/enemies/jaw_worm.tres",
-		"res://data/enemies/fire_lizard.tres",
-	]
+	var enemy_paths: Array[String] = COMBAT_ENEMY_PATHS.duplicate()
 	enemy_paths.shuffle()
 	var result: Array[NodeData] = []
 	for row in 2:
@@ -70,7 +74,7 @@ static func _make_col2() -> Array[NodeData]:
 			NodeConfig.Type.COMBAT:
 				nd.config.enemy_data = _random_combat_enemy()
 			NodeConfig.Type.ELITE:
-				nd.config.enemy_data = load("res://data/enemies/elite_guard.tres") as EnemyData
+				nd.config.enemy_data = load(ELITE_ENEMY_PATH) as EnemyData
 		result.append(nd)
 	return result
 
@@ -78,15 +82,11 @@ static func _make_col3() -> Array[NodeData]:
 	var nd := NodeData.new()
 	nd.config = NodeConfig.new()
 	nd.config.type = NodeConfig.Type.COMBAT
-	nd.config.enemy_data = load("res://data/enemies/boss.tres") as EnemyData
+	nd.config.enemy_data = load(BOSS_ENEMY_PATH) as EnemyData
 	nd.config.column = 3
 	nd.config.row = 0
 	var result: Array[NodeData] = [nd]
 	return result
 
 static func _random_combat_enemy() -> EnemyData:
-	var paths: Array[String] = [
-		"res://data/enemies/jaw_worm.tres",
-		"res://data/enemies/fire_lizard.tres",
-	]
-	return load(paths[randi() % paths.size()]) as EnemyData
+	return load(COMBAT_ENEMY_PATHS[randi() % COMBAT_ENEMY_PATHS.size()]) as EnemyData
