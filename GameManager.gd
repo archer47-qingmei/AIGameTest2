@@ -102,3 +102,4 @@ func is_elite_node() -> bool:
 
 func collect_gold(amount: int) -> void:
 	player_state.gold += amount
+	pending_gold = 0

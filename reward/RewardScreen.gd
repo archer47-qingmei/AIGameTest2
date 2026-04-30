@@ -75,7 +75,6 @@ func _on_relic_pressed() -> void:
 
 func _on_gold_pressed() -> void:
 	GameManager.collect_gold(GameManager.pending_gold)
-	GameManager.pending_gold = 0
 	_btn_gold.disabled = true
 	_btn_gold.text += " ✓"
 
