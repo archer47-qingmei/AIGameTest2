@@ -48,10 +48,15 @@ func _draw() -> void:
 			draw_line(from, to, color, 2.0)
 
 func _get_node_pos(nd: NodeData) -> Vector2:
-	if nd.config.column == 2:
-		return Vector2(380.0, 375.0)
-	return Vector2(100.0 if nd.config.column == 0 else 240.0,
-				   250.0 if nd.config.row == 0 else 500.0)
+	if nd.config.column == 3:
+		return Vector2(430.0, 375.0)
+	var col_x: float
+	match nd.config.column:
+		0: col_x = 100.0
+		1: col_x = 210.0
+		2: col_x = 320.0
+		_: col_x = 100.0
+	return Vector2(col_x, 250.0 if nd.config.row == 0 else 500.0)
 
 func _get_node_label(nd: NodeData) -> String:
 	if nd.connections.is_empty():
