@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://u62kotjnjchy"]
 
 [ext_resource type="Script" uid="uid://13mprie5g221" path="res://CardData.gd" id="1_CardData"]
 [ext_resource type="Script" uid="uid://cxv8nrm4tp7dk" path="res://CardEffectData.gd" id="2_CardEffectData"]
@@ -19,4 +19,4 @@ upgrade_bonus = 3
 script = ExtResource("1_CardData")
 card_name = "斩击"
 cost = 2
-effects = [SubResource("Effect_damage"), SubResource("Effect_block")]
+effects = Array[ExtResource("2_CardEffectData")]([SubResource("Effect_damage"), SubResource("Effect_block")])

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3 uid="uid://c6513wu4kf5ar"]
 
 [ext_resource type="Script" uid="uid://bp7tc2xnj6g4e" path="res://EnemyData.gd" id="1_EnemyData"]
 [ext_resource type="Script" uid="uid://dkqvfnm3r8w5y" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
@@ -17,4 +17,4 @@ value = 6
 script = ExtResource("1_EnemyData")
 display_name = "颚虫"
 hp = 44
-actions = [SubResource("Action_attack"), SubResource("Action_block")]
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_attack"), SubResource("Action_block")])
