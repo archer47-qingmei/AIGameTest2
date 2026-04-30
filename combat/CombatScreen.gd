@@ -31,8 +31,8 @@ func _ready() -> void:
 	_engine.combat_ended.connect(_on_combat_ended)
 	_btn_end_turn.pressed.connect(_engine.end_turn)
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
-	_btn_get_reward.pressed.connect(GameManager.go_to_reward)
-	_btn_win.pressed.connect(GameManager.go_to_win)
+	_btn_get_reward.pressed.connect(_on_proceed)
+	_btn_win.pressed.connect(_on_proceed)
 	_btn_view_deck.pressed.connect(_on_view_deck_pressed)
 	_btn_close_deck.pressed.connect(_deck_view_panel.hide)
 	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data(), GameManager.player_state.hp, GameManager.player_state.max_hp)
@@ -73,7 +73,6 @@ func _on_combat_ended(result: String) -> void:
 	if result == "victory":
 		_lbl_result.text = "胜利！"
 		_lbl_result.visible = true
-		GameManager.player_state.hp = _engine.player.hp
 		if GameManager.is_final_node():
 			_btn_win.visible = true
 		else:
@@ -102,3 +101,6 @@ func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
 		var lbl: Label = Label.new()
 		lbl.text = card.get_description()
 		container.add_child(lbl)
+
+func _on_proceed() -> void:
+	GameManager.end_combat(_engine.player.hp)
