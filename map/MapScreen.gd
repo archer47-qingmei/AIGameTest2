@@ -58,4 +58,6 @@ func _get_node_label(nd: NodeData) -> String:
 		return "Boss 战斗"
 	if nd.config.type == NodeConfig.Type.REST:
 		return "休息站"
+	if nd.config.type == NodeConfig.Type.ELITE:
+		return "精英战斗"
 	return "战斗"
