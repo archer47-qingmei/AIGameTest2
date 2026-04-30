@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="NodeConfig" format=3]
+
+[ext_resource type="Resource" path="res://data/enemies/fire_lizard.tres" id="1_osr6g"]
+[ext_resource type="Script" path="res://NodeConfig.gd" id="2_6m30d"]
+
+[resource]
+script = ExtResource("2_6m30d")
+enemy_data = ExtResource("1_osr6g")
+column = 1
+row = 1

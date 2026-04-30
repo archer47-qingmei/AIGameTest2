@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NodeConfig" format=3]
+
+[ext_resource type="Resource" path="res://data/enemies/boss.tres" id="1_x7so6"]
+[ext_resource type="Script" path="res://NodeConfig.gd" id="2_f3i0v"]
+
+[resource]
+script = ExtResource("2_f3i0v")
+enemy_data = ExtResource("1_x7so6")
+column = 2
