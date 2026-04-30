@@ -12,6 +12,7 @@ var _btn_continue: Button
 
 func _ready() -> void:
 	for child in _vbox.get_children():
+		_vbox.remove_child(child)
 		child.free()
 
 	_btn_relic = Button.new()
@@ -66,6 +67,7 @@ func _on_card_btn_pressed() -> void:
 
 func _build_card_options() -> void:
 	for child in _card_container.get_children():
+		_card_container.remove_child(child)
 		child.free()
 	var options: Array[CardData] = RewardEngine.get_options()
 	for card: CardData in options:
