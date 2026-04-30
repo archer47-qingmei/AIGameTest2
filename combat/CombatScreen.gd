@@ -24,8 +24,11 @@ extends Control
 
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
+var _lbl_relics: Label
 
 func _ready() -> void:
+	_lbl_relics = Label.new()
+	$VBoxContainer/PlayerPanel.add_child(_lbl_relics)
 	_engine = CombatEngine.new()
 	_engine.state_changed.connect(_refresh_ui)
 	_engine.combat_ended.connect(_on_combat_ended)
@@ -35,7 +38,9 @@ func _ready() -> void:
 	_btn_win.pressed.connect(_on_proceed)
 	_btn_view_deck.pressed.connect(_on_view_deck_pressed)
 	_btn_close_deck.pressed.connect(_deck_view_panel.hide)
-	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data(), GameManager.player_state.hp, GameManager.player_state.max_hp)
+	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data(),
+		GameManager.player_state.hp, GameManager.player_state.max_hp,
+		GameManager.player_state.relics)
 
 func _on_card_pressed(card: CardData) -> void:
 	_engine.play_card(card)
@@ -53,6 +58,10 @@ func _refresh_ui() -> void:
 	_lbl_player_hp.text = "生命：%d / %d" % [_engine.player.hp, _engine.player.max_hp]
 	_lbl_player_block.text = "格挡：%d" % _engine.player.block
 	_lbl_energy.text = "能量：%d / 3" % _engine.energy
+	var relic_names: PackedStringArray = []
+	for r: RelicData in GameManager.player_state.relics:
+		relic_names.append(r.display_name)
+	_lbl_relics.text = "遗物：" + ("、".join(relic_names) if not relic_names.is_empty() else "无")
 	_rebuild_hand()
 
 func _rebuild_hand() -> void:
