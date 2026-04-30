@@ -24,6 +24,7 @@ static func generate() -> Array[NodeData]:
 	all.append_array(col1)
 	all.append_array(col2)
 	all.append_array(col3)
+	_add_shop_node(all)
 	return all
 
 static func _make_col0() -> Array[NodeData]:
@@ -90,3 +91,14 @@ static func _make_col3() -> Array[NodeData]:
 
 static func _random_combat_enemy() -> EnemyData:
 	return load(COMBAT_ENEMY_PATHS[randi() % COMBAT_ENEMY_PATHS.size()]) as EnemyData
+
+static func _add_shop_node(all_nodes: Array[NodeData]) -> void:
+	var candidates: Array[NodeData] = []
+	for nd: NodeData in all_nodes:
+		if nd.config.column in [1, 2] and nd.config.type != NodeConfig.Type.ELITE:
+			candidates.append(nd)
+	if candidates.is_empty():
+		return
+	var chosen: NodeData = candidates[randi() % candidates.size()]
+	chosen.config.type = NodeConfig.Type.SHOP
+	chosen.config.enemy_data = null

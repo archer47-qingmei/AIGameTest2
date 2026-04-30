@@ -1,6 +1,6 @@
 extends Node
 
-enum Phase { MENU, MAP, COMBAT, REWARD, REST, WIN, GAME_OVER }
+enum Phase { MENU, MAP, COMBAT, REWARD, REST, SHOP, WIN, GAME_OVER }
 
 func _ready() -> void:
 	var font: FontFile = load("res://data/fonts/NotoSansSC-Regular.otf") as FontFile
@@ -41,10 +41,13 @@ func start_new_run() -> void:
 
 func select_node(node: NodeData) -> void:
 	player_state.current_node = node
-	if node.config.type == NodeConfig.Type.REST:
-		go_to_rest()
-	else:
-		go_to_combat()
+	match node.config.type:
+		NodeConfig.Type.REST:
+			go_to_rest()
+		NodeConfig.Type.SHOP:
+			go_to_shop()
+		_:
+			go_to_combat()
 
 func go_to_combat() -> void:
 	current_phase = Phase.COMBAT
@@ -69,6 +72,10 @@ func go_to_rest() -> void:
 	player_state.apply_rest_heal()
 	current_phase = Phase.REST
 	get_tree().change_scene_to_file("res://rest/RestScreen.tscn")
+
+func go_to_shop() -> void:
+	current_phase = Phase.SHOP
+	get_tree().change_scene_to_file("res://shop/ShopScreen.tscn")
 
 func go_to_map() -> void:
 	if player_state.current_node != null:

@@ -61,8 +61,11 @@ func _get_node_pos(nd: NodeData) -> Vector2:
 func _get_node_label(nd: NodeData) -> String:
 	if nd.connections.is_empty():
 		return "Boss 战斗"
-	if nd.config.type == NodeConfig.Type.REST:
-		return "休息站"
-	if nd.config.type == NodeConfig.Type.ELITE:
-		return "精英战斗"
+	match nd.config.type:
+		NodeConfig.Type.REST:
+			return "休息站"
+		NodeConfig.Type.ELITE:
+			return "精英战斗"
+		NodeConfig.Type.SHOP:
+			return "商店"
 	return "战斗"
