@@ -176,32 +176,41 @@ ShopScreen (Control)
 
 ### 卡牌池与遗物池
 
-ShopEngine.generate() 所需的完整池由 GameManager 传入：
-- 卡牌池：`data/cards/` 下全部 9 张 CardData（preload）
-- 遗物池：`data/relics/` 下全部 2 个 RelicData（preload）
+GDScript 4 不支持在 `const` 中使用 `preload`，改为 GameManager 新增静态方法：
 
-GameManager 新增常量：
 ```gdscript
-const SHOP_CARD_POOL: Array[CardData] = [
-    preload("res://data/cards/strike.tres"),
-    # ... 其余 8 张
-]
-const SHOP_RELIC_POOL: Array[RelicData] = [
-    preload("res://data/relics/burning_gem.tres"),
-    preload("res://data/relics/life_ring.tres"),
-]
+static func _get_shop_card_pool() -> Array[CardData]:
+    return [
+        preload("res://data/cards/strike.tres"),
+        preload("res://data/cards/defend.tres"),
+        preload("res://data/cards/bash.tres"),
+        preload("res://data/cards/slash.tres"),
+        preload("res://data/cards/dash.tres"),
+        preload("res://data/cards/energize.tres"),
+        preload("res://data/cards/entangle.tres"),
+        preload("res://data/cards/insight.tres"),
+        preload("res://data/cards/quick_strike.tres"),
+    ]
+
+static func _get_shop_relic_pool() -> Array[RelicData]:
+    return [
+        preload("res://data/relics/burning_gem.tres"),
+        preload("res://data/relics/life_ring.tres"),
+    ]
 ```
+
+`go_to_shop()` 调用时将两个池传给 ShopScreen（通过 autoload 或 ShopScreen 自己调用）。
 
 ---
 
 ## PlayerState.relics 字段
 
-若 PlayerState 尚未包含 `relics` 字段，需新增：
+**PlayerState 当前没有 relics 字段，必须新增**：
 ```gdscript
 var relics: Array[RelicData] = []
 ```
 
-RelicEngine 已依赖此数组触发遗物效果，确认字段名一致。
+RelicEngine 应读取此字段触发遗物效果（实现时需确认 RelicEngine 的依赖路径）。
 
 ---
 
