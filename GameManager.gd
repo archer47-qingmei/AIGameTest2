@@ -10,12 +10,6 @@ func _ready() -> void:
 		theme.default_font_size = 16
 		get_tree().root.theme = theme
 
-const NORMAL_POOL: Array[String] = [
-	"res://data/enemies/jaw_worm.tres",
-	"res://data/enemies/fire_lizard.tres",
-]
-const BOSS_ENEMY: String = "res://data/enemies/boss.tres"
-
 var current_phase: Phase = Phase.MENU
 var player_state: PlayerState
 var last_rest_heal: int = 0
@@ -34,33 +28,15 @@ func start_new_run() -> void:
 	player_state.deck.append(slash.duplicate())
 
 	var a1: NodeData = NodeData.new()
-	a1.type = NodeData.Type.COMBAT
-	a1.enemy_data = load(NORMAL_POOL[0]) as EnemyData
-	a1.column = 0
-	a1.row = 0
-
+	a1.config = preload("res://data/nodes/node_a1.tres")
 	var a2: NodeData = NodeData.new()
-	a2.type = NodeData.Type.COMBAT
-	a2.enemy_data = load(NORMAL_POOL[1]) as EnemyData
-	a2.column = 0
-	a2.row = 1
-
+	a2.config = preload("res://data/nodes/node_a2.tres")
 	var b1: NodeData = NodeData.new()
-	b1.type = NodeData.Type.REST
-	b1.column = 1
-	b1.row = 0
-
+	b1.config = preload("res://data/nodes/node_b1.tres")
 	var b2: NodeData = NodeData.new()
-	b2.type = NodeData.Type.COMBAT
-	b2.enemy_data = load(NORMAL_POOL[1]) as EnemyData
-	b2.column = 1
-	b2.row = 1
-
+	b2.config = preload("res://data/nodes/node_b2.tres")
 	var c1: NodeData = NodeData.new()
-	c1.type = NodeData.Type.COMBAT
-	c1.enemy_data = load(BOSS_ENEMY) as EnemyData
-	c1.column = 2
-	c1.row = 0
+	c1.config = preload("res://data/nodes/node_c1.tres")
 
 	a1.connections.assign([b1, b2])
 	a2.connections.assign([b1, b2])
@@ -75,7 +51,7 @@ func start_new_run() -> void:
 
 func select_node(node: NodeData) -> void:
 	player_state.current_node = node
-	if node.type == NodeData.Type.REST:
+	if node.config.type == NodeConfig.Type.REST:
 		go_to_rest()
 	else:
 		go_to_combat()
@@ -116,7 +92,7 @@ func go_to_menu() -> void:
 	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
 
 func get_current_enemy_data() -> EnemyData:
-	return player_state.current_node.enemy_data
+	return player_state.current_node.config.enemy_data
 
 func is_final_node() -> bool:
 	return player_state.current_node.connections.is_empty()

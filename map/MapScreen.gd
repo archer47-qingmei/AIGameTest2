@@ -48,14 +48,14 @@ func _draw() -> void:
 			draw_line(from, to, color, 2.0)
 
 func _get_node_pos(nd: NodeData) -> Vector2:
-	if nd.column == 2:
+	if nd.config.column == 2:
 		return Vector2(380.0, 375.0)
-	return Vector2(100.0 if nd.column == 0 else 240.0,
-				   250.0 if nd.row == 0 else 500.0)
+	return Vector2(100.0 if nd.config.column == 0 else 240.0,
+				   250.0 if nd.config.row == 0 else 500.0)
 
 func _get_node_label(nd: NodeData) -> String:
 	if nd.connections.is_empty():
 		return "Boss 战斗"
-	if nd.type == NodeData.Type.REST:
+	if nd.config.type == NodeConfig.Type.REST:
 		return "休息站"
 	return "战斗"
