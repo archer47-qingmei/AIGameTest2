@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "燃烧宝石"
+description = "每次战斗开始时，额外获得 1 点能量。"
+trigger = 0
+effect_type = "energy"
+value = 1

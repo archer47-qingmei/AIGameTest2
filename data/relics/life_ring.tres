@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "生命之环"
+description = "每回合开始时，恢复 1 点生命。"
+trigger = 1
+effect_type = "heal_hp"
+value = 1
