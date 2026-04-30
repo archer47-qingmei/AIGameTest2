@@ -1,0 +1,66 @@
+extends Control
+
+@onready var _lbl_gold: Label = $VBoxContainer/LblGold
+@onready var _card_list: VBoxContainer = $VBoxContainer/CardList
+@onready var _relic_list: VBoxContainer = $VBoxContainer/RelicList
+@onready var _btn_leave: Button = $VBoxContainer/BtnLeave
+
+var _engine: ShopEngine
+
+func _ready() -> void:
+	_engine = ShopEngine.new()
+	_engine.generate(_card_pool(), _relic_pool())
+	_btn_leave.pressed.connect(GameManager.go_to_map)
+	_rebuild_ui()
+
+func _card_pool() -> Array[CardData]:
+	return [
+		preload("res://data/cards/strike.tres"),
+		preload("res://data/cards/defend.tres"),
+		preload("res://data/cards/bash.tres"),
+		preload("res://data/cards/slash.tres"),
+		preload("res://data/cards/insight.tres"),
+		preload("res://data/cards/quick_strike.tres"),
+		preload("res://data/cards/energize.tres"),
+		preload("res://data/cards/dash.tres"),
+		preload("res://data/cards/entangle.tres"),
+	]
+
+func _relic_pool() -> Array[RelicData]:
+	return [
+		preload("res://data/relics/burning_gem.tres"),
+		preload("res://data/relics/life_ring.tres"),
+	]
+
+func _rebuild_ui() -> void:
+	_lbl_gold.text = "金币：%d" % GameManager.player_state.gold
+	_rebuild_card_list()
+	_rebuild_relic_list()
+
+func _rebuild_card_list() -> void:
+	for child in _card_list.get_children():
+		child.queue_free()
+	for card: CardData in _engine.inventory_cards:
+		var btn := Button.new()
+		btn.text = "%s  [%d金]" % [card.get_description(), card.price]
+		btn.disabled = GameManager.player_state.gold < card.price
+		btn.pressed.connect(_on_buy_card.bind(card))
+		_card_list.add_child(btn)
+
+func _rebuild_relic_list() -> void:
+	for child in _relic_list.get_children():
+		child.queue_free()
+	for relic: RelicData in _engine.inventory_relics:
+		var btn := Button.new()
+		btn.text = "%s — %s  [%d金]" % [relic.display_name, relic.description, relic.price]
+		btn.disabled = GameManager.player_state.gold < relic.price
+		btn.pressed.connect(_on_buy_relic.bind(relic))
+		_relic_list.add_child(btn)
+
+func _on_buy_card(card: CardData) -> void:
+	_engine.buy_card(card, GameManager.player_state)
+	_rebuild_ui()
+
+func _on_buy_relic(relic: RelicData) -> void:
+	_engine.buy_relic(relic, GameManager.player_state)
+	_rebuild_ui()

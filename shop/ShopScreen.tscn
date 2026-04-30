@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://shop/ShopScreen.gd" id="1_ShopScreen"]
+
+[node name="ShopScreen" type="Control"]
+script = ExtResource("1_ShopScreen")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="LblGold" type="Label" parent="VBoxContainer"]
+text = "金币：0"
+
+[node name="LblCards" type="Label" parent="VBoxContainer"]
+text = "卡牌"
+
+[node name="CardList" type="VBoxContainer" parent="VBoxContainer"]
+
+[node name="LblRelics" type="Label" parent="VBoxContainer"]
+text = "遗物"
+
+[node name="RelicList" type="VBoxContainer" parent="VBoxContainer"]
+
+[node name="BtnLeave" type="Button" parent="VBoxContainer"]
+text = "离开商店"
