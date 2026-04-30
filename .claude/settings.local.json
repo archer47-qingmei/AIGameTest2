@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "mcp__godot__get_debug_output",
+      "mcp__godot__stop_project",
+      "mcp__godot__run_project",
+      "Bash(git tag *)",
+      "Bash(git -C \"e:/MyWork/AIGameTest2\" log --oneline -3)"
+    ]
+  }
+}
