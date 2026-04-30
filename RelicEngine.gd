@@ -13,7 +13,7 @@ static func apply_turn_start(relics: Array[RelicData], engine: CombatEngine) -> 
 
 static func _apply(relic: RelicData, engine: CombatEngine) -> void:
 	match relic.effect_type:
-		"energy":
+		RelicData.EffectType.ENERGY:
 			engine.energy += relic.value
-		"heal_hp":
+		RelicData.EffectType.HEAL_HP:
 			engine.player.hp = mini(engine.player.hp + relic.value, engine.player.max_hp)
