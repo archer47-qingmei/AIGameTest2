@@ -27,24 +27,13 @@ func start_new_run() -> void:
 	player_state.deck.append(bash.duplicate())
 	player_state.deck.append(slash.duplicate())
 
-	var a1: NodeData = NodeData.new()
-	a1.config = preload("res://data/nodes/node_a1.tres")
-	var a2: NodeData = NodeData.new()
-	a2.config = preload("res://data/nodes/node_a2.tres")
-	var b1: NodeData = NodeData.new()
-	b1.config = preload("res://data/nodes/node_b1.tres")
-	var b2: NodeData = NodeData.new()
-	b2.config = preload("res://data/nodes/node_b2.tres")
-	var c1: NodeData = NodeData.new()
-	c1.config = preload("res://data/nodes/node_c1.tres")
-
-	a1.connections.assign([b1, b2])
-	a2.connections.assign([b1, b2])
-	b1.connections.assign([c1])
-	b2.connections.assign([c1])
-
-	player_state.map_all_nodes.assign([a1, a2, b1, b2, c1])
-	player_state.available_nodes.assign([a1, a2])
+	var nodes: Array[NodeData] = MapGenerator.generate()
+	player_state.map_all_nodes.assign(nodes)
+	var start_nodes: Array[NodeData] = []
+	for nd in nodes:
+		if nd.config.column == 0:
+			start_nodes.append(nd)
+	player_state.available_nodes.assign(start_nodes)
 
 	current_phase = Phase.MAP
 	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
