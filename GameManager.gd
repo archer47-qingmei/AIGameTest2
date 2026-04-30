@@ -61,6 +61,10 @@ func go_to_combat() -> void:
 
 func end_combat(final_hp: int) -> void:
 	player_state.hp = final_hp
+	if is_elite_node():
+		_grant_relic(preload("res://data/relics/burning_gem.tres"))
+	elif is_final_node():
+		_grant_relic(preload("res://data/relics/life_ring.tres"))
 	if is_final_node():
 		go_to_win()
 	else:
@@ -101,3 +105,9 @@ func get_current_enemy_data() -> EnemyData:
 
 func is_final_node() -> bool:
 	return player_state.current_node.connections.is_empty()
+
+func is_elite_node() -> bool:
+	return player_state.current_node.config.type == NodeConfig.Type.ELITE
+
+func _grant_relic(relic_data: RelicData) -> void:
+	player_state.relics.append(relic_data.duplicate())

@@ -9,6 +9,7 @@ var available_nodes: Array[NodeData] = []
 var completed_nodes: Array[NodeData] = []
 var current_node: NodeData = null
 var last_rest_heal: int = 0
+var relics: Array[RelicData] = []
 
 func apply_rest_heal() -> int:
 	last_rest_heal = int(max_hp * 0.3)
