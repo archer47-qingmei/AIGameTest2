@@ -13,8 +13,10 @@ var turn_number: int = 0
 var _draw_pile: Array[CardData] = []
 var _discard_pile: Array[CardData] = []
 var _enemy_data: EnemyData
+var _relics: Array[RelicData] = []
 
-func setup(initial_deck: Array[CardData], enemy_data: EnemyData, initial_hp: int, max_hp: int) -> void:
+func setup(initial_deck: Array[CardData], enemy_data: EnemyData, initial_hp: int, max_hp: int, relics: Array[RelicData] = []) -> void:
+	_relics = relics
 	_enemy_data = enemy_data
 	enemy = Combatant.new()
 	enemy.display_name = _enemy_data.display_name
@@ -70,6 +72,9 @@ func _start_player_turn() -> void:
 	energy = 3
 	player.block = 0
 	_draw_hand()
+	if turn_number == 1:
+		RelicEngine.apply_combat_start(_relics, self)
+	RelicEngine.apply_turn_start(_relics, self)
 	state_changed.emit()
 
 func _refill_draw_pile_if_needed() -> void:
