@@ -3,6 +3,7 @@ extends Resource
 
 @export var card_name: String
 @export var cost: int
+@export var price: int = 0
 @export var effects: Array[CardEffectData]
 var is_upgraded: bool = false
 

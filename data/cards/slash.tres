@@ -19,4 +19,5 @@ upgrade_bonus = 3
 script = ExtResource("1_CardData")
 card_name = "斩击"
 cost = 2
+price = 30
 effects = Array[ExtResource("2_CardEffectData")]([SubResource("Effect_damage"), SubResource("Effect_block")])

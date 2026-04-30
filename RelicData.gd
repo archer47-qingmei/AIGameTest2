@@ -8,3 +8,4 @@ enum Trigger { COMBAT_START, TURN_START }
 @export var trigger: Trigger = Trigger.COMBAT_START
 @export var effect_type: String = ""
 @export var value: int = 0
+@export var price: int = 0

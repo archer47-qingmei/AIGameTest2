@@ -13,4 +13,5 @@ upgrade_bonus = 1
 script = ExtResource("1_CardData")
 card_name = "蓄力"
 cost = 1
+price = 50
 effects = [SubResource("Effect_energy")]
