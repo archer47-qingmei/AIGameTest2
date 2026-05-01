@@ -17,6 +17,7 @@ var pending_gold: int = 0
 var pending_card_reward: bool = true
 
 func start_new_run() -> void:
+	pending_card_reward = true
 	player_state = PlayerState.new()
 	var strike: CardData    = preload("res://data/cards/strike.tres")
 	var defend: CardData    = preload("res://data/cards/defend.tres")
@@ -82,6 +83,7 @@ func go_to_chest() -> void:
 		preload("res://data/relics/iron_armor.tres"),
 		preload("res://data/relics/tome_of_wisdom.tres"),
 	]
+	assert(!chest_relics.is_empty(), "chest relic pool is empty")
 	pending_relic = chest_relics.pick_random()
 	pending_gold = 0
 	pending_card_reward = false
