@@ -1,9 +1,15 @@
 class_name RewardEngine
 extends RefCounted
 
-static func get_options() -> Array[CardData]:
+static func get_options(character: String) -> Array[CardData]:
+	var pool_paths: Array[String] = []
+	match character:
+		"sword":
+			pool_paths.assign(CardPool.SWORD_REWARD_CARDS)
+		_:
+			pool_paths.assign(CardPool.CARDS)
 	var pool: Array[CardData] = []
-	for path: String in CardPool.CARDS:
+	for path: String in pool_paths:
 		var card := load(path) as CardData
 		if card != null:
 			pool.append(card)

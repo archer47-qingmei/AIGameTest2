@@ -26,3 +26,12 @@ const CHEST_RELICS: Array[String] = [
 const SWORD_START_RELICS: Array[String] = [
 	"res://data/relics/sword_gourd.tres",
 ]
+
+const SWORD_REWARD_CARDS: Array[String] = [
+	"res://data/cards/zhan_tie.tres",
+	"res://data/cards/po_feng.tres",
+	"res://data/cards/ce_bu.tres",
+	"res://data/cards/lian_xi.tres",
+	"res://data/cards/chuan_xin.tres",
+	"res://data/cards/yang_jian_shu.tres",
+]
