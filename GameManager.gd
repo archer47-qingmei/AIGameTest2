@@ -14,6 +14,7 @@ var current_phase: Phase = Phase.MENU
 var player_state: PlayerState
 var pending_relic: RelicData = null
 var pending_gold: int = 0
+var pending_card_reward: bool = true
 
 func start_new_run() -> void:
 	player_state = PlayerState.new()
@@ -48,6 +49,8 @@ func select_node(node: NodeData) -> void:
 			go_to_rest()
 		NodeConfig.Type.SHOP:
 			go_to_shop()
+		NodeConfig.Type.CHEST:
+			go_to_chest()
 		_:
 			go_to_combat()
 
@@ -74,7 +77,18 @@ func go_to_shop() -> void:
 	current_phase = Phase.SHOP
 	get_tree().change_scene_to_file("res://shop/ShopScreen.tscn")
 
+func go_to_chest() -> void:
+	var chest_relics: Array[RelicData] = [
+		preload("res://data/relics/iron_armor.tres"),
+		preload("res://data/relics/tome_of_wisdom.tres"),
+	]
+	pending_relic = chest_relics.pick_random()
+	pending_gold = 0
+	pending_card_reward = false
+	go_to_reward()
+
 func go_to_map() -> void:
+	pending_card_reward = true
 	if player_state.current_node != null:
 		player_state.completed_nodes.append(player_state.current_node)
 		player_state.available_nodes.assign(player_state.current_node.connections)
