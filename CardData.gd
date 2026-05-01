@@ -25,6 +25,7 @@ func get_description() -> String:
 	if is_venom:
 		return "%s\n费用:%d  %s" % [card_name, cost, special_text]
 	var dmg: int = 0
+	var dmg_times: int = 1
 	var blk: int = 0
 	var drw: int = 0
 	var nrg: int = 0
@@ -32,8 +33,13 @@ func get_description() -> String:
 	var vul: int = 0
 	var si_cap: int = 0
 	var si_bonus: int = 0
+	var dpt: int = 0
+	var si_retain: bool = false
+	var si_blk: int = 0
 	for effect: CardEffectData in effects:
-		if effect.type == "damage":               dmg = effect.value
+		if effect.type == "damage":
+			dmg = effect.value
+			dmg_times = effect.times
 		elif effect.type == "block":              blk = effect.value
 		elif effect.type == "draw":               drw = effect.value
 		elif effect.type == "energy":             nrg = effect.value
@@ -41,16 +47,25 @@ func get_description() -> String:
 		elif effect.type == "vulnerable":         vul = effect.value
 		elif effect.type == "sword_intent_cap":   si_cap = effect.value
 		elif effect.type == "sword_intent_bonus": si_bonus = effect.value
+		elif effect.type == "draw_per_turn":      dpt = effect.value
+		elif effect.type == "sword_intent_retain": si_retain = true
+		elif effect.type == "sword_intent_block_bonus": si_blk = effect.value
 	var desc: String = "%s\n费用:%d" % [card_name, cost]
 	if dmg > 0:
-		desc += "  攻:%d" % dmg
+		if dmg_times > 1:
+			desc += "  攻:%d×%d" % [dmg, dmg_times]
+		else:
+			desc += "  攻:%d" % dmg
 		if sword_intent_consume_bonus > 0:
 			desc += "(+剑意×%d)" % sword_intent_consume_bonus
-	if blk > 0:  desc += "  挡:%d" % blk
-	if drw > 0:  desc += "  抽:%d" % drw
-	if nrg > 0:  desc += "  能:%d" % nrg
-	if wk > 0:   desc += "  虚弱:%d" % wk
-	if vul > 0:  desc += "  脆弱:%d" % vul
-	if si_cap > 0:   desc += "  剑意上限+%d" % si_cap
-	if si_bonus > 0: desc += "  剑意加成+%d" % si_bonus
+	if blk > 0:       desc += "  挡:%d" % blk
+	if drw > 0:       desc += "  抽:%d" % drw
+	if nrg > 0:       desc += "  能:%d" % nrg
+	if wk > 0:        desc += "  虚弱:%d" % wk
+	if vul > 0:       desc += "  脆弱:%d" % vul
+	if si_cap > 0:    desc += "  剑意上限+%d" % si_cap
+	if si_bonus > 0:  desc += "  剑意加成+%d" % si_bonus
+	if dpt > 0:       desc += "  多抽+%d张/回" % dpt
+	if si_retain:     desc += "  剑意永续"
+	if si_blk > 0:    desc += "  剑意挡加成+%d" % si_blk
 	return desc
