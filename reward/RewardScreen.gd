@@ -43,7 +43,10 @@ func _ready() -> void:
 func _show_list() -> void:
 	_state = State.LIST
 	_card_container.hide()
-	_btn_card.show()
+	if GameManager.pending_card_reward:
+		_btn_card.show()
+	else:
+		_btn_card.hide()
 	_btn_continue.show()
 
 	if _btn_relic.disabled:

@@ -74,4 +74,6 @@ func _get_node_label(nd: NodeData) -> String:
 			return "精英战斗"
 		NodeConfig.Type.SHOP:
 			return "商店"
+		NodeConfig.Type.CHEST:
+			return "宝箱"
 	return "战斗"
