@@ -17,16 +17,18 @@ var pending_gold: int = 0
 
 func start_new_run() -> void:
 	player_state = PlayerState.new()
-	var strike: CardData = preload("res://data/cards/strike.tres")
-	var defend: CardData = preload("res://data/cards/defend.tres")
-	var bash: CardData   = preload("res://data/cards/bash.tres")
-	var slash: CardData  = preload("res://data/cards/slash.tres")
+	var strike: CardData    = preload("res://data/cards/strike.tres")
+	var defend: CardData    = preload("res://data/cards/defend.tres")
+	var bash: CardData      = preload("res://data/cards/bash.tres")
+	var slash: CardData     = preload("res://data/cards/slash.tres")
+	var whirlwind: CardData = preload("res://data/cards/whirlwind.tres")
 	for i in 4:
 		player_state.deck.append(strike.duplicate())
 	for i in 4:
 		player_state.deck.append(defend.duplicate())
 	player_state.deck.append(bash.duplicate())
 	player_state.deck.append(slash.duplicate())
+	player_state.deck.append(whirlwind.duplicate())
 
 	var nodes: Array[NodeData] = MapGenerator.generate()
 	player_state.map_all_nodes.assign(nodes)
