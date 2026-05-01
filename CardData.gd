@@ -5,6 +5,7 @@ extends Resource
 @export var cost: int
 @export var price: int = 0
 @export var effects: Array[CardEffectData]
+@export var is_venom: bool = false
 var is_upgraded: bool = false
 
 func upgrade() -> void:
@@ -16,6 +17,8 @@ func upgrade() -> void:
 		effect.value += effect.upgrade_bonus
 
 func get_description() -> String:
+	if is_venom:
+		return "毒液\n费用:0  留手扣血"
 	var dmg: int = 0
 	var blk: int = 0
 	var drw: int = 0
