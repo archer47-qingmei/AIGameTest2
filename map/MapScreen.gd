@@ -1,6 +1,8 @@
 extends Control
 
 @onready var _lbl_hp: Label = $LblHP
+@onready var _scroll: ScrollContainer = $ScrollContainer
+@onready var _map_content: Control = $ScrollContainer/MapContent
 
 var _node_positions: Dictionary = {}
 var _state: PlayerState = null
@@ -10,7 +12,10 @@ func _ready() -> void:
 	_state = state
 	_lbl_hp.text = "生命：%d / %d" % [state.hp, state.max_hp]
 	_build_map(state)
-	queue_redraw()
+	_map_content.draw.connect(_draw_connections)
+	_map_content.queue_redraw()
+	await get_tree().process_frame
+	_scroll.scroll_vertical = 99999
 
 func _build_map(state: PlayerState) -> void:
 	for nd: NodeData in state.map_all_nodes:
@@ -30,9 +35,9 @@ func _build_map(state: PlayerState) -> void:
 		else:
 			btn.text = _get_node_label(nd)
 			btn.disabled = true
-		add_child(btn)
+		_map_content.add_child(btn)
 
-func _draw() -> void:
+func _draw_connections() -> void:
 	if _state == null:
 		return
 	for nd: NodeData in _state.map_all_nodes:
@@ -45,18 +50,13 @@ func _draw() -> void:
 			var to: Vector2 = _node_positions[target]
 			var color: Color = Color(0.4, 1.0, 0.4) if _state.completed_nodes.has(nd) \
 							   else Color(0.5, 0.5, 0.5)
-			draw_line(from, to, color, 2.0)
+			_map_content.draw_line(from, to, color, 2.0)
 
 func _get_node_pos(nd: NodeData) -> Vector2:
-	if nd.config.column == 3:
+	if nd.config.column == MapGenerator.TOTAL_COLUMNS - 1:
 		return Vector2(240.0, 150.0)
 	var row_x: float = 140.0 if nd.config.row == 0 else 340.0
-	var col_y: float
-	match nd.config.column:
-		0: col_y = 660.0
-		1: col_y = 490.0
-		2: col_y = 320.0
-		_: col_y = 660.0
+	var col_y: float = 1500.0 - nd.config.column * 150.0
 	return Vector2(row_x, col_y)
 
 func _get_node_label(nd: NodeData) -> String:
