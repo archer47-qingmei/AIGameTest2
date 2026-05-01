@@ -60,6 +60,10 @@ func _get_node_pos(nd: NodeData) -> Vector2:
 	var col_y: float = 1500.0 - nd.config.column * 150.0
 	return Vector2(row_x, col_y)
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenDrag:
+		_scroll.scroll_vertical -= int(event.relative.y)
+
 func _get_node_label(nd: NodeData) -> String:
 	if nd.connections.is_empty():
 		return "Boss 战斗"
