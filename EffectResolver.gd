@@ -3,22 +3,24 @@ extends RefCounted
 
 static func resolve(card: CardData, attacker: Combatant, defender: Combatant) -> void:
 	for effect: CardEffectData in card.effects:
-		if effect.type == "damage":
-			if defender != null:
-				var bonus: int = 0
-				if card.is_finisher:
-					bonus = attacker.sword_intent * card.sword_intent_consume_bonus
-				elif card.card_type == "招式":
-					bonus = attacker.sword_intent * attacker.sword_intent_damage_bonus
-				apply_damage(attacker, defender, effect.value + bonus)
-		elif effect.type == "block":
-			attacker.add_block(effect.value)
-		elif effect.type == "weak":
-			if defender != null:
-				defender.add_weak(effect.value)
-		elif effect.type == "vulnerable":
-			if defender != null:
-				defender.add_vulnerable(effect.value)
+		for _i in effect.times:
+			if effect.type == "damage":
+				if defender != null:
+					var bonus: int = 0
+					if card.is_finisher:
+						bonus = attacker.sword_intent * card.sword_intent_consume_bonus
+					elif card.card_type == "招式":
+						bonus = attacker.sword_intent * attacker.sword_intent_damage_bonus
+					apply_damage(attacker, defender, effect.value + bonus)
+			elif effect.type == "block":
+				var blk_bonus: int = attacker.sword_intent * attacker.sword_intent_block_bonus
+				attacker.add_block(effect.value + blk_bonus)
+			elif effect.type == "weak":
+				if defender != null:
+					defender.add_weak(effect.value)
+			elif effect.type == "vulnerable":
+				if defender != null:
+					defender.add_vulnerable(effect.value)
 	if card.is_finisher:
 		attacker.sword_intent = 0
 	elif card.card_type == "招式":
