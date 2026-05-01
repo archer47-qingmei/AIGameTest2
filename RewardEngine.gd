@@ -7,6 +7,7 @@ static func get_options(character: String) -> Array[CardData]:
 		"sword":
 			pool_paths.assign(CardPool.SWORD_REWARD_CARDS)
 		_:
+			push_warning("RewardEngine.get_options: unknown character '%s', fallback to CARDS" % character)
 			pool_paths.assign(CardPool.CARDS)
 	var pool: Array[CardData] = []
 	for path: String in pool_paths:
