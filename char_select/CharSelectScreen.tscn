@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://char_select/CharSelectScreen.gd" id="1_script"]
+
+[node name="CharSelectScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_script")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -90.0
+offset_right = 80.0
+offset_bottom = 90.0
+
+[node name="LblTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "选择职业"
+horizontal_alignment = 1
+
+[node name="BtnSword" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "剑修"
+
+[node name="BtnFa" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "法修（未解锁）"
+disabled = true
+
+[node name="BtnTi" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "体修（未解锁）"
+disabled = true
+
+[node name="BtnBack" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "返回"
