@@ -10,3 +10,4 @@ trigger = 1
 effect_type = 2
 value = 4
 price = 120
+source = 1
