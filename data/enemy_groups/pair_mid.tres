@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyGroupData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://EnemyGroupData.gd" id="1_GroupData"]
+[ext_resource type="Script" uid="uid://bp7tc2xnj6g4e" path="res://EnemyData.gd" id="2_EnemyData"]
+[ext_resource type="Resource" path="res://data/enemies/poison_spider.tres" id="3_poison_spider"]
+[ext_resource type="Resource" path="res://data/enemies/swamp_slime.tres" id="4_swamp_slime"]
+
+[resource]
+script = ExtResource("1_GroupData")
+enemies = Array[ExtResource("2_EnemyData")]([ExtResource("3_poison_spider"), ExtResource("4_swamp_slime")])
