@@ -42,6 +42,7 @@ func _ready() -> void:
 		GameManager.player_state.relics
 	)
 	_build_enemy_panels()
+	_refresh_ui()
 
 func _build_enemy_panels() -> void:
 	for child in _enemies_container.get_children():
