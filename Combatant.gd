@@ -7,6 +7,9 @@ var max_hp: int
 var block: int
 var weak: int = 0
 var vulnerable: int = 0
+var sword_intent: int = 0
+var sword_intent_cap: int = 10
+var sword_intent_damage_bonus: int = 1
 
 func take_damage(amount: int) -> void:
 	if amount <= block:
