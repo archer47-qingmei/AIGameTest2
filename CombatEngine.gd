@@ -60,6 +60,14 @@ func play_card(card: CardData) -> void:
 	_check_end()
 
 func end_turn() -> void:
+	var venom_count: int = 0
+	for card: CardData in hand:
+		if card.is_venom:
+			venom_count += 1
+	if venom_count > 0:
+		player.hp = max(0, player.hp - venom_count)
+		if _check_end():
+			return
 	for card: CardData in hand:
 		_discard_pile.append(card)
 	hand.clear()
@@ -117,6 +125,11 @@ func _do_enemy_turn() -> void:
 	if action.type == "attack":
 		EffectResolver.apply_damage(enemy, player, action.value)
 		enemy.weak = max(0, enemy.weak - 1)
+	elif action.type == "poison":
+		var venom_card: CardData = load("res://data/cards/venom.tres") as CardData
+		for i in action.value:
+			_draw_pile.append(venom_card.duplicate())
+		_draw_pile.shuffle()
 	else:
 		enemy.add_block(action.value)
 
