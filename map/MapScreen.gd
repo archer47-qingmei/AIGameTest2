@@ -49,14 +49,15 @@ func _draw() -> void:
 
 func _get_node_pos(nd: NodeData) -> Vector2:
 	if nd.config.column == 3:
-		return Vector2(430.0, 375.0)
-	var col_x: float
+		return Vector2(240.0, 150.0)
+	var row_x: float = 140.0 if nd.config.row == 0 else 340.0
+	var col_y: float
 	match nd.config.column:
-		0: col_x = 100.0
-		1: col_x = 210.0
-		2: col_x = 320.0
-		_: col_x = 100.0
-	return Vector2(col_x, 250.0 if nd.config.row == 0 else 500.0)
+		0: col_y = 660.0
+		1: col_y = 490.0
+		2: col_y = 320.0
+		_: col_y = 660.0
+	return Vector2(row_x, col_y)
 
 func _get_node_label(nd: NodeData) -> String:
 	if nd.connections.is_empty():
