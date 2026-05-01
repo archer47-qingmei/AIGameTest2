@@ -21,3 +21,5 @@ static func _apply(relic: RelicData, engine: CombatEngine) -> void:
 			engine.player.add_block(relic.value)
 		RelicData.EffectType.DRAW:
 			engine.draw_cards(relic.value)
+		RelicData.EffectType.SWORD_INTENT:
+			push_warning("RelicEngine: SWORD_INTENT not yet implemented (v0.34.0)")
