@@ -52,5 +52,5 @@ func get_description() -> String:
 	if wk > 0:   desc += "  虚弱:%d" % wk
 	if vul > 0:  desc += "  脆弱:%d" % vul
 	if si_cap > 0:   desc += "  剑意上限+%d" % si_cap
-	if si_bonus > 0: desc += "  加成+%d" % si_bonus
+	if si_bonus > 0: desc += "  剑意加成+%d" % si_bonus
 	return desc
