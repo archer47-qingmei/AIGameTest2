@@ -7,24 +7,26 @@ signal state_changed
 signal combat_ended(result: String)
 
 var player: Combatant
-var enemy: Combatant
+var enemies: Array[Combatant] = []
 var hand: Array[CardData] = []
 var energy: int = 0
 var turn_number: int = 0
 
 var _draw_pile: Array[CardData] = []
 var _discard_pile: Array[CardData] = []
-var _enemy_data: EnemyData
+var _enemy_data_list: Array[EnemyData] = []
 var _relics: Array[RelicData] = []
 
-func setup(initial_deck: Array[CardData], enemy_data: EnemyData, initial_hp: int, max_hp: int, relics: Array[RelicData] = []) -> void:
+func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_hp: int, max_hp: int, relics: Array[RelicData] = []) -> void:
 	_relics = relics
-	_enemy_data = enemy_data
-	enemy = Combatant.new()
-	enemy.display_name = _enemy_data.display_name
-	enemy.hp = _enemy_data.hp
-	enemy.max_hp = _enemy_data.hp
-	enemy.block = 0
+	for data: EnemyData in enemy_group.enemies:
+		var c := Combatant.new()
+		c.display_name = data.display_name
+		c.hp = data.hp
+		c.max_hp = data.hp
+		c.block = 0
+		enemies.append(c)
+		_enemy_data_list.append(data)
 
 	player = Combatant.new()
 	player.display_name = "玩家"
@@ -37,8 +39,9 @@ func setup(initial_deck: Array[CardData], enemy_data: EnemyData, initial_hp: int
 	_draw_pile.shuffle()
 	_start_player_turn()
 
-func get_current_enemy_action() -> EnemyActionData:
-	return _enemy_data.actions[(turn_number - 1) % _enemy_data.actions.size()]
+func get_enemy_action(i: int) -> EnemyActionData:
+	var actions: Array = _enemy_data_list[i].actions
+	return actions[(turn_number - 1) % actions.size()]
 
 func get_draw_pile() -> Array[CardData]:
 	return _draw_pile.duplicate()
@@ -46,18 +49,19 @@ func get_draw_pile() -> Array[CardData]:
 func get_discard_pile() -> Array[CardData]:
 	return _discard_pile.duplicate()
 
-func play_card(card: CardData) -> void:
-	if energy < card.cost:
-		return
+func play_card(card_index: int, target_index: int) -> bool:
+	var card: CardData = hand[card_index]
+	if card.cost > energy:
+		return false
 	energy -= card.cost
-	EffectResolver.resolve(card, player, enemy)
+	var target: Combatant = enemies[target_index] if target_index >= 0 else null
+	EffectResolver.resolve(card, player, target)
 	_apply_engine_effects(card)
-	var idx: int = hand.find(card)
-	if idx >= 0:
-		hand.remove_at(idx)
+	hand.remove_at(card_index)
 	_discard_pile.append(card)
 	state_changed.emit()
 	_check_end()
+	return true
 
 func end_turn() -> void:
 	var venom_count: int = 0
@@ -120,22 +124,28 @@ func _draw_cards(n: int) -> void:
 		hand.append(card)
 
 func _do_enemy_turn() -> void:
-	enemy.block = 0
-	enemy.vulnerable = max(0, enemy.vulnerable - 1)
-	var action: EnemyActionData = get_current_enemy_action()
-	if action.type == "attack":
-		EffectResolver.apply_damage(enemy, player, action.value)
-		enemy.weak = max(0, enemy.weak - 1)
-	elif action.type == "poison":
-		var venom_card: CardData = load("res://data/cards/venom.tres") as CardData
-		for i in action.value:
-			_draw_pile.append(venom_card.duplicate())
-		_draw_pile.shuffle()
-	else:
-		enemy.add_block(action.value)
+	for i in enemies.size():
+		if enemies[i].hp <= 0:
+			continue
+		enemies[i].block = 0
+		enemies[i].vulnerable = max(0, enemies[i].vulnerable - 1)
+		var action: EnemyActionData = get_enemy_action(i)
+		if action.type == "attack":
+			EffectResolver.apply_damage(enemies[i], player, action.value)
+			enemies[i].weak = max(0, enemies[i].weak - 1)
+		elif action.type == "poison":
+			var venom_card: CardData = load("res://data/cards/venom.tres") as CardData
+			for j in action.value:
+				_draw_pile.append(venom_card.duplicate())
+			_draw_pile.shuffle()
+		else:
+			enemies[i].add_block(action.value)
+
+func _get_living_enemies() -> Array[Combatant]:
+	return enemies.filter(func(e: Combatant) -> bool: return e.hp > 0)
 
 func _check_end() -> bool:
-	if enemy.hp <= 0:
+	if _get_living_enemies().is_empty():
 		combat_ended.emit("victory")
 		return true
 	if player.hp <= 0:
