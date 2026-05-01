@@ -3,9 +3,13 @@ extends RefCounted
 
 const TOTAL_COLUMNS: int = 10
 
-const COMBAT_ENEMY_PATHS: Array[String] = [
+const EARLY_ENEMY_PATHS: Array[String] = [
 	"res://data/enemies/jaw_worm.tres",
 	"res://data/enemies/fire_lizard.tres",
+]
+const MID_ENEMY_PATHS: Array[String] = [
+	"res://data/enemies/poison_spider.tres",
+	"res://data/enemies/swamp_slime.tres",
 ]
 const ELITE_ENEMY_PATH: String = "res://data/enemies/elite_guard.tres"
 const BOSS_ENEMY_PATH: String = "res://data/enemies/boss.tres"
@@ -45,7 +49,7 @@ static func _make_column(col: int) -> Array[NodeData]:
 		nd.config.row = row
 		match nd.config.type:
 			NodeConfig.Type.COMBAT:
-				nd.config.enemy_data = _random_combat_enemy()
+				nd.config.enemy_data = _random_combat_enemy(col)
 			NodeConfig.Type.ELITE:
 				nd.config.enemy_data = load(ELITE_ENEMY_PATH) as EnemyData
 				nd.config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
@@ -69,8 +73,9 @@ static func _get_column_types(col: int) -> Array:
 		push_error("unexpected column %d" % col)
 		return [NodeConfig.Type.COMBAT, NodeConfig.Type.COMBAT]
 
-static func _random_combat_enemy() -> EnemyData:
-	return load(COMBAT_ENEMY_PATHS[randi() % COMBAT_ENEMY_PATHS.size()]) as EnemyData
+static func _random_combat_enemy(col: int) -> EnemyData:
+	var paths: Array[String] = EARLY_ENEMY_PATHS if col <= 3 else MID_ENEMY_PATHS
+	return load(paths[randi() % paths.size()]) as EnemyData
 
 static func _add_shop_nodes(all_nodes: Array[NodeData]) -> void:
 	var candidates: Array[NodeData] = []
