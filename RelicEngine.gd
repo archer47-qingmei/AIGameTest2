@@ -22,4 +22,7 @@ static func _apply(relic: RelicData, engine: CombatEngine) -> void:
 		RelicData.EffectType.DRAW:
 			engine.draw_cards(relic.value)
 		RelicData.EffectType.SWORD_INTENT:
-			push_warning("RelicEngine: SWORD_INTENT not yet implemented (v0.34.0)")
+			engine.player.sword_intent = mini(
+				engine.player.sword_intent + relic.value,
+				engine.player.sword_intent_cap
+			)
