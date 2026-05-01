@@ -93,7 +93,7 @@ func _build_card_options() -> void:
 	for child in _card_container.get_children():
 		_card_container.remove_child(child)
 		child.free()
-	var options: Array[CardData] = RewardEngine.get_options()
+	var options: Array[CardData] = RewardEngine.get_options(GameManager.player_state.character)
 	for card: CardData in options:
 		var btn: Button = Button.new()
 		btn.text = card.get_description()
