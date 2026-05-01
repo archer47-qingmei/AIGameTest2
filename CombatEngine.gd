@@ -55,8 +55,13 @@ func play_card(card_index: int, target_index: int) -> bool:
 	if card.cost > energy:
 		return false
 	energy -= card.cost
-	var target: Combatant = enemies[target_index] if target_index >= 0 else null
-	EffectResolver.resolve(card, player, target)
+	if card.target_type == "all":
+		for enemy in enemies:
+			if enemy.hp > 0:
+				EffectResolver.resolve(card, player, enemy)
+	else:
+		var target: Combatant = enemies[target_index] if target_index >= 0 else null
+		EffectResolver.resolve(card, player, target)
 	_apply_engine_effects(card)
 	hand.remove_at(card_index)
 	_discard_pile.append(card)
