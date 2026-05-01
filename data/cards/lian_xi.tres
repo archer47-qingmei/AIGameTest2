@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=4 format=3]
+
+[ext_resource type="Script" uid="uid://13mprie5g221" path="res://CardData.gd" id="1_CardData"]
+[ext_resource type="Script" uid="uid://cxv8nrm4tp7dk" path="res://CardEffectData.gd" id="2_CardEffectData"]
+
+[sub_resource type="Resource" id="Effect_block"]
+script = ExtResource("2_CardEffectData")
+type = "block"
+value = 3
+upgrade_bonus = 0
+
+[resource]
+script = ExtResource("1_CardData")
+card_name = "敛息"
+cost = 0
+price = 0
+effects = Array[ExtResource("2_CardEffectData")]([SubResource("Effect_block")])
+target_type = "none"
+card_type = "身法"
