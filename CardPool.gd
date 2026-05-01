@@ -17,3 +17,8 @@ const RELICS: Array[String] = [
 	"res://data/relics/burning_gem.tres",
 	"res://data/relics/life_ring.tres",
 ]
+
+const CHEST_RELICS: Array[String] = [
+	"res://data/relics/iron_armor.tres",
+	"res://data/relics/tome_of_wisdom.tres",
+]

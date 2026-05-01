@@ -79,12 +79,8 @@ func go_to_shop() -> void:
 	get_tree().change_scene_to_file("res://shop/ShopScreen.tscn")
 
 func go_to_chest() -> void:
-	var chest_relics: Array[RelicData] = [
-		preload("res://data/relics/iron_armor.tres"),
-		preload("res://data/relics/tome_of_wisdom.tres"),
-	]
-	assert(!chest_relics.is_empty(), "chest relic pool is empty")
-	pending_relic = chest_relics.pick_random()
+	assert(!CardPool.CHEST_RELICS.is_empty(), "chest relic pool is empty")
+	pending_relic = load(CardPool.CHEST_RELICS[randi() % CardPool.CHEST_RELICS.size()]) as RelicData
 	pending_gold = 0
 	pending_card_reward = false
 	go_to_reward()
