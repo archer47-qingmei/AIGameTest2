@@ -5,7 +5,12 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 	for effect: CardEffectData in card.effects:
 		if effect.type == "damage":
 			if defender != null:
-				apply_damage(attacker, defender, effect.value)
+				var bonus: int = 0
+				if card.is_finisher:
+					bonus = attacker.sword_intent * card.sword_intent_consume_bonus
+				elif card.card_type == "招式":
+					bonus = attacker.sword_intent * attacker.sword_intent_damage_bonus
+				apply_damage(attacker, defender, effect.value + bonus)
 		elif effect.type == "block":
 			attacker.add_block(effect.value)
 		elif effect.type == "weak":
@@ -14,6 +19,10 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 		elif effect.type == "vulnerable":
 			if defender != null:
 				defender.add_vulnerable(effect.value)
+	if card.is_finisher:
+		attacker.sword_intent = 0
+	elif card.card_type == "招式":
+		attacker.sword_intent = mini(attacker.sword_intent + 1, attacker.sword_intent_cap)
 
 static func apply_damage(source: Combatant, target: Combatant, amount: int) -> void:
 	var dmg: int = amount
