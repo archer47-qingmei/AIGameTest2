@@ -20,32 +20,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 10
 
-[node name="EnemyPanel" type="VBoxContainer" parent="VBoxContainer"]
+[node name="EnemiesContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-
-[node name="LblEnemyName" type="Label" parent="VBoxContainer/EnemyPanel"]
-layout_mode = 2
-text = "Enemy"
-
-[node name="LblEnemyHP" type="Label" parent="VBoxContainer/EnemyPanel"]
-layout_mode = 2
-text = "生命：?"
-
-[node name="LblEnemyBlock" type="Label" parent="VBoxContainer/EnemyPanel"]
-layout_mode = 2
-text = "格挡：0"
-
-[node name="LblEnemyWeak" type="Label" parent="VBoxContainer/EnemyPanel"]
-layout_mode = 2
-text = "虚弱：0"
-
-[node name="LblEnemyVulnerable" type="Label" parent="VBoxContainer/EnemyPanel"]
-layout_mode = 2
-text = "脆弱：0"
-
-[node name="LblEnemyIntent" type="Label" parent="VBoxContainer/EnemyPanel"]
-layout_mode = 2
-text = "意图：?"
 
 [node name="PlayerPanel" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2

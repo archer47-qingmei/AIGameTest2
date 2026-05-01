@@ -1,11 +1,6 @@
 extends Control
 
-@onready var _lbl_enemy_name: Label    = $VBoxContainer/EnemyPanel/LblEnemyName
-@onready var _lbl_enemy_hp: Label      = $VBoxContainer/EnemyPanel/LblEnemyHP
-@onready var _lbl_enemy_block: Label   = $VBoxContainer/EnemyPanel/LblEnemyBlock
-@onready var _lbl_enemy_weak: Label       = $VBoxContainer/EnemyPanel/LblEnemyWeak
-@onready var _lbl_enemy_vulnerable: Label = $VBoxContainer/EnemyPanel/LblEnemyVulnerable
-@onready var _lbl_enemy_intent: Label     = $VBoxContainer/EnemyPanel/LblEnemyIntent
+@onready var _enemies_container: HBoxContainer = $VBoxContainer/EnemiesContainer
 @onready var _lbl_player_hp: Label     = $VBoxContainer/PlayerPanel/LblPlayerHP
 @onready var _lbl_player_block: Label  = $VBoxContainer/PlayerPanel/LblPlayerBlock
 @onready var _lbl_energy: Label        = $VBoxContainer/PlayerPanel/LblEnergy
@@ -25,6 +20,7 @@ extends Control
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
 var _lbl_relics: Label
+var _pending_card_index: int = -1
 
 func _ready() -> void:
 	_lbl_relics = Label.new()
@@ -38,23 +34,64 @@ func _ready() -> void:
 	_btn_win.pressed.connect(_on_proceed)
 	_btn_view_deck.pressed.connect(_on_view_deck_pressed)
 	_btn_close_deck.pressed.connect(_deck_view_panel.hide)
-	_engine.setup(GameManager.player_state.deck, GameManager.get_current_enemy_data(),
-		GameManager.player_state.hp, GameManager.player_state.max_hp,
-		GameManager.player_state.relics)
+	_engine.setup(
+		GameManager.player_state.deck,
+		GameManager.get_current_enemy_group(),
+		GameManager.player_state.hp,
+		GameManager.player_state.max_hp,
+		GameManager.player_state.relics
+	)
+	_build_enemy_panels()
 
-func _on_card_pressed(card: CardData) -> void:
-	_engine.play_card(card)
+func _build_enemy_panels() -> void:
+	for child in _enemies_container.get_children():
+		child.queue_free()
+	for i in _engine.enemies.size():
+		var btn := Button.new()
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.pressed.connect(_on_enemy_pressed.bind(i))
+		btn.disabled = true
+		_enemies_container.add_child(btn)
+
+func _on_card_pressed(card_index: int) -> void:
+	if _pending_card_index >= 0:
+		_pending_card_index = -1
+		_set_targeting_mode(false)
+		return
+	var card: CardData = _engine.hand[card_index]
+	if card.target_type == "none":
+		_engine.play_card(card_index, -1)
+	else:
+		_pending_card_index = card_index
+		_set_targeting_mode(true)
+
+func _on_enemy_pressed(enemy_index: int) -> void:
+	if _pending_card_index >= 0:
+		_engine.play_card(_pending_card_index, enemy_index)
+		_pending_card_index = -1
+		_set_targeting_mode(false)
+
+func _set_targeting_mode(active: bool) -> void:
+	_btn_end_turn.disabled = active
+	for i in _enemies_container.get_child_count():
+		var btn: Button = _enemies_container.get_child(i) as Button
+		if i < _engine.enemies.size() and _engine.enemies[i].hp > 0:
+			btn.disabled = not active
 
 func _refresh_ui() -> void:
-	_lbl_enemy_name.text = _engine.enemy.display_name
-	_lbl_enemy_hp.text = "生命：%d / %d" % [_engine.enemy.hp, _engine.enemy.max_hp]
-	_lbl_enemy_block.text = "格挡：%d" % _engine.enemy.block
-	_lbl_enemy_weak.text = "虚弱：%d" % _engine.enemy.weak
-	_lbl_enemy_vulnerable.text = "脆弱：%d" % _engine.enemy.vulnerable
-	var action: EnemyActionData = _engine.get_current_enemy_action()
-	var attack_value: int = int(action.value * 0.75) if action.type == "attack" and _engine.enemy.weak > 0 else action.value
-	var intent: String = "攻击 %d" % attack_value if action.type == "attack" else "格挡 %d" % action.value
-	_lbl_enemy_intent.text = "意图：" + intent
+	for i in _engine.enemies.size():
+		var e: Combatant = _engine.enemies[i]
+		var btn: Button = _enemies_container.get_child(i) as Button
+		if e.hp <= 0:
+			btn.text = "%s\n(已死亡)" % e.display_name
+			btn.disabled = true
+		else:
+			var action: EnemyActionData = _engine.get_enemy_action(i)
+			btn.text = "%s\nHP:%d/%d 挡:%d\n%s" % [
+				e.display_name, e.hp, e.max_hp, e.block,
+				_intent_text(action, e)
+			]
+			btn.disabled = (_pending_card_index < 0)
 	_lbl_player_hp.text = "生命：%d / %d" % [_engine.player.hp, _engine.player.max_hp]
 	_lbl_player_block.text = "格挡：%d" % _engine.player.block
 	_lbl_energy.text = "能量：%d / 3" % _engine.energy
@@ -64,14 +101,25 @@ func _refresh_ui() -> void:
 	_lbl_relics.text = "遗物：" + ("、".join(relic_names) if not relic_names.is_empty() else "无")
 	_rebuild_hand()
 
+func _intent_text(action: EnemyActionData, e: Combatant) -> String:
+	match action.type:
+		"attack":
+			var val: int = int(action.value * 0.75) if e.weak > 0 else action.value
+			return "意图：攻击 %d" % val
+		"poison":
+			return "意图：投毒 %d" % action.value
+		_:
+			return "意图：格挡 %d" % action.value
+
 func _rebuild_hand() -> void:
 	for btn: Button in _hand_buttons:
 		btn.queue_free()
 	_hand_buttons.clear()
-	for card: CardData in _engine.hand:
+	for i in _engine.hand.size():
+		var card: CardData = _engine.hand[i]
 		var btn: Button = Button.new()
 		btn.text = card.get_description()
-		btn.pressed.connect(_on_card_pressed.bind(card))
+		btn.pressed.connect(_on_card_pressed.bind(i))
 		_hand_container.add_child(btn)
 		_hand_buttons.append(btn)
 
@@ -81,7 +129,8 @@ func _on_combat_ended(result: String) -> void:
 		btn.disabled = true
 	if result == "victory":
 		_lbl_result.text = "胜利！"
-		_lbl_result.visible = true
+	_lbl_result.visible = true
+	if result == "victory":
 		if GameManager.is_final_node():
 			_btn_win.visible = true
 		else:
