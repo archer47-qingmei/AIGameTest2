@@ -12,10 +12,10 @@ func _ready() -> void:
 	_state = state
 	_lbl_hp.text = "生命：%d / %d" % [state.hp, state.max_hp]
 	_build_map(state)
-	_map_content.draw.connect(_draw_connections)
+	_map_content.on_draw = _draw_connections
 	_map_content.queue_redraw()
 	await get_tree().process_frame
-	_scroll.scroll_vertical = 99999
+	_scroll.scroll_vertical = int(_map_content.get_minimum_size().y)
 
 func _build_map(state: PlayerState) -> void:
 	for nd: NodeData in state.map_all_nodes:

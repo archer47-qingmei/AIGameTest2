@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmap8x3qnc5vy"]
+[gd_scene load_steps=3 format=3 uid="uid://dmap8x3qnc5vy"]
 
 [ext_resource type="Script" path="res://map/MapScreen.gd" id="1_script"]
+[ext_resource type="Script" path="res://map/MapContent.gd" id="2_content_script"]
 
 [node name="MapScreen" type="Control"]
 layout_mode = 3
@@ -47,3 +48,4 @@ scroll_horizontal_enabled = false
 [node name="MapContent" type="Control" parent="ScrollContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(480, 1650)
+script = ExtResource("2_content_script")
