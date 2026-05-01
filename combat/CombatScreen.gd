@@ -4,6 +4,7 @@ extends Control
 @onready var _lbl_player_hp: Label     = $VBoxContainer/PlayerPanel/LblPlayerHP
 @onready var _lbl_player_block: Label  = $VBoxContainer/PlayerPanel/LblPlayerBlock
 @onready var _lbl_energy: Label        = $VBoxContainer/PlayerPanel/LblEnergy
+@onready var _lbl_sword_intent: Label  = $VBoxContainer/PlayerPanel/LblSwordIntent
 @onready var _hand_container: HBoxContainer = $VBoxContainer/HandScroll/HandContainer
 @onready var _btn_end_turn: Button     = $VBoxContainer/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
@@ -98,6 +99,7 @@ func _refresh_ui() -> void:
 	_lbl_player_hp.text = "生命：%d / %d" % [_engine.player.hp, _engine.player.max_hp]
 	_lbl_player_block.text = "格挡：%d" % _engine.player.block
 	_lbl_energy.text = "能量：%d / 3" % _engine.energy
+	_lbl_sword_intent.text = "剑意：%d / %d" % [_engine.player.sword_intent, _engine.player.sword_intent_cap]
 	var relic_names: PackedStringArray = []
 	for r: RelicData in GameManager.player_state.relics:
 		relic_names.append(r.display_name)
