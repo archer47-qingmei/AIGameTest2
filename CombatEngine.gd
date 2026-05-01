@@ -83,6 +83,7 @@ func end_turn() -> void:
 	for card: CardData in hand:
 		_discard_pile.append(card)
 	hand.clear()
+	player.sword_intent = player.sword_intent / 2
 	_do_enemy_turn()
 	state_changed.emit()
 	if not _check_end():
@@ -121,6 +122,10 @@ func _apply_engine_effects(card: CardData) -> void:
 			_draw_cards(effect.value)
 		elif effect.type == "energy":
 			energy += effect.value
+		elif effect.type == "sword_intent_cap":
+			player.sword_intent_cap += effect.value
+		elif effect.type == "sword_intent_bonus":
+			player.sword_intent_damage_bonus += effect.value
 
 func draw_cards(n: int) -> void:
 	_draw_cards(n)
