@@ -17,3 +17,7 @@ static func _apply(relic: RelicData, engine: CombatEngine) -> void:
 			engine.energy += relic.value
 		RelicData.EffectType.HEAL_HP:
 			engine.player.hp = mini(engine.player.hp + relic.value, engine.player.max_hp)
+		RelicData.EffectType.BLOCK:
+			engine.player.add_block(relic.value)
+		RelicData.EffectType.DRAW:
+			engine._draw_cards(relic.value)

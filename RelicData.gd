@@ -2,7 +2,7 @@ class_name RelicData
 extends Resource
 
 enum Trigger { COMBAT_START, TURN_START }
-enum EffectType { ENERGY, HEAL_HP }
+enum EffectType { ENERGY, HEAL_HP, BLOCK, DRAW }
 
 @export var display_name: String = ""
 @export var description: String = ""
