@@ -15,3 +15,4 @@ card_name = "洞察"
 cost = 1
 price = 30
 effects = [SubResource("Effect_draw")]
+target_type = "none"

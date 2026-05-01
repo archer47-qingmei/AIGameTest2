@@ -8,3 +8,4 @@ card_name = "毒液"
 cost = 0
 is_venom = true
 special_text = "留手扣血"
+target_type = "none"

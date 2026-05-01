@@ -7,6 +7,7 @@ extends Resource
 @export var effects: Array[CardEffectData]
 @export var is_venom: bool = false
 @export var special_text: String = ""
+@export var target_type: String = "single"
 var is_upgraded: bool = false
 
 func upgrade() -> void:
