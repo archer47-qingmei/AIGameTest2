@@ -10,6 +10,9 @@ var vulnerable: int = 0
 var sword_intent: int = 0
 var sword_intent_cap: int = 10
 var sword_intent_damage_bonus: int = 1
+var draw_per_turn: int = 0
+var sword_intent_retain: bool = false
+var sword_intent_block_bonus: int = 0
 
 func take_damage(amount: int) -> void:
 	if amount <= block:
