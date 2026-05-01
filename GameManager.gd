@@ -93,8 +93,8 @@ func go_to_menu() -> void:
 	current_phase = Phase.MENU
 	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
 
-func get_current_enemy_data() -> EnemyData:
-	return player_state.current_node.config.enemy_data
+func get_current_enemy_group() -> EnemyGroupData:
+	return player_state.current_node.config.enemy_group
 
 func is_final_node() -> bool:
 	return player_state.current_node.connections.is_empty()

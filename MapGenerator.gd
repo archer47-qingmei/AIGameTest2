@@ -3,16 +3,18 @@ extends RefCounted
 
 const TOTAL_COLUMNS: int = 10
 
-const EARLY_ENEMY_PATHS: Array[String] = [
-	"res://data/enemies/jaw_worm.tres",
-	"res://data/enemies/fire_lizard.tres",
+const EARLY_GROUP_PATHS: Array[String] = [
+	"res://data/enemy_groups/single_jaw_worm.tres",
+	"res://data/enemy_groups/single_fire_lizard.tres",
+	"res://data/enemy_groups/pair_early.tres",
 ]
-const MID_ENEMY_PATHS: Array[String] = [
-	"res://data/enemies/poison_spider.tres",
-	"res://data/enemies/swamp_slime.tres",
+const MID_GROUP_PATHS: Array[String] = [
+	"res://data/enemy_groups/single_poison_spider.tres",
+	"res://data/enemy_groups/single_swamp_slime.tres",
+	"res://data/enemy_groups/pair_mid.tres",
 ]
-const ELITE_ENEMY_PATH: String = "res://data/enemies/elite_guard.tres"
-const BOSS_ENEMY_PATH: String = "res://data/enemies/boss.tres"
+const ELITE_GROUP_PATH: String = "res://data/enemy_groups/single_elite_guard.tres"
+const BOSS_GROUP_PATH: String = "res://data/enemy_groups/single_boss.tres"
 const ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"
 const BOSS_REWARD_RELIC_PATH: String = "res://data/relics/life_ring.tres"
 
@@ -34,7 +36,7 @@ static func _make_column(col: int) -> Array[NodeData]:
 		var nd := NodeData.new()
 		nd.config = NodeConfig.new()
 		nd.config.type = NodeConfig.Type.COMBAT
-		nd.config.enemy_data = load(BOSS_ENEMY_PATH) as EnemyData
+		nd.config.enemy_group = load(BOSS_GROUP_PATH) as EnemyGroupData
 		nd.config.reward_relic = load(BOSS_REWARD_RELIC_PATH) as RelicData
 		nd.config.column = col
 		nd.config.row = 0
@@ -49,9 +51,9 @@ static func _make_column(col: int) -> Array[NodeData]:
 		nd.config.row = row
 		match nd.config.type:
 			NodeConfig.Type.COMBAT:
-				nd.config.enemy_data = _random_combat_enemy(col)
+				nd.config.enemy_group = _random_combat_group(col)
 			NodeConfig.Type.ELITE:
-				nd.config.enemy_data = load(ELITE_ENEMY_PATH) as EnemyData
+				nd.config.enemy_group = load(ELITE_GROUP_PATH) as EnemyGroupData
 				nd.config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
 		result.append(nd)
 	return result
@@ -73,9 +75,9 @@ static func _get_column_types(col: int) -> Array:
 		push_error("unexpected column %d" % col)
 		return [NodeConfig.Type.COMBAT, NodeConfig.Type.COMBAT]
 
-static func _random_combat_enemy(col: int) -> EnemyData:
-	var paths: Array[String] = EARLY_ENEMY_PATHS if col <= 3 else MID_ENEMY_PATHS
-	return load(paths[randi() % paths.size()]) as EnemyData
+static func _random_combat_group(col: int) -> EnemyGroupData:
+	var paths: Array[String] = EARLY_GROUP_PATHS if col <= 3 else MID_GROUP_PATHS
+	return load(paths[randi() % paths.size()]) as EnemyGroupData
 
 static func _add_shop_nodes(all_nodes: Array[NodeData]) -> void:
 	var candidates: Array[NodeData] = []
@@ -85,4 +87,4 @@ static func _add_shop_nodes(all_nodes: Array[NodeData]) -> void:
 	candidates.shuffle()
 	for i in mini(2, candidates.size()):
 		candidates[i].config.type = NodeConfig.Type.SHOP
-		candidates[i].config.enemy_data = null
+		candidates[i].config.enemy_group = null
