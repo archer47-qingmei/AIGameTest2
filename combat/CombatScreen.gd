@@ -60,7 +60,7 @@ func _on_card_pressed(card_index: int) -> void:
 		_set_targeting_mode(false)
 		return
 	var card: CardData = _engine.hand[card_index]
-	if card.target_type == "none" or card.target_type == "all":
+	if card.target_type in ["none", "all"]:
 		_engine.play_card(card_index, -1)
 	else:
 		_pending_card_index = card_index
