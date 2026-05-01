@@ -124,11 +124,16 @@ func _rebuild_hand() -> void:
 		btn.pressed.connect(_on_card_pressed.bind(i))
 		_hand_container.add_child(btn)
 		_hand_buttons.append(btn)
+	if _pending_card_index >= 0:
+		_set_targeting_mode(true)
 
 func _on_combat_ended(result: String) -> void:
+	_pending_card_index = -1
 	_btn_end_turn.disabled = true
 	for btn: Button in _hand_buttons:
 		btn.disabled = true
+	for i in _enemies_container.get_child_count():
+		(_enemies_container.get_child(i) as Button).disabled = true
 	if result == "victory":
 		_lbl_result.text = "胜利！"
 	_lbl_result.visible = true
@@ -155,7 +160,6 @@ func _on_view_deck_pressed() -> void:
 
 func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
 	for child in container.get_children():
-		container.remove_child(child)
 		child.queue_free()
 	for card: CardData in cards:
 		var lbl: Label = Label.new()
