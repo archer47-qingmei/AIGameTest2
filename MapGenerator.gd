@@ -63,9 +63,11 @@ static func _get_column_types(col: int) -> Array:
 		var types: Array = [NodeConfig.Type.ELITE, NodeConfig.Type.COMBAT]
 		types.shuffle()
 		return types
-	else:
-		assert(col == 8, "unexpected column %d" % col)
+	elif col == 8:
 		return [NodeConfig.Type.ELITE, NodeConfig.Type.ELITE]
+	else:
+		push_error("unexpected column %d" % col)
+		return [NodeConfig.Type.COMBAT, NodeConfig.Type.COMBAT]
 
 static func _random_combat_enemy() -> EnemyData:
 	return load(COMBAT_ENEMY_PATHS[randi() % COMBAT_ENEMY_PATHS.size()]) as EnemyData
