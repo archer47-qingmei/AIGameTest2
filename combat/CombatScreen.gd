@@ -73,6 +73,8 @@ func _on_enemy_pressed(enemy_index: int) -> void:
 
 func _set_targeting_mode(active: bool) -> void:
 	_btn_end_turn.disabled = active
+	for btn: Button in _hand_buttons:
+		btn.disabled = active
 	for i in _enemies_container.get_child_count():
 		var btn: Button = _enemies_container.get_child(i) as Button
 		if i < _engine.enemies.size() and _engine.enemies[i].hp > 0:
