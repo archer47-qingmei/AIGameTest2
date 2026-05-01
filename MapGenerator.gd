@@ -64,6 +64,7 @@ static func _get_column_types(col: int) -> Array:
 		types.shuffle()
 		return types
 	else:
+		assert(col == 8, "unexpected column %d" % col)
 		return [NodeConfig.Type.ELITE, NodeConfig.Type.ELITE]
 
 static func _random_combat_enemy() -> EnemyData:
@@ -72,7 +73,7 @@ static func _random_combat_enemy() -> EnemyData:
 static func _add_shop_nodes(all_nodes: Array[NodeData]) -> void:
 	var candidates: Array[NodeData] = []
 	for nd: NodeData in all_nodes:
-		if nd.config.column >= 4 and nd.config.column <= 8 and nd.config.type == NodeConfig.Type.COMBAT:
+		if nd.config.column >= 4 and nd.config.column <= 7 and nd.config.type == NodeConfig.Type.COMBAT:
 			candidates.append(nd)
 	candidates.shuffle()
 	for i in mini(2, candidates.size()):
