@@ -24,6 +24,8 @@ func start_new_run(character: String) -> void:
 	match character:
 		"sword":
 			relic_paths.assign(CardPool.SWORD_START_RELICS)
+		_:
+			push_error("start_new_run: unknown character '%s'" % character)
 	for path in relic_paths:
 		player_state.relics.append((load(path) as RelicData).duplicate())
 
