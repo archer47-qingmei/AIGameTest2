@@ -1,6 +1,6 @@
 extends Node
 
-enum Phase { MENU, MAP, COMBAT, REWARD, REST, SHOP, WIN, GAME_OVER }
+enum Phase { MENU, CHAR_SELECT, MAP, COMBAT, REWARD, REST, SHOP, WIN, GAME_OVER }
 
 func _ready() -> void:
 	var font: FontFile = load("res://data/fonts/NotoSansSC-Regular.otf") as FontFile
@@ -16,9 +16,17 @@ var pending_relic: RelicData = null
 var pending_gold: int = 0
 var pending_card_reward: bool = true
 
-func start_new_run() -> void:
+func start_new_run(character: String) -> void:
 	pending_card_reward = true
 	player_state = PlayerState.new()
+	player_state.character = character
+	var relic_paths: Array[String] = []
+	match character:
+		"sword":
+			relic_paths.assign(CardPool.SWORD_START_RELICS)
+	for path in relic_paths:
+		player_state.relics.append((load(path) as RelicData).duplicate())
+
 	var strike: CardData    = preload("res://data/cards/strike.tres")
 	var defend: CardData    = preload("res://data/cards/defend.tres")
 	var bash: CardData      = preload("res://data/cards/bash.tres")
@@ -101,6 +109,10 @@ func go_to_win() -> void:
 func go_to_game_over() -> void:
 	current_phase = Phase.GAME_OVER
 	get_tree().change_scene_to_file("res://game_over/GameOverScreen.tscn")
+
+func go_to_char_select() -> void:
+	current_phase = Phase.CHAR_SELECT
+	get_tree().change_scene_to_file("res://char_select/CharSelectScreen.tscn")
 
 func go_to_menu() -> void:
 	player_state = null
