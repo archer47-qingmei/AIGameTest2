@@ -122,6 +122,9 @@ func _apply_engine_effects(card: CardData) -> void:
 		elif effect.type == "energy":
 			energy += effect.value
 
+func draw_cards(n: int) -> void:
+	_draw_cards(n)
+
 func _draw_cards(n: int) -> void:
 	for i: int in n:
 		_refill_draw_pile_if_needed()

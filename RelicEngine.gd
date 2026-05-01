@@ -20,4 +20,4 @@ static func _apply(relic: RelicData, engine: CombatEngine) -> void:
 		RelicData.EffectType.BLOCK:
 			engine.player.add_block(relic.value)
 		RelicData.EffectType.DRAW:
-			engine._draw_cards(relic.value)
+			engine.draw_cards(relic.value)
