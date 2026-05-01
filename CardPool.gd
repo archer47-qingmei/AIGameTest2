@@ -34,4 +34,13 @@ const SWORD_REWARD_CARDS: Array[String] = [
 	"res://data/cards/lian_xi.tres",
 	"res://data/cards/chuan_xin.tres",
 	"res://data/cards/yang_jian_shu.tres",
+	"res://data/cards/lue_ying.tres",
+	"res://data/cards/sui_xing.tres",
+	"res://data/cards/heng_jian.tres",
+	"res://data/cards/lie_kong.tres",
+	"res://data/cards/wu_hen.tres",
+	"res://data/cards/po_jun.tres",
+	"res://data/cards/wan_jian_gui_zong.tres",
+	"res://data/cards/jian_yu.tres",
+	"res://data/cards/xin_jian.tres",
 ]
