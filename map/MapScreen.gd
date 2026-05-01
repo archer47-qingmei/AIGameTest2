@@ -14,6 +14,7 @@ func _ready() -> void:
 	_build_map(state)
 	_map_content.on_draw = _draw_connections
 	_map_content.queue_redraw()
+	_scroll.get_v_scroll_bar().custom_minimum_size.x = 0
 	await get_tree().process_frame
 	_scroll.scroll_vertical = int(_map_content.get_minimum_size().y)
 
