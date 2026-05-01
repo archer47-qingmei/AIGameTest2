@@ -3,6 +3,7 @@ extends RefCounted
 
 const REST_HEAL_RATIO: float = 0.3
 
+var character: String = "sword"
 var deck: Array[CardData] = []
 var hp: int = 70
 var max_hp: int = 70

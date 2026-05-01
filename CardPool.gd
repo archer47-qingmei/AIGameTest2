@@ -22,3 +22,7 @@ const CHEST_RELICS: Array[String] = [
 	"res://data/relics/iron_armor.tres",
 	"res://data/relics/tome_of_wisdom.tres",
 ]
+
+const SWORD_START_RELICS: Array[String] = [
+	"res://data/relics/sword_gourd.tres",
+]
