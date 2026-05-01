@@ -18,6 +18,7 @@ var _enemy_data_list: Array[EnemyData] = []
 var _relics: Array[RelicData] = []
 
 func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_hp: int, max_hp: int, relics: Array[RelicData] = []) -> void:
+	assert(not enemy_group.enemies.is_empty(), "EnemyGroupData has no enemies")
 	_relics = relics
 	for data: EnemyData in enemy_group.enemies:
 		var c := Combatant.new()
@@ -60,7 +61,8 @@ func play_card(card_index: int, target_index: int) -> bool:
 	hand.remove_at(card_index)
 	_discard_pile.append(card)
 	state_changed.emit()
-	_check_end()
+	if _check_end():
+		return true
 	return true
 
 func end_turn() -> void:
