@@ -66,6 +66,7 @@ func end_turn() -> void:
 			venom_count += 1
 	if venom_count > 0:
 		player.hp = max(0, player.hp - venom_count)
+		state_changed.emit()
 		if _check_end():
 			return
 	for card: CardData in hand:
