@@ -61,10 +61,12 @@ static func _make_column(col: int) -> Array[NodeData]:
 static func _get_column_types(col: int) -> Array:
 	if col <= 3:
 		return [NodeConfig.Type.COMBAT, NodeConfig.Type.COMBAT]
-	elif col <= 5:
+	elif col == 4:
 		var types: Array = [NodeConfig.Type.COMBAT, NodeConfig.Type.REST]
 		types.shuffle()
 		return types
+	elif col == 5:
+		return [NodeConfig.Type.CHEST, NodeConfig.Type.REST]
 	elif col <= 7:
 		var types: Array = [NodeConfig.Type.ELITE, NodeConfig.Type.COMBAT]
 		types.shuffle()
