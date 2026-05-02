@@ -5,13 +5,13 @@ extends Control
 @onready var _lbl_player_block: Label  = $VBoxContainer/BottomBar/LblPlayerBlock
 @onready var _lbl_energy: Label        = $VBoxContainer/BottomBar/LblEnergy
 @onready var _lbl_sword_intent: Label  = $VBoxContainer/BottomBar/LblSwordIntent
-@onready var _hand_container: HBoxContainer = $VBoxContainer/HandScroll/HandContainer
-@onready var _btn_end_turn: Button     = $VBoxContainer/BottomBar/BtnEndTurn
+@onready var _hand_container: HBoxContainer = $VBoxContainer/HandArea/HandScroll/HandContainer
+@onready var _btn_end_turn: Button     = $VBoxContainer/HandArea/ActionPanel/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
 @onready var _btn_return_menu: Button  = $BtnReturnMenu
 @onready var _btn_get_reward: Button   = $BtnGetReward
 @onready var _btn_win: Button          = $BtnWin
-@onready var _btn_view_deck: Button    = $VBoxContainer/BottomBar/BtnViewDeck
+@onready var _btn_view_deck: Button    = $VBoxContainer/HandArea/ActionPanel/BtnViewDeck
 @onready var _bottom_bar: HBoxContainer = $VBoxContainer/BottomBar
 @onready var _deck_view_panel: Panel   = $DeckViewPanel
 @onready var _btn_close_deck: Button   = $DeckViewPanel/VBoxContainer/BtnCloseDeck
@@ -28,7 +28,6 @@ var _pending_card_index: int = -1
 func _ready() -> void:
 	_lbl_relics = Label.new()
 	_bottom_bar.add_child(_lbl_relics)
-	_bottom_bar.move_child(_lbl_relics, 4)
 	_engine = CombatEngine.new()
 	_engine.state_changed.connect(_refresh_ui)
 	_engine.combat_ended.connect(_on_combat_ended)
