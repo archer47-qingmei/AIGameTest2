@@ -119,6 +119,28 @@ func go_to_char_select() -> void:
 	current_phase = Phase.CHAR_SELECT
 	get_tree().change_scene_to_file("res://char_select/CharSelectScreen.tscn")
 
+func go_to_debug_deck() -> void:
+	current_phase = Phase.CHAR_SELECT
+	get_tree().change_scene_to_file("res://debug/DebugDeckScreen.tscn")
+
+func start_debug_run(cards: Array[CardData]) -> void:
+	pending_card_reward = true
+	player_state = PlayerState.new()
+	player_state.character = "sword"
+	for path in CardPool.SWORD_START_RELICS:
+		player_state.relics.append((load(path) as RelicData).duplicate())
+	for card in cards:
+		player_state.deck.append(card.duplicate())
+	var nodes: Array[NodeData] = MapGenerator.generate()
+	player_state.map_all_nodes.assign(nodes)
+	var start_nodes: Array[NodeData] = []
+	for nd in nodes:
+		if nd.config.column == 0:
+			start_nodes.append(nd)
+	player_state.available_nodes.assign(start_nodes)
+	current_phase = Phase.MAP
+	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
+
 func go_to_menu() -> void:
 	player_state = null
 	current_phase = Phase.MENU
