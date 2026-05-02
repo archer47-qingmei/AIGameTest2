@@ -1,19 +1,18 @@
 extends Control
 
 @onready var _enemies_container: HBoxContainer = $VBoxContainer/EnemiesContainer
-@onready var _lbl_player_hp: Label     = $VBoxContainer/KeyStatsBar/LblPlayerHP
-@onready var _lbl_player_block: Label  = $VBoxContainer/StatsBar/LblPlayerBlock
-@onready var _lbl_energy: Label        = $VBoxContainer/KeyStatsBar/LblEnergy
-@onready var _lbl_sword_intent: Label  = $VBoxContainer/KeyStatsBar/LblSwordIntent
+@onready var _lbl_player_hp: Label     = $VBoxContainer/PlayerRow/CardArea/CardStats/LblPlayerHP
+@onready var _lbl_player_block: Label  = $VBoxContainer/PlayerRow/CardArea/CardStats/LblPlayerBlock
+@onready var _lbl_energy: Label        = $VBoxContainer/PlayerRow/LeftPanel/LblEnergy
+@onready var _lbl_sword_intent: Label  = $VBoxContainer/PlayerRow/LeftPanel/LblSwordIntent
+@onready var _player_card: Button      = $VBoxContainer/PlayerRow/CardArea/CardCenter/PlayerCard
 @onready var _hand_container: HBoxContainer = $VBoxContainer/HandScroll/HandContainer
-@onready var _btn_end_turn: Button     = $VBoxContainer/ActionRow/BtnEndTurn
+@onready var _btn_end_turn: Button     = $VBoxContainer/PlayerRow/RightPanel/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
 @onready var _btn_return_menu: Button  = $BtnReturnMenu
 @onready var _btn_get_reward: Button   = $BtnGetReward
 @onready var _btn_win: Button          = $BtnWin
-@onready var _btn_view_deck: Button    = $VBoxContainer/ActionRow/BtnViewDeck
-@onready var _stats_bar: HBoxContainer = $VBoxContainer/StatsBar
-@onready var _key_stats_bar: HBoxContainer = $VBoxContainer/KeyStatsBar
+@onready var _btn_view_deck: Button    = $VBoxContainer/PlayerRow/RightPanel/BtnViewDeck
 @onready var _relics_panel: VBoxContainer = $VBoxContainer/RelicsPanel
 @onready var _deck_view_panel: Panel   = $DeckViewPanel
 @onready var _btn_close_deck: Button   = $DeckViewPanel/VBoxContainer/BtnCloseDeck
@@ -27,12 +26,12 @@ var _hand_buttons: Array[Button] = []
 var _pending_card_index: int = -1
 
 func _ready() -> void:
-	_lbl_player_hp.add_theme_font_size_override("font_size", 28)
-	_lbl_player_hp.add_theme_color_override("font_color", Color(0.95, 0.3, 0.3))
-	_lbl_energy.add_theme_font_size_override("font_size", 28)
+	_lbl_energy.add_theme_font_size_override("font_size", 22)
 	_lbl_energy.add_theme_color_override("font_color", Color(0.25, 0.65, 1.0))
-	_lbl_sword_intent.add_theme_font_size_override("font_size", 28)
+	_lbl_sword_intent.add_theme_font_size_override("font_size", 22)
 	_lbl_sword_intent.add_theme_color_override("font_color", Color(1.0, 0.82, 0.2))
+	_lbl_player_hp.add_theme_font_size_override("font_size", 20)
+	_lbl_player_hp.add_theme_color_override("font_color", Color(0.95, 0.3, 0.3))
 	_engine = CombatEngine.new()
 	_engine.state_changed.connect(_refresh_ui)
 	_engine.combat_ended.connect(_on_combat_ended)
@@ -222,17 +221,17 @@ func _on_damage_dealt(enemy_index: int, amount: int) -> void:
 	flyout_tween.finished.connect(lbl.queue_free)
 
 func _on_player_damaged(amount: int) -> void:
-	_key_stats_bar.pivot_offset = _key_stats_bar.size / 2
+	_player_card.pivot_offset = _player_card.size / 2
 
 	var flash_tween: Tween = create_tween()
-	flash_tween.tween_property(_key_stats_bar, "modulate", Color(1.0, 0.2, 0.2), 0.05)
-	flash_tween.tween_property(_key_stats_bar, "modulate", Color(1.0, 1.0, 1.0), 0.2)
+	flash_tween.tween_property(_player_card, "modulate", Color(1.0, 0.2, 0.2), 0.05)
+	flash_tween.tween_property(_player_card, "modulate", Color(1.0, 1.0, 1.0), 0.2)
 
 	var shake_tween: Tween = create_tween()
-	shake_tween.tween_property(_key_stats_bar, "scale", Vector2(1.05, 0.95), 0.06)
-	shake_tween.tween_property(_key_stats_bar, "scale", Vector2(0.97, 1.03), 0.06)
-	shake_tween.tween_property(_key_stats_bar, "scale", Vector2(1.02, 0.99), 0.06)
-	shake_tween.tween_property(_key_stats_bar, "scale", Vector2(1.0, 1.0), 0.07)
+	shake_tween.tween_property(_player_card, "scale", Vector2(1.05, 0.95), 0.06)
+	shake_tween.tween_property(_player_card, "scale", Vector2(0.97, 1.03), 0.06)
+	shake_tween.tween_property(_player_card, "scale", Vector2(1.02, 0.99), 0.06)
+	shake_tween.tween_property(_player_card, "scale", Vector2(1.0, 1.0), 0.07)
 
 	var lbl: Label = Label.new()
 	lbl.text = "-%d" % amount
@@ -240,7 +239,7 @@ func _on_player_damaged(amount: int) -> void:
 	lbl.pivot_offset = Vector2(15, 12)
 	lbl.z_index = 10
 	add_child(lbl)
-	lbl.global_position = _key_stats_bar.get_global_rect().get_center() - Vector2(15, 12)
+	lbl.global_position = _player_card.get_global_rect().get_center() - Vector2(15, 12)
 
 	var direction: float = 1.0 if randi() % 2 == 0 else -1.0
 	var drift_x: float = direction * randf_range(20.0, 60.0)

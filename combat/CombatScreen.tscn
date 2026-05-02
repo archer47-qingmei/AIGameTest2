@@ -37,39 +37,61 @@ size_flags_stretch_ratio = 1.0
 [node name="RelicsPanel" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="KeyStatsBar" type="HBoxContainer" parent="VBoxContainer"]
+[node name="PlayerRow" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 8
 
-[node name="LblPlayerHP" type="Label" parent="VBoxContainer/KeyStatsBar"]
+[node name="LeftPanel" type="VBoxContainer" parent="VBoxContainer/PlayerRow"]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-text = "生命：?"
+size_flags_vertical = 0
 
-[node name="LblEnergy" type="Label" parent="VBoxContainer/KeyStatsBar"]
+[node name="LblEnergy" type="Label" parent="VBoxContainer/PlayerRow/LeftPanel"]
 layout_mode = 2
 text = "真气：3 / 3"
 
-[node name="LblSwordIntent" type="Label" parent="VBoxContainer/KeyStatsBar"]
+[node name="LblSwordIntent" type="Label" parent="VBoxContainer/PlayerRow/LeftPanel"]
 layout_mode = 2
 text = "剑意：0"
 
-[node name="StatsBar" type="HBoxContainer" parent="VBoxContainer"]
+[node name="CardArea" type="VBoxContainer" parent="VBoxContainer/PlayerRow"]
 layout_mode = 2
-theme_override_constants/separation = 12
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
 
-[node name="LblPlayerBlock" type="Label" parent="VBoxContainer/StatsBar"]
+[node name="CardStats" type="HBoxContainer" parent="VBoxContainer/PlayerRow/CardArea"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="LblPlayerHP" type="Label" parent="VBoxContainer/PlayerRow/CardArea/CardStats"]
+layout_mode = 2
+text = "生命：?"
+
+[node name="LblPlayerBlock" type="Label" parent="VBoxContainer/PlayerRow/CardArea/CardStats"]
 layout_mode = 2
 text = "格挡：0"
 
-[node name="ActionRow" type="HBoxContainer" parent="VBoxContainer"]
+[node name="CardCenter" type="HBoxContainer" parent="VBoxContainer/PlayerRow/CardArea"]
 layout_mode = 2
-alignment = 2
+alignment = 1
 
-[node name="BtnEndTurn" type="Button" parent="VBoxContainer/ActionRow"]
+[node name="PlayerCard" type="Button" parent="VBoxContainer/PlayerRow/CardArea/CardCenter"]
+custom_minimum_size = Vector2(150, 120)
+layout_mode = 2
+disabled = true
+text = "剑客"
+
+[node name="RightPanel" type="VBoxContainer" parent="VBoxContainer/PlayerRow"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="BtnEndTurn" type="Button" parent="VBoxContainer/PlayerRow/RightPanel"]
 layout_mode = 2
 text = "结束回合"
 
-[node name="BtnViewDeck" type="Button" parent="VBoxContainer/ActionRow"]
+[node name="BtnViewDeck" type="Button" parent="VBoxContainer/PlayerRow/RightPanel"]
 layout_mode = 2
 text = "查看牌组"
 
