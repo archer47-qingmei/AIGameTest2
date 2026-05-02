@@ -30,6 +30,7 @@ func _ready() -> void:
 	_engine = CombatEngine.new()
 	_engine.state_changed.connect(_refresh_ui)
 	_engine.combat_ended.connect(_on_combat_ended)
+	_engine.damage_dealt.connect(_on_damage_dealt)
 	_btn_end_turn.pressed.connect(_engine.end_turn)
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
 	_btn_get_reward.pressed.connect(_on_proceed)
@@ -177,6 +178,40 @@ func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
 		var lbl: Label = Label.new()
 		lbl.text = card.get_description()
 		container.add_child(lbl)
+
+func _on_damage_dealt(enemy_index: int, amount: int) -> void:
+	var btn: Button = _enemies_container.get_child(enemy_index) as Button
+	if btn == null:
+		return
+	btn.pivot_offset = btn.size / 2
+
+	var flash_tween: Tween = create_tween()
+	flash_tween.tween_property(btn, "modulate", Color(1.0, 0.2, 0.2), 0.05)
+	flash_tween.tween_property(btn, "modulate", Color(1.0, 1.0, 1.0), 0.2)
+
+	var shake_tween: Tween = create_tween()
+	shake_tween.tween_property(btn, "scale", Vector2(1.15, 0.85), 0.06)
+	shake_tween.tween_property(btn, "scale", Vector2(0.9, 1.1), 0.06)
+	shake_tween.tween_property(btn, "scale", Vector2(1.05, 0.95), 0.06)
+	shake_tween.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.07)
+
+	var lbl: Label = Label.new()
+	lbl.text = str(amount)
+	lbl.add_theme_font_size_override("font_size", 24)
+	lbl.pivot_offset = Vector2(15, 12)
+	var btn_center: Vector2 = to_local(btn.get_global_rect().get_center())
+	lbl.position = btn_center - Vector2(15, 12)
+	lbl.z_index = 10
+	add_child(lbl)
+
+	var direction: float = [-1.0, 1.0][randi() % 2]
+	var drift_x: float = direction * randf_range(20.0, 60.0)
+
+	var flyout_tween: Tween = create_tween().set_parallel(true)
+	flyout_tween.tween_property(lbl, "scale", Vector2(1.5, 1.5), 0.15).set_ease(Tween.EASE_OUT)
+	flyout_tween.tween_property(lbl, "position:x", lbl.position.x + drift_x, 0.4)
+	flyout_tween.tween_property(lbl, "modulate:a", 0.0, 0.3).set_delay(0.1)
+	flyout_tween.finished.connect(lbl.queue_free)
 
 func _on_proceed() -> void:
 	GameManager.end_combat(_engine.player.hp)
