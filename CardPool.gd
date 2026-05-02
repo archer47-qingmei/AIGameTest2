@@ -22,6 +22,10 @@ const RELICS: Array[String] = [
 	"res://data/relics/jie_lei_cui_ti.tres",
 	"res://data/relics/tian_dao_sui_pian.tres",
 	"res://data/relics/tian_jie_yu_yun.tres",
+	"res://data/relics/qie_tian.tres",
+	"res://data/relics/rong_dao.tres",
+	"res://data/relics/tian_mo_jie_ti.tres",
+	"res://data/relics/hui_guang_fan_zhao.tres",
 ]
 
 const CHEST_RELICS: Array[String] = [
