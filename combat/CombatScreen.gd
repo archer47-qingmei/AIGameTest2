@@ -57,6 +57,7 @@ func _build_enemy_panels() -> void:
 		panel.custom_minimum_size = Vector2(150, 120)
 
 		var vbox := VBoxContainer.new()
+		vbox.name = "VBoxContainer"
 		var lbl_info := Label.new()
 		lbl_info.name = "LblInfo"
 		lbl_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -73,7 +74,7 @@ func _build_enemy_panels() -> void:
 		var btn := Button.new()
 		btn.name = "BtnOverlay"
 		btn.flat = true
-		btn.anchors_preset = 15
+		btn.anchors_preset = Control.PRESET_FULL_RECT
 		btn.pressed.connect(_on_enemy_pressed.bind(i))
 		btn.disabled = true
 		panel.add_child(btn)
@@ -275,7 +276,7 @@ func _on_player_damaged(amount: int) -> void:
 
 func _build_status_row(row: HBoxContainer, combatant: Combatant) -> void:
 	for child in row.get_children():
-		child.queue_free()
+		child.free()
 	if combatant.weak > 0:
 		var lbl := Label.new()
 		lbl.text = "虚弱×%d" % combatant.weak
