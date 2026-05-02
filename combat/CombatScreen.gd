@@ -26,12 +26,6 @@ var _hand_buttons: Array[Button] = []
 var _pending_card_index: int = -1
 
 func _ready() -> void:
-	_lbl_energy.add_theme_font_size_override("font_size", 22)
-	_lbl_energy.add_theme_color_override("font_color", Color(0.25, 0.65, 1.0))
-	_lbl_sword_intent.add_theme_font_size_override("font_size", 22)
-	_lbl_sword_intent.add_theme_color_override("font_color", Color(1.0, 0.82, 0.2))
-	_lbl_player_hp.add_theme_font_size_override("font_size", 20)
-	_lbl_player_hp.add_theme_color_override("font_color", Color(0.95, 0.3, 0.3))
 	_engine = CombatEngine.new()
 	_engine.state_changed.connect(_refresh_ui)
 	_engine.combat_ended.connect(_on_combat_ended)
