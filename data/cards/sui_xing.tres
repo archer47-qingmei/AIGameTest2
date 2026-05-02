@@ -7,7 +7,7 @@
 script = ExtResource("2_CardEffectData")
 type = "damage"
 value = 5
-upgrade_bonus = 0
+upgrade_bonus = 3
 times = 2
 
 [resource]

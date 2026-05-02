@@ -7,13 +7,13 @@
 script = ExtResource("2_CardEffectData")
 type = "sword_intent_cap"
 value = 5
-upgrade_bonus = 0
+upgrade_bonus = 1
 
 [sub_resource type="Resource" id="Effect_bonus"]
 script = ExtResource("2_CardEffectData")
 type = "sword_intent_bonus"
 value = 1
-upgrade_bonus = 0
+upgrade_bonus = 1
 
 [resource]
 script = ExtResource("1_CardData")

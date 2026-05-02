@@ -7,7 +7,7 @@
 script = ExtResource("2_CardEffectData")
 type = "sword_intent_block_bonus"
 value = 1
-upgrade_bonus = 0
+upgrade_bonus = 1
 
 [resource]
 script = ExtResource("1_CardData")
