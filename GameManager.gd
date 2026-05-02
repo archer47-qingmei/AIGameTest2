@@ -76,7 +76,6 @@ func go_to_reward() -> void:
 	get_tree().change_scene_to_file("res://reward/RewardScreen.tscn")
 
 func go_to_rest() -> void:
-	player_state.apply_rest_heal()
 	current_phase = Phase.REST
 	get_tree().change_scene_to_file("res://rest/RestScreen.tscn")
 
