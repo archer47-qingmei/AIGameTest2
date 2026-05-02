@@ -13,6 +13,13 @@ var sword_intent_damage_bonus: int = 1
 var draw_per_turn: int = 0
 var sword_intent_retain: bool = false
 var sword_intent_block_bonus: int = 0
+var played_style_this_turn: bool = false
+var gained_sword_intent_this_turn: bool = false
+var first_si_block_bonus: int = 0
+var next_turn_sword_intent: int = 0
+var next_turn_draw: int = 0
+var finisher_block_bonus: int = 0
+var current_intent: String = ""
 
 func take_damage(amount: int) -> void:
 	if amount <= block:

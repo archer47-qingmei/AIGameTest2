@@ -11,6 +11,7 @@ extends Resource
 @export var card_type: String = ""
 @export var is_finisher: bool = false
 @export var sword_intent_consume_bonus: int = 0
+@export var retain_si_if_target_attacks: bool = false
 var is_upgraded: bool = false
 
 func upgrade() -> void:
