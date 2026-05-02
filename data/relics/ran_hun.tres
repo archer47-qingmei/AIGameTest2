@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "燃魂"
+description = "每回合获得 1 点额外真气。每场战斗结束后失去 3 血量。"
+trigger = 1
+effect_type = 0
+value = 1
+trigger_b = 3
+effect_type_b = 5
+value_b = 3
+has_effect_b = true
+price = 150

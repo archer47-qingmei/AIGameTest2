@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "天道碎片"
+description = "每回合多抽 1 张牌。不能从坊市购买遗物。"
+trigger = 1
+effect_type = 3
+value = 1
+blocks_relic_purchase = true
+price = 150

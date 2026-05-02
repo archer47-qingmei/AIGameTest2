@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "劫雷淬体"
+description = "真气上限 +1。最大血量 -10%（立即生效）。"
+trigger = 0
+effect_type = 6
+value = 1
+trigger_b = 4
+effect_type_b = 7
+value_b = 10
+has_effect_b = true
+price = 150

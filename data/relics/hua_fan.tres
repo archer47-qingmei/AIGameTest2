@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "化凡"
+description = "每场战斗开始获得 15 格挡。每回合结束失去 1 格挡（若没有格挡则扣 1 HP）。"
+trigger = 0
+effect_type = 2
+value = 15
+trigger_b = 2
+effect_type_b = 9
+value_b = 1
+has_effect_b = true
+price = 150
