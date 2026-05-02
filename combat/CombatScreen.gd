@@ -53,11 +53,32 @@ func _build_enemy_panels() -> void:
 	for child in _enemies_container.get_children():
 		child.queue_free()
 	for i in _engine.enemies.size():
+		var panel := Panel.new()
+		panel.custom_minimum_size = Vector2(150, 120)
+
+		var vbox := VBoxContainer.new()
+		var lbl_info := Label.new()
+		lbl_info.name = "LblInfo"
+		lbl_info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		var lbl_intent := Label.new()
+		lbl_intent.name = "LblIntent"
+		var status_row := HBoxContainer.new()
+		status_row.name = "StatusRow"
+		status_row.add_theme_constant_override("separation", 6)
+		vbox.add_child(lbl_info)
+		vbox.add_child(lbl_intent)
+		vbox.add_child(status_row)
+		panel.add_child(vbox)
+
 		var btn := Button.new()
-		btn.custom_minimum_size = Vector2(150, 120)
+		btn.name = "BtnOverlay"
+		btn.flat = true
+		btn.anchors_preset = 15
 		btn.pressed.connect(_on_enemy_pressed.bind(i))
 		btn.disabled = true
-		_enemies_container.add_child(btn)
+		panel.add_child(btn)
+
+		_enemies_container.add_child(panel)
 
 func _on_card_pressed(card_index: int) -> void:
 	if _pending_card_index >= 0:
@@ -84,24 +105,29 @@ func _on_enemy_pressed(enemy_index: int) -> void:
 func _set_targeting_mode(active: bool) -> void:
 	_btn_end_turn.disabled = active
 	for i in _enemies_container.get_child_count():
-		var btn: Button = _enemies_container.get_child(i) as Button
+		var panel: Panel = _enemies_container.get_child(i) as Panel
+		var btn: Button = panel.get_node("BtnOverlay") as Button
 		if i < _engine.enemies.size() and _engine.enemies[i].hp > 0:
 			btn.disabled = not active
 
 func _refresh_ui() -> void:
 	for i in _engine.enemies.size():
 		var e: Combatant = _engine.enemies[i]
-		var btn: Button = _enemies_container.get_child(i) as Button
+		var panel: Panel = _enemies_container.get_child(i) as Panel
+		var lbl_info: Label = panel.get_node("VBoxContainer/LblInfo") as Label
+		var lbl_intent: Label = panel.get_node("VBoxContainer/LblIntent") as Label
+		var status_row: HBoxContainer = panel.get_node("VBoxContainer/StatusRow") as HBoxContainer
+		var btn: Button = panel.get_node("BtnOverlay") as Button
 		if e.hp <= 0:
-			btn.text = "%s\n(已死亡)" % e.display_name
+			lbl_info.text = "%s\n(已死亡)" % e.display_name
+			lbl_intent.text = ""
 			btn.disabled = true
 		else:
 			var action: EnemyActionData = _engine.get_enemy_action(i)
-			btn.text = "%s\nHP:%d/%d 挡:%d\n%s" % [
-				e.display_name, e.hp, e.max_hp, e.block,
-				_intent_text(action, e)
-			]
+			lbl_info.text = "%s\nHP:%d/%d 挡:%d" % [e.display_name, e.hp, e.max_hp, e.block]
+			lbl_intent.text = _intent_text(action, e)
 			btn.disabled = (_pending_card_index < 0)
+		_build_status_row(status_row, e)
 	_lbl_player_hp.text = "生命：%d / %d" % [_engine.player.hp, _engine.player.max_hp]
 	_lbl_player_block.text = "格挡：%d" % _engine.player.block
 	_lbl_energy.text = "真气：%d / %d" % [_engine.energy, _engine.energy_cap]
@@ -147,7 +173,8 @@ func _on_combat_ended(result: String) -> void:
 	for btn: Button in _hand_buttons:
 		btn.disabled = true
 	for i in _enemies_container.get_child_count():
-		(_enemies_container.get_child(i) as Button).disabled = true
+		var panel: Panel = _enemies_container.get_child(i) as Panel
+		(panel.get_node("BtnOverlay") as Button).disabled = true
 	if result == "victory":
 		_lbl_result.text = "胜利！"
 	_lbl_result.visible = true
@@ -184,20 +211,20 @@ func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
 		container.add_child(lbl)
 
 func _on_damage_dealt(enemy_index: int, amount: int) -> void:
-	var btn: Button = _enemies_container.get_child(enemy_index) as Button
-	if btn == null:
+	var panel: Panel = _enemies_container.get_child(enemy_index) as Panel
+	if panel == null:
 		return
-	btn.pivot_offset = btn.size / 2
+	panel.pivot_offset = panel.size / 2
 
 	var flash_tween: Tween = create_tween()
-	flash_tween.tween_property(btn, "modulate", Color(1.0, 0.2, 0.2), 0.05)
-	flash_tween.tween_property(btn, "modulate", Color(1.0, 1.0, 1.0), 0.2)
+	flash_tween.tween_property(panel, "modulate", Color(1.0, 0.2, 0.2), 0.05)
+	flash_tween.tween_property(panel, "modulate", Color(1.0, 1.0, 1.0), 0.2)
 
 	var shake_tween: Tween = create_tween()
-	shake_tween.tween_property(btn, "scale", Vector2(1.15, 0.85), 0.06)
-	shake_tween.tween_property(btn, "scale", Vector2(0.9, 1.1), 0.06)
-	shake_tween.tween_property(btn, "scale", Vector2(1.05, 0.95), 0.06)
-	shake_tween.tween_property(btn, "scale", Vector2(1.0, 1.0), 0.07)
+	shake_tween.tween_property(panel, "scale", Vector2(1.15, 0.85), 0.06)
+	shake_tween.tween_property(panel, "scale", Vector2(0.9, 1.1), 0.06)
+	shake_tween.tween_property(panel, "scale", Vector2(1.05, 0.95), 0.06)
+	shake_tween.tween_property(panel, "scale", Vector2(1.0, 1.0), 0.07)
 
 	var lbl: Label = Label.new()
 	lbl.text = str(amount)
@@ -205,7 +232,7 @@ func _on_damage_dealt(enemy_index: int, amount: int) -> void:
 	lbl.pivot_offset = Vector2(15, 12)
 	lbl.z_index = 10
 	add_child(lbl)
-	lbl.global_position = btn.get_global_rect().get_center() - Vector2(15, 12)
+	lbl.global_position = panel.get_global_rect().get_center() - Vector2(15, 12)
 
 	var direction: float = 1.0 if randi() % 2 == 0 else -1.0
 	var drift_x: float = direction * randf_range(20.0, 60.0)
@@ -245,6 +272,20 @@ func _on_player_damaged(amount: int) -> void:
 	flyout_tween.tween_property(lbl, "position:x", lbl.position.x + drift_x, 0.4)
 	flyout_tween.tween_property(lbl, "modulate:a", 0.0, 0.3).set_delay(0.1)
 	flyout_tween.finished.connect(lbl.queue_free)
+
+func _build_status_row(row: HBoxContainer, combatant: Combatant) -> void:
+	for child in row.get_children():
+		child.queue_free()
+	if combatant.weak > 0:
+		var lbl := Label.new()
+		lbl.text = "虚弱×%d" % combatant.weak
+		lbl.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))
+		row.add_child(lbl)
+	if combatant.vulnerable > 0:
+		var lbl := Label.new()
+		lbl.text = "脆弱×%d" % combatant.vulnerable
+		lbl.add_theme_color_override("font_color", Color(1.0, 0.55, 0.1))
+		row.add_child(lbl)
 
 func _on_proceed() -> void:
 	GameManager.end_combat(_engine.player.hp)
