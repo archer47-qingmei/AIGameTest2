@@ -91,6 +91,13 @@ func end_turn() -> void:
 		_start_player_turn()
 
 func _start_player_turn() -> void:
+	player.played_style_this_turn = false
+	player.gained_sword_intent_this_turn = false
+	player.sword_intent = mini(
+		player.sword_intent + player.next_turn_sword_intent,
+		player.sword_intent_cap
+	)
+	player.next_turn_sword_intent = 0
 	player.weak = max(0, player.weak - 1)
 	turn_number += 1
 	energy = BASE_ENERGY
@@ -98,6 +105,12 @@ func _start_player_turn() -> void:
 	_draw_hand()
 	if player.draw_per_turn > 0:
 		_draw_cards(player.draw_per_turn)
+	if player.next_turn_draw > 0:
+		_draw_cards(player.next_turn_draw)
+		player.next_turn_draw = 0
+	for i in enemies.size():
+		if enemies[i].hp > 0:
+			enemies[i].current_intent = get_enemy_action(i).type
 	if turn_number == 1:
 		RelicEngine.apply_combat_start(_relics, self)
 	RelicEngine.apply_turn_start(_relics, self)
@@ -135,6 +148,17 @@ func _apply_engine_effects(card: CardData) -> void:
 			player.sword_intent_retain = true
 		elif effect.type == "sword_intent_block_bonus":
 			player.sword_intent_block_bonus += effect.value
+		elif effect.type == "sword_intent_if_no_style":
+			if not player.played_style_this_turn:
+				player.sword_intent = mini(player.sword_intent + effect.value, player.sword_intent_cap)
+		elif effect.type == "next_turn_si":
+			player.next_turn_sword_intent += effect.value
+		elif effect.type == "next_turn_draw":
+			player.next_turn_draw += effect.value
+		elif effect.type == "finisher_block":
+			player.finisher_block_bonus += effect.value
+		elif effect.type == "first_si_block":
+			player.first_si_block_bonus += effect.value
 
 func draw_cards(n: int) -> void:
 	_draw_cards(n)
