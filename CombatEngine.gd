@@ -15,6 +15,7 @@ var turn_number: int = 0
 
 var _draw_pile: Array[CardData] = []
 var _discard_pile: Array[CardData] = []
+var _exhaust_pile: Array[CardData] = []
 var _enemy_data_list: Array[EnemyData] = []
 var _relics: Array[RelicData] = []
 
@@ -51,6 +52,9 @@ func get_draw_pile() -> Array[CardData]:
 func get_discard_pile() -> Array[CardData]:
 	return _discard_pile.duplicate()
 
+func get_exhaust_pile() -> Array[CardData]:
+	return _exhaust_pile.duplicate()
+
 func play_card(card_index: int, target_index: int) -> bool:
 	var card: CardData = hand[card_index]
 	if card.cost > energy:
@@ -65,7 +69,10 @@ func play_card(card_index: int, target_index: int) -> bool:
 		EffectResolver.resolve(card, player, target)
 	_apply_engine_effects(card)
 	hand.remove_at(card_index)
-	_discard_pile.append(card)
+	if card.card_type == "功法":
+		_exhaust_pile.append(card)
+	else:
+		_discard_pile.append(card)
 	state_changed.emit()
 	_check_end()
 	return true
