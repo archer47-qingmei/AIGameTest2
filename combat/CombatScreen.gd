@@ -56,7 +56,6 @@ func _build_enemy_panels() -> void:
 	for i in _engine.enemies.size():
 		var btn := Button.new()
 		btn.custom_minimum_size = Vector2(150, 120)
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.pressed.connect(_on_enemy_pressed.bind(i))
 		btn.disabled = true
 		_enemies_container.add_child(btn)
