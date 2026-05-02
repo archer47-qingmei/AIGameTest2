@@ -66,8 +66,7 @@ func play_card(card_index: int, target_index: int) -> bool:
 	hand.remove_at(card_index)
 	_discard_pile.append(card)
 	state_changed.emit()
-	if _check_end():
-		return true
+	_check_end()
 	return true
 
 func end_turn() -> void:
@@ -118,48 +117,43 @@ func _start_player_turn() -> void:
 
 func _refill_draw_pile_if_needed() -> void:
 	if _draw_pile.is_empty() and not _discard_pile.is_empty():
-		for card: CardData in _discard_pile:
-			_draw_pile.append(card)
+		_draw_pile.append_array(_discard_pile)
 		_discard_pile.clear()
 		_draw_pile.shuffle()
 
 func _draw_hand() -> void:
 	hand.clear()
-	for i in 5:
-		_refill_draw_pile_if_needed()
-		if _draw_pile.is_empty():
-			break
-		var card: CardData = _draw_pile.pop_back()
-		hand.append(card)
+	_draw_cards(5)
 
 func _apply_engine_effects(card: CardData) -> void:
 	for effect: CardEffectData in card.effects:
-		if effect.type == "draw":
-			_draw_cards(effect.value)
-		elif effect.type == "energy":
-			energy += effect.value
-		elif effect.type == "sword_intent_cap":
-			player.sword_intent_cap += effect.value
-		elif effect.type == "sword_intent_bonus":
-			player.sword_intent_damage_bonus += effect.value
-		elif effect.type == "draw_per_turn":
-			player.draw_per_turn += effect.value
-		elif effect.type == "sword_intent_retain":
-			player.sword_intent_retain = true
-		elif effect.type == "sword_intent_block_bonus":
-			player.sword_intent_block_bonus += effect.value
-		elif effect.type == "sword_intent_if_no_style":
-			# 仅用于非招式牌（招式打出后 played_style_this_turn 已为 true，会静默失效）
-			if not player.played_style_this_turn:
-				player.sword_intent = mini(player.sword_intent + effect.value, player.sword_intent_cap)
-		elif effect.type == "next_turn_si":
-			player.next_turn_sword_intent += effect.value
-		elif effect.type == "next_turn_draw":
-			player.next_turn_draw += effect.value
-		elif effect.type == "finisher_block":
-			player.finisher_block_bonus += effect.value
-		elif effect.type == "first_si_block":
-			player.first_si_block_bonus += effect.value
+		match effect.type:
+			"draw":
+				_draw_cards(effect.value)
+			"energy":
+				energy += effect.value
+			"sword_intent_cap":
+				player.sword_intent_cap += effect.value
+			"sword_intent_bonus":
+				player.sword_intent_damage_bonus += effect.value
+			"draw_per_turn":
+				player.draw_per_turn += effect.value
+			"sword_intent_retain":
+				player.sword_intent_retain = true
+			"sword_intent_block_bonus":
+				player.sword_intent_block_bonus += effect.value
+			"sword_intent_if_no_style":
+				# 仅用于非招式牌（招式打出后 played_style_this_turn 已为 true，会静默失效）
+				if not player.played_style_this_turn:
+					player.sword_intent = mini(player.sword_intent + effect.value, player.sword_intent_cap)
+			"next_turn_si":
+				player.next_turn_sword_intent += effect.value
+			"next_turn_draw":
+				player.next_turn_draw += effect.value
+			"finisher_block":
+				player.finisher_block_bonus += effect.value
+			"first_si_block":
+				player.first_si_block_bonus += effect.value
 
 func draw_cards(n: int) -> void:
 	_draw_cards(n)
@@ -179,16 +173,17 @@ func _do_enemy_turn() -> void:
 		enemies[i].block = 0
 		enemies[i].vulnerable = max(0, enemies[i].vulnerable - 1)
 		var action: EnemyActionData = get_enemy_action(i)
-		if action.type == "attack":
-			EffectResolver.apply_damage(enemies[i], player, action.value)
-			enemies[i].weak = max(0, enemies[i].weak - 1)
-		elif action.type == "poison":
-			var venom_card: CardData = load("res://data/cards/venom.tres") as CardData
-			for j in action.value:
-				_draw_pile.append(venom_card.duplicate())
-			_draw_pile.shuffle()
-		else:
-			enemies[i].add_block(action.value)
+		match action.type:
+			"attack":
+				EffectResolver.apply_damage(enemies[i], player, action.value)
+				enemies[i].weak = max(0, enemies[i].weak - 1)
+			"poison":
+				var venom_card: CardData = load("res://data/cards/venom.tres") as CardData
+				for j in action.value:
+					_draw_pile.append(venom_card.duplicate())
+				_draw_pile.shuffle()
+			_:
+				enemies[i].add_block(action.value)
 
 func _get_living_enemies() -> Array[Combatant]:
 	return enemies.filter(func(e: Combatant) -> bool: return e.hp > 0)
