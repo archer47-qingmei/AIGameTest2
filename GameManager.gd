@@ -116,7 +116,7 @@ func go_to_debug_deck() -> void:
 	current_phase = Phase.CHAR_SELECT
 	get_tree().change_scene_to_file("res://debug/DebugDeckScreen.tscn")
 
-func start_debug_run(cards: Array[CardData]) -> void:
+func start_debug_run(cards: Array[CardData], extra_relics: Array[RelicData] = []) -> void:
 	pending_card_reward = true
 	player_state = PlayerState.new()
 	player_state.character = "sword"
@@ -124,6 +124,10 @@ func start_debug_run(cards: Array[CardData]) -> void:
 		var relic: RelicData = (load(path) as RelicData).duplicate()
 		player_state.relics.append(relic)
 		RelicEngine.apply_on_equip(relic, player_state)
+	for relic in extra_relics:
+		var equipped: RelicData = relic.duplicate()
+		player_state.relics.append(equipped)
+		RelicEngine.apply_on_equip(equipped, player_state)
 	for card in cards:
 		player_state.deck.append(card.duplicate())
 	_setup_map()
