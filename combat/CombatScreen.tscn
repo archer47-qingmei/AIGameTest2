@@ -22,7 +22,6 @@ theme_override_constants/separation = 10
 
 [node name="EnemiesContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="HandScroll" type="ScrollContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 170)
