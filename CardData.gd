@@ -37,6 +37,11 @@ func get_description() -> String:
 	var dpt: int = 0
 	var si_retain: bool = false
 	var si_blk: int = 0
+	var next_turn_si: int = 0
+	var next_turn_drw: int = 0
+	var finisher_blk: int = 0
+	var first_si_blk: int = 0
+	var si_if_no_style: int = 0
 	for effect: CardEffectData in effects:
 		if effect.type == "damage":
 			dmg = effect.value
@@ -51,6 +56,11 @@ func get_description() -> String:
 		elif effect.type == "draw_per_turn":      dpt = effect.value
 		elif effect.type == "sword_intent_retain": si_retain = true
 		elif effect.type == "sword_intent_block_bonus": si_blk = effect.value
+		elif effect.type == "next_turn_si":              next_turn_si = effect.value
+		elif effect.type == "next_turn_draw":            next_turn_drw = effect.value
+		elif effect.type == "finisher_block":            finisher_blk = effect.value
+		elif effect.type == "first_si_block":            first_si_blk = effect.value
+		elif effect.type == "sword_intent_if_no_style":  si_if_no_style = effect.value
 	var desc: String = "%s\n费用:%d" % [card_name, cost]
 	if dmg > 0:
 		if dmg_times > 1:
@@ -67,6 +77,12 @@ func get_description() -> String:
 	if si_cap > 0:    desc += "  剑意上限+%d" % si_cap
 	if si_bonus > 0:  desc += "  剑意加成+%d" % si_bonus
 	if dpt > 0:       desc += "  多抽+%d张/回" % dpt
-	if si_retain:     desc += "  剑意永续"
-	if si_blk > 0:    desc += "  剑意挡加成+%d" % si_blk
+	if si_retain:          desc += "  剑意永续"
+	if si_blk > 0:         desc += "  剑意挡加成+%d" % si_blk
+	if next_turn_si > 0:   desc += "  下回合剑意+%d" % next_turn_si
+	if next_turn_drw > 0:  desc += "  下回合抽+%d" % next_turn_drw
+	if finisher_blk > 0:   desc += "  终结技触发挡+%d" % finisher_blk
+	if first_si_blk > 0:   desc += "  首剑意+挡%d" % first_si_blk
+	if si_if_no_style > 0: desc += "  无招式时+剑意%d" % si_if_no_style
+	if retain_si_if_target_attacks: desc += "  攻击意图→剑意不消耗"
 	return desc
