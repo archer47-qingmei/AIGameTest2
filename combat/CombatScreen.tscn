@@ -23,10 +23,19 @@ theme_override_constants/separation = 4
 [node name="TopSpacer" type="Control" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 1.0
 
 [node name="EnemiesContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 alignment = 1
+
+[node name="MidSpacer" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.0
+
+[node name="RelicsPanel" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
 
 [node name="StatsBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -48,34 +57,24 @@ text = "真气：3 / 3"
 layout_mode = 2
 text = "剑意：0"
 
-[node name="HandSection" type="HBoxContainer" parent="VBoxContainer"]
+[node name="ActionRow" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+alignment = 2
 
-[node name="RelicsPanel" type="VBoxContainer" parent="VBoxContainer/HandSection"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="HandScroll" type="ScrollContainer" parent="VBoxContainer/HandSection"]
-custom_minimum_size = Vector2(0, 170)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="HandContainer" type="HBoxContainer" parent="VBoxContainer/HandSection/HandScroll"]
-layout_mode = 2
-
-[node name="ActionPanel" type="VBoxContainer" parent="VBoxContainer/HandSection"]
-custom_minimum_size = Vector2(110, 0)
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="BtnEndTurn" type="Button" parent="VBoxContainer/HandSection/ActionPanel"]
+[node name="BtnEndTurn" type="Button" parent="VBoxContainer/ActionRow"]
 layout_mode = 2
 text = "结束回合"
 
-[node name="BtnViewDeck" type="Button" parent="VBoxContainer/HandSection/ActionPanel"]
+[node name="BtnViewDeck" type="Button" parent="VBoxContainer/ActionRow"]
 layout_mode = 2
 text = "查看牌组"
+
+[node name="HandScroll" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 170)
+layout_mode = 2
+
+[node name="HandContainer" type="HBoxContainer" parent="VBoxContainer/HandScroll"]
+layout_mode = 2
 
 [node name="LblResult" type="Label" parent="."]
 visible = false
