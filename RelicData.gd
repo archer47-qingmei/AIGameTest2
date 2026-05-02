@@ -5,7 +5,9 @@ enum Trigger { COMBAT_START, TURN_START, TURN_END, COMBAT_END, ON_EQUIP }
 enum EffectType {
 	ENERGY, HEAL_HP, BLOCK, DRAW, SWORD_INTENT,
 	SELF_DAMAGE, ENERGY_CAP, MAX_HP_PERCENT,
-	FIRST_TURN_DRAW_PENALTY, BLOCK_DRAIN
+	FIRST_TURN_DRAW_PENALTY, BLOCK_DRAIN,
+	REMOVE_CARDS, FIRST_TURN_ENERGY,
+	SECOND_TURN_ENERGY_PENALTY, ENERGY_IF_LOW_HP
 }
 
 @export var display_name: String = ""
@@ -18,4 +20,5 @@ enum EffectType {
 @export var value_b: int = 0
 @export var has_effect_b: bool = false
 @export var blocks_relic_purchase: bool = false
+@export var blocks_card_purchase: bool = false
 @export var price: int = 0
