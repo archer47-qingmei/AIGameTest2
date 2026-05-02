@@ -98,7 +98,7 @@ func _refresh_ui() -> void:
 			btn.disabled = (_pending_card_index < 0)
 	_lbl_player_hp.text = "生命：%d / %d" % [_engine.player.hp, _engine.player.max_hp]
 	_lbl_player_block.text = "格挡：%d" % _engine.player.block
-	_lbl_energy.text = "能量：%d / 3" % _engine.energy
+	_lbl_energy.text = "真气：%d / %d" % [_engine.energy, _engine.energy_cap]
 	_lbl_sword_intent.text = "剑意：%d / %d" % [_engine.player.sword_intent, _engine.player.sword_intent_cap]
 	var relic_names: PackedStringArray = []
 	for r: RelicData in GameManager.player_state.relics:

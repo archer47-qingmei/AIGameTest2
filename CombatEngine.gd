@@ -10,6 +10,7 @@ var player: Combatant
 var enemies: Array[Combatant] = []
 var hand: Array[CardData] = []
 var energy: int = 0
+var energy_cap: int = BASE_ENERGY
 var turn_number: int = 0
 
 var _draw_pile: Array[CardData] = []
@@ -100,7 +101,7 @@ func _start_player_turn() -> void:
 	player.next_turn_sword_intent = 0
 	player.weak = max(0, player.weak - 1)
 	turn_number += 1
-	energy = BASE_ENERGY
+	energy = energy_cap
 	player.block = 0
 	_draw_hand()
 	if player.draw_per_turn > 0:

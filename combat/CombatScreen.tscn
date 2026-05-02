@@ -40,7 +40,7 @@ text = "剑意：0"
 
 [node name="LblEnergy" type="Label" parent="VBoxContainer/PlayerPanel"]
 layout_mode = 2
-text = "能量：3 / 3"
+text = "真气：3 / 3"
 
 [node name="HandScroll" type="ScrollContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 80)

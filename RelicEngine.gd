@@ -42,8 +42,8 @@ static func _apply_effect(effect_type: RelicData.EffectType, value: int, engine:
 			)
 		RelicData.EffectType.SELF_DAMAGE:
 			engine.player.hp = max(0, engine.player.hp - value)
-		RelicData.EffectType.SWORD_INTENT_CAP:
-			engine.player.sword_intent_cap += value
+		RelicData.EffectType.ENERGY_CAP:
+			engine.energy_cap += value
 		RelicData.EffectType.FIRST_TURN_DRAW_PENALTY:
 			if engine.turn_number == 1:
 				for i in value:
