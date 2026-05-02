@@ -59,7 +59,6 @@ func _on_card_pressed(card_index: int) -> void:
 	if _pending_card_index >= 0:
 		_pending_card_index = -1
 		_set_targeting_mode(false)
-		return
 	var card: CardData = _engine.hand[card_index]
 	if card.target_type in ["none", "all"]:
 		_engine.play_card(card_index, -1)
@@ -75,8 +74,6 @@ func _on_enemy_pressed(enemy_index: int) -> void:
 
 func _set_targeting_mode(active: bool) -> void:
 	_btn_end_turn.disabled = active
-	for btn: Button in _hand_buttons:
-		btn.disabled = active
 	for i in _enemies_container.get_child_count():
 		var btn: Button = _enemies_container.get_child(i) as Button
 		if i < _engine.enemies.size() and _engine.enemies[i].hp > 0:
