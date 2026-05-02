@@ -17,9 +17,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -200.0
+offset_top = -270.0
 offset_right = 200.0
-offset_bottom = 200.0
+offset_bottom = 270.0
 theme_override_constants/separation = 12
 
 [node name="LblTitle" type="Label" parent="VBoxContainer"]
@@ -27,25 +27,78 @@ layout_mode = 2
 text = "休息站"
 horizontal_alignment = 1
 
+[node name="PanelChoice" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnRest" type="Button" parent="VBoxContainer/PanelChoice"]
+layout_mode = 2
+text = "休息（+? 生命）"
+
+[node name="BtnUpgrade" type="Button" parent="VBoxContainer/PanelChoice"]
+layout_mode = 2
+text = "升级卡牌"
+
 [node name="LblHeal" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "恢复了 ? 点生命"
+visible = false
 
 [node name="LblHP" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "当前生命：? / 70"
+text = "当前生命：? / ?"
+visible = false
 
-[node name="LblUpgrade" type="Label" parent="VBoxContainer"]
+[node name="LblUpgradePrompt" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "选择一张牌升级（可选）："
+text = "选择一张牌升级："
+visible = false
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 150)
+visible = false
 
 [node name="CardList" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 
+[node name="PanelPreview" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+visible = false
+
+[node name="PreviewContent" type="VBoxContainer" parent="VBoxContainer/PanelPreview"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+theme_override_constants/separation = 8
+
+[node name="LblCurrent" type="Label" parent="VBoxContainer/PanelPreview/PreviewContent"]
+layout_mode = 2
+text = ""
+
+[node name="RtlUpgraded" type="RichTextLabel" parent="VBoxContainer/PanelPreview/PreviewContent"]
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+text = ""
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelPreview/PreviewContent"]
+layout_mode = 2
+
+[node name="BtnConfirmUpgrade" type="Button" parent="VBoxContainer/PanelPreview/PreviewContent/HBoxContainer"]
+layout_mode = 2
+text = "确认升级"
+
+[node name="BtnCancelPreview" type="Button" parent="VBoxContainer/PanelPreview/PreviewContent/HBoxContainer"]
+layout_mode = 2
+text = "返回"
+
 [node name="BtnContinue" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "继续"
+visible = false
