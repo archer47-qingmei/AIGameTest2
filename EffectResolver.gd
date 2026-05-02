@@ -22,6 +22,7 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 				if defender != null:
 					defender.add_vulnerable(effect.value)
 	if card.is_finisher:
+		# 人剑合一：每次打出终结技额外获得格挡（与 effects 内 block 效果无关）
 		attacker.add_block(attacker.finisher_block_bonus)
 		var skip_consume: bool = card.retain_si_if_target_attacks \
 			and defender != null and defender.current_intent == "attack"
@@ -31,7 +32,7 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 		var will_gain: bool = attacker.sword_intent < attacker.sword_intent_cap
 		if will_gain and not attacker.gained_sword_intent_this_turn:
 			attacker.add_block(attacker.first_si_block_bonus)
-			attacker.gained_sword_intent_this_turn = true
+			attacker.gained_sword_intent_this_turn = true  # 已达上限视为未获得
 		attacker.sword_intent = mini(attacker.sword_intent + 1, attacker.sword_intent_cap)
 		attacker.played_style_this_turn = true
 
