@@ -51,7 +51,7 @@ func _ready() -> void:
 
 func _build_enemy_panels() -> void:
 	for child in _enemies_container.get_children():
-		child.queue_free()
+		child.free()
 	for i in _engine.enemies.size():
 		var panel := Panel.new()
 		panel.custom_minimum_size = Vector2(150, 120)
