@@ -66,6 +66,11 @@ func _on_card_pressed(card_index: int) -> void:
 		_pending_card_index = card_index
 		_set_targeting_mode(true)
 
+func _unhandled_input(event: InputEvent) -> void:
+	if _pending_card_index >= 0 and event is InputEventMouseButton and event.pressed:
+		_pending_card_index = -1
+		_set_targeting_mode(false)
+
 func _on_enemy_pressed(enemy_index: int) -> void:
 	if _pending_card_index >= 0:
 		_engine.play_card(_pending_card_index, enemy_index)
