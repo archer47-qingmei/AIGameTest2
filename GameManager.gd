@@ -45,16 +45,7 @@ func start_new_run(character: String) -> void:
 	player_state.deck.append(chuan_xin.duplicate())
 	player_state.deck.append(yang_jian_shu.duplicate())
 
-	var nodes: Array[NodeData] = MapGenerator.generate()
-	player_state.map_all_nodes.assign(nodes)
-	var start_nodes: Array[NodeData] = []
-	for nd in nodes:
-		if nd.config.column == 0:
-			start_nodes.append(nd)
-	player_state.available_nodes.assign(start_nodes)
-
-	current_phase = Phase.MAP
-	get_tree().change_scene_to_file("res://map/MapScreen.tscn")
+	_setup_map()
 
 func select_node(node: NodeData) -> void:
 	player_state.current_node = node
@@ -131,6 +122,9 @@ func start_debug_run(cards: Array[CardData]) -> void:
 		player_state.relics.append((load(path) as RelicData).duplicate())
 	for card in cards:
 		player_state.deck.append(card.duplicate())
+	_setup_map()
+
+func _setup_map() -> void:
 	var nodes: Array[NodeData] = MapGenerator.generate()
 	player_state.map_all_nodes.assign(nodes)
 	var start_nodes: Array[NodeData] = []

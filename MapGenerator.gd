@@ -59,23 +59,24 @@ static func _make_column(col: int) -> Array[NodeData]:
 	return result
 
 static func _get_column_types(col: int) -> Array:
-	if col <= 3:
-		return [NodeConfig.Type.COMBAT, NodeConfig.Type.COMBAT]
-	elif col == 4:
-		var types: Array = [NodeConfig.Type.COMBAT, NodeConfig.Type.REST]
-		types.shuffle()
-		return types
-	elif col == 5:
-		return [NodeConfig.Type.CHEST, NodeConfig.Type.REST]
-	elif col <= 7:
-		var types: Array = [NodeConfig.Type.ELITE, NodeConfig.Type.COMBAT]
-		types.shuffle()
-		return types
-	elif col == 8:
-		return [NodeConfig.Type.ELITE, NodeConfig.Type.ELITE]
-	else:
-		push_error("unexpected column %d" % col)
-		return [NodeConfig.Type.COMBAT, NodeConfig.Type.COMBAT]
+	match col:
+		0, 1, 2, 3:
+			return [NodeConfig.Type.COMBAT, NodeConfig.Type.COMBAT]
+		4:
+			var types: Array = [NodeConfig.Type.COMBAT, NodeConfig.Type.REST]
+			types.shuffle()
+			return types
+		5:
+			return [NodeConfig.Type.CHEST, NodeConfig.Type.REST]
+		6, 7:
+			var types: Array = [NodeConfig.Type.ELITE, NodeConfig.Type.COMBAT]
+			types.shuffle()
+			return types
+		8:
+			return [NodeConfig.Type.ELITE, NodeConfig.Type.ELITE]
+		_:
+			push_error("unexpected column %d" % col)
+			return [NodeConfig.Type.COMBAT, NodeConfig.Type.COMBAT]
 
 static func _random_combat_group(col: int) -> EnemyGroupData:
 	var paths: Array[String] = EARLY_GROUP_PATHS if col <= 3 else MID_GROUP_PATHS

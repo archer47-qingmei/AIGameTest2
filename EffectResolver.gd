@@ -4,23 +4,24 @@ extends RefCounted
 static func resolve(card: CardData, attacker: Combatant, defender: Combatant) -> void:
 	for effect: CardEffectData in card.effects:
 		for _i in effect.times:
-			if effect.type == "damage":
-				if defender != null:
-					var dmg_bonus: int = 0
-					if card.is_finisher:
-						dmg_bonus = attacker.sword_intent * card.sword_intent_consume_bonus
-					elif card.card_type == "招式":
-						dmg_bonus = attacker.sword_intent * attacker.sword_intent_damage_bonus
-					apply_damage(attacker, defender, effect.value + dmg_bonus)
-			elif effect.type == "block":
-				var blk_bonus: int = attacker.sword_intent * attacker.sword_intent_block_bonus
-				attacker.add_block(effect.value + blk_bonus)
-			elif effect.type == "weak":
-				if defender != null:
-					defender.add_weak(effect.value)
-			elif effect.type == "vulnerable":
-				if defender != null:
-					defender.add_vulnerable(effect.value)
+			match effect.type:
+				"damage":
+					if defender != null:
+						var dmg_bonus: int = 0
+						if card.is_finisher:
+							dmg_bonus = attacker.sword_intent * card.sword_intent_consume_bonus
+						elif card.card_type == "招式":
+							dmg_bonus = attacker.sword_intent * attacker.sword_intent_damage_bonus
+						apply_damage(attacker, defender, effect.value + dmg_bonus)
+				"block":
+					var blk_bonus: int = attacker.sword_intent * attacker.sword_intent_block_bonus
+					attacker.add_block(effect.value + blk_bonus)
+				"weak":
+					if defender != null:
+						defender.add_weak(effect.value)
+				"vulnerable":
+					if defender != null:
+						defender.add_vulnerable(effect.value)
 	if card.is_finisher:
 		# 人剑合一：每次打出终结技额外获得格挡（与 effects 内 block 效果无关）
 		attacker.add_block(attacker.finisher_block_bonus)
