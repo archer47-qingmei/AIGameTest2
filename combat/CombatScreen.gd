@@ -120,6 +120,9 @@ func _rebuild_hand() -> void:
 	for i in _engine.hand.size():
 		var card: CardData = _engine.hand[i]
 		var btn: Button = Button.new()
+		btn.custom_minimum_size = Vector2(110, 150)
+		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		btn.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 		btn.text = card.get_description()
 		btn.pressed.connect(_on_card_pressed.bind(i))
 		_hand_container.add_child(btn)
