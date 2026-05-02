@@ -26,6 +26,7 @@ func _build_rows() -> void:
 		var lbl_desc := Label.new()
 		lbl_desc.text = _cards[i].get_description()
 		lbl_desc.custom_minimum_size.x = 280
+		lbl_desc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		lbl_desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		var btn_minus := Button.new()
 		btn_minus.text = "−"
