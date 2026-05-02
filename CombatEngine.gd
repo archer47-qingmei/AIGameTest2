@@ -6,6 +6,7 @@ const BASE_ENERGY: int = 3
 signal state_changed
 signal combat_ended(result: String)
 signal damage_dealt(enemy_index: int, amount: int)
+signal player_damaged(amount: int)
 
 var player: Combatant
 var enemies: Array[Combatant] = []
@@ -92,6 +93,7 @@ func end_turn() -> void:
 			venom_count += 1
 	if venom_count > 0:
 		player.hp = max(0, player.hp - venom_count)
+		player_damaged.emit(venom_count)
 		state_changed.emit()
 		if _check_end():
 			return
@@ -193,7 +195,11 @@ func _do_enemy_turn() -> void:
 		var action: EnemyActionData = get_enemy_action(i)
 		match action.type:
 			"attack":
+				var hp_before: int = player.hp
 				EffectResolver.apply_damage(enemies[i], player, action.value)
+				var dmg: int = hp_before - player.hp
+				if dmg > 0:
+					player_damaged.emit(dmg)
 				enemies[i].weak = max(0, enemies[i].weak - 1)
 			"poison":
 				var venom_card: CardData = load("res://data/cards/venom.tres") as CardData
