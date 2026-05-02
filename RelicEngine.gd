@@ -54,6 +54,15 @@ static func _apply_effect(effect_type: RelicData.EffectType, value: int, engine:
 				engine.player.block -= 1
 			else:
 				engine.player.hp = max(0, engine.player.hp - 1)
+		RelicData.EffectType.FIRST_TURN_ENERGY:
+			if engine.turn_number == 1:
+				engine.energy += value
+		RelicData.EffectType.SECOND_TURN_ENERGY_PENALTY:
+			if engine.turn_number == 2:
+				engine.energy = max(2, engine.energy - value)
+		RelicData.EffectType.ENERGY_IF_LOW_HP:
+			if engine.player.hp < int(engine.player.max_hp * 0.3):
+				engine.energy += value
 
 static func _apply_equip_effect(effect_type: RelicData.EffectType, value: int, player_state: PlayerState) -> void:
 	match effect_type:
@@ -61,3 +70,8 @@ static func _apply_equip_effect(effect_type: RelicData.EffectType, value: int, p
 			var reduction: int = max(1, int(player_state.max_hp * value / 100.0))
 			player_state.max_hp = max(1, player_state.max_hp - reduction)
 			player_state.hp = mini(player_state.hp, player_state.max_hp)
+		RelicData.EffectType.REMOVE_CARDS:
+			for i in value:
+				if player_state.deck.is_empty():
+					break
+				player_state.deck.remove_at(randi() % player_state.deck.size())
