@@ -20,58 +20,62 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 4
 
+[node name="TopSpacer" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="EnemiesContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="BattleField" type="Control" parent="VBoxContainer"]
+[node name="StatsBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
+theme_override_constants/separation = 12
 
-[node name="HandArea" type="HBoxContainer" parent="VBoxContainer"]
+[node name="LblPlayerHP" type="Label" parent="VBoxContainer/StatsBar"]
+layout_mode = 2
+text = "生命：?"
+
+[node name="LblPlayerBlock" type="Label" parent="VBoxContainer/StatsBar"]
+layout_mode = 2
+text = "格挡：0"
+
+[node name="LblEnergy" type="Label" parent="VBoxContainer/StatsBar"]
+layout_mode = 2
+text = "真气：3 / 3"
+
+[node name="LblSwordIntent" type="Label" parent="VBoxContainer/StatsBar"]
+layout_mode = 2
+text = "剑意：0"
+
+[node name="HandSection" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="HandScroll" type="ScrollContainer" parent="VBoxContainer/HandArea"]
+[node name="RelicsPanel" type="VBoxContainer" parent="VBoxContainer/HandSection"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HandScroll" type="ScrollContainer" parent="VBoxContainer/HandSection"]
 custom_minimum_size = Vector2(0, 170)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HandContainer" type="HBoxContainer" parent="VBoxContainer/HandArea/HandScroll"]
+[node name="HandContainer" type="HBoxContainer" parent="VBoxContainer/HandSection/HandScroll"]
 layout_mode = 2
 
-[node name="ActionPanel" type="VBoxContainer" parent="VBoxContainer/HandArea"]
+[node name="ActionPanel" type="VBoxContainer" parent="VBoxContainer/HandSection"]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
+size_flags_vertical = 0
 
-[node name="BtnEndTurn" type="Button" parent="VBoxContainer/HandArea/ActionPanel"]
+[node name="BtnEndTurn" type="Button" parent="VBoxContainer/HandSection/ActionPanel"]
 layout_mode = 2
-size_flags_vertical = 3
 text = "结束回合"
 
-[node name="BtnViewDeck" type="Button" parent="VBoxContainer/HandArea/ActionPanel"]
+[node name="BtnViewDeck" type="Button" parent="VBoxContainer/HandSection/ActionPanel"]
 layout_mode = 2
-size_flags_vertical = 3
 text = "查看牌组"
-
-[node name="BottomBar" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 12
-
-[node name="LblPlayerHP" type="Label" parent="VBoxContainer/BottomBar"]
-layout_mode = 2
-text = "生命：?"
-
-[node name="LblPlayerBlock" type="Label" parent="VBoxContainer/BottomBar"]
-layout_mode = 2
-text = "格挡：0"
-
-[node name="LblEnergy" type="Label" parent="VBoxContainer/BottomBar"]
-layout_mode = 2
-text = "真气：3 / 3"
-
-[node name="LblSwordIntent" type="Label" parent="VBoxContainer/BottomBar"]
-layout_mode = 2
-text = "剑意：0"
 
 [node name="LblResult" type="Label" parent="."]
 visible = false
