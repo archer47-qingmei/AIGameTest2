@@ -40,6 +40,10 @@ layout_mode = 2
 text = "体修（未解锁）"
 disabled = true
 
+[node name="BtnDebug" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "测试模式"
+
 [node name="BtnBack" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "返回"
