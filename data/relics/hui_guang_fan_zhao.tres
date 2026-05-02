@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "回光返照"
+description = "每回合开始若 HP 低于 30%，获得 3 点真气。最大血量 -20%（立即生效）。"
+trigger = 1
+effect_type = 13
+value = 3
+trigger_b = 4
+effect_type_b = 7
+value_b = 20
+has_effect_b = true
+price = 150

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "窃天"
+description = "真气上限 +1。不能从坊市购买卡牌。"
+trigger = 0
+effect_type = 6
+value = 1
+blocks_card_purchase = true
+price = 150
