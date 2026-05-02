@@ -6,7 +6,7 @@ var inventory_relics: Array[RelicData] = []
 
 func generate() -> void:
 	var cards: Array[CardData] = []
-	for path: String in CardPool.CARDS:
+	for path: String in CardPool.SWORD_REWARD_CARDS:
 		var card := load(path) as CardData
 		if card != null:
 			cards.append(card)
