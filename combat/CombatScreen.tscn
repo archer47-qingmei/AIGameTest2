@@ -37,25 +37,29 @@ size_flags_stretch_ratio = 1.0
 [node name="RelicsPanel" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
+[node name="KeyStatsBar" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LblPlayerHP" type="Label" parent="VBoxContainer/KeyStatsBar"]
+layout_mode = 2
+text = "生命：?"
+
+[node name="LblEnergy" type="Label" parent="VBoxContainer/KeyStatsBar"]
+layout_mode = 2
+text = "真气：3 / 3"
+
+[node name="LblSwordIntent" type="Label" parent="VBoxContainer/KeyStatsBar"]
+layout_mode = 2
+text = "剑意：0"
+
 [node name="StatsBar" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="LblPlayerHP" type="Label" parent="VBoxContainer/StatsBar"]
-layout_mode = 2
-text = "生命：?"
-
 [node name="LblPlayerBlock" type="Label" parent="VBoxContainer/StatsBar"]
 layout_mode = 2
 text = "格挡：0"
-
-[node name="LblEnergy" type="Label" parent="VBoxContainer/StatsBar"]
-layout_mode = 2
-text = "真气：3 / 3"
-
-[node name="LblSwordIntent" type="Label" parent="VBoxContainer/StatsBar"]
-layout_mode = 2
-text = "剑意：0"
 
 [node name="ActionRow" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
