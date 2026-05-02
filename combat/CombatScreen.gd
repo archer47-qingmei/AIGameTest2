@@ -199,12 +199,11 @@ func _on_damage_dealt(enemy_index: int, amount: int) -> void:
 	lbl.text = str(amount)
 	lbl.add_theme_font_size_override("font_size", 24)
 	lbl.pivot_offset = Vector2(15, 12)
-	var btn_center: Vector2 = to_local(btn.get_global_rect().get_center())
-	lbl.position = btn_center - Vector2(15, 12)
 	lbl.z_index = 10
 	add_child(lbl)
+	lbl.global_position = btn.get_global_rect().get_center() - Vector2(15, 12)
 
-	var direction: float = [-1.0, 1.0][randi() % 2]
+	var direction: float = 1.0 if randi() % 2 == 0 else -1.0
 	var drift_x: float = direction * randf_range(20.0, 60.0)
 
 	var flyout_tween: Tween = create_tween().set_parallel(true)
