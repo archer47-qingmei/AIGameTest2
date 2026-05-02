@@ -19,12 +19,15 @@ func _rebuild_ui() -> void:
 	_rebuild_relic_list()
 
 func _rebuild_card_list() -> void:
+	var purchase_blocked: bool = GameManager.player_state.relics.any(
+		func(r: RelicData) -> bool: return r.blocks_card_purchase
+	)
 	for child in _card_list.get_children():
 		child.queue_free()
 	for card: CardData in _engine.inventory_cards:
 		var btn := Button.new()
 		btn.text = "%s  [%d金]" % [card.get_description(), card.price]
-		btn.disabled = GameManager.player_state.gold < card.price
+		btn.disabled = GameManager.player_state.gold < card.price or purchase_blocked
 		btn.pressed.connect(_on_buy_card.bind(card))
 		_card_list.add_child(btn)
 
