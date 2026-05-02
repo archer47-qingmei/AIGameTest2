@@ -1,17 +1,18 @@
 extends Control
 
-@onready var _enemies_container: HBoxContainer = $VBoxContainer/EnemiesContainer
-@onready var _lbl_player_hp: Label     = $VBoxContainer/PlayerPanel/LblPlayerHP
-@onready var _lbl_player_block: Label  = $VBoxContainer/PlayerPanel/LblPlayerBlock
-@onready var _lbl_energy: Label        = $VBoxContainer/PlayerPanel/LblEnergy
-@onready var _lbl_sword_intent: Label  = $VBoxContainer/PlayerPanel/LblSwordIntent
-@onready var _hand_container: HBoxContainer = $VBoxContainer/HandScroll/HandContainer
-@onready var _btn_end_turn: Button     = $VBoxContainer/BtnEndTurn
+@onready var _enemies_container: HBoxContainer = $HBoxContainer/MainArea/EnemiesContainer
+@onready var _lbl_player_hp: Label     = $HBoxContainer/RightPanel/LblPlayerHP
+@onready var _lbl_player_block: Label  = $HBoxContainer/RightPanel/LblPlayerBlock
+@onready var _lbl_energy: Label        = $HBoxContainer/RightPanel/LblEnergy
+@onready var _lbl_sword_intent: Label  = $HBoxContainer/RightPanel/LblSwordIntent
+@onready var _hand_container: HBoxContainer = $HBoxContainer/MainArea/HandScroll/HandContainer
+@onready var _btn_end_turn: Button     = $HBoxContainer/RightPanel/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
 @onready var _btn_return_menu: Button  = $BtnReturnMenu
 @onready var _btn_get_reward: Button   = $BtnGetReward
 @onready var _btn_win: Button          = $BtnWin
-@onready var _btn_view_deck: Button    = $VBoxContainer/BtnViewDeck
+@onready var _btn_view_deck: Button    = $HBoxContainer/RightPanel/BtnViewDeck
+@onready var _right_panel: VBoxContainer = $HBoxContainer/RightPanel
 @onready var _deck_view_panel: Panel   = $DeckViewPanel
 @onready var _btn_close_deck: Button   = $DeckViewPanel/VBoxContainer/BtnCloseDeck
 @onready var _all_cards_list: VBoxContainer = $DeckViewPanel/VBoxContainer/TabContainer/完整牌组/AllCardsList
@@ -26,11 +27,12 @@ var _pending_card_index: int = -1
 
 func _ready() -> void:
 	_lbl_relics = Label.new()
-	$VBoxContainer/PlayerPanel.add_child(_lbl_relics)
+	_right_panel.add_child(_lbl_relics)
 	_engine = CombatEngine.new()
 	_engine.state_changed.connect(_refresh_ui)
 	_engine.combat_ended.connect(_on_combat_ended)
 	_engine.damage_dealt.connect(_on_damage_dealt)
+	_engine.player_damaged.connect(_on_player_damaged)
 	_btn_end_turn.pressed.connect(_engine.end_turn)
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
 	_btn_get_reward.pressed.connect(_on_proceed)
@@ -202,6 +204,36 @@ func _on_damage_dealt(enemy_index: int, amount: int) -> void:
 	lbl.z_index = 10
 	add_child(lbl)
 	lbl.global_position = btn.get_global_rect().get_center() - Vector2(15, 12)
+
+	var direction: float = 1.0 if randi() % 2 == 0 else -1.0
+	var drift_x: float = direction * randf_range(20.0, 60.0)
+
+	var flyout_tween: Tween = create_tween().set_parallel(true)
+	flyout_tween.tween_property(lbl, "scale", Vector2(1.5, 1.5), 0.15).set_ease(Tween.EASE_OUT)
+	flyout_tween.tween_property(lbl, "position:x", lbl.position.x + drift_x, 0.4)
+	flyout_tween.tween_property(lbl, "modulate:a", 0.0, 0.3).set_delay(0.1)
+	flyout_tween.finished.connect(lbl.queue_free)
+
+func _on_player_damaged(amount: int) -> void:
+	_right_panel.pivot_offset = _right_panel.size / 2
+
+	var flash_tween: Tween = create_tween()
+	flash_tween.tween_property(_right_panel, "modulate", Color(1.0, 0.2, 0.2), 0.05)
+	flash_tween.tween_property(_right_panel, "modulate", Color(1.0, 1.0, 1.0), 0.2)
+
+	var shake_tween: Tween = create_tween()
+	shake_tween.tween_property(_right_panel, "scale", Vector2(1.05, 0.95), 0.06)
+	shake_tween.tween_property(_right_panel, "scale", Vector2(0.97, 1.03), 0.06)
+	shake_tween.tween_property(_right_panel, "scale", Vector2(1.02, 0.99), 0.06)
+	shake_tween.tween_property(_right_panel, "scale", Vector2(1.0, 1.0), 0.07)
+
+	var lbl: Label = Label.new()
+	lbl.text = "-%d" % amount
+	lbl.add_theme_font_size_override("font_size", 24)
+	lbl.pivot_offset = Vector2(15, 12)
+	lbl.z_index = 10
+	add_child(lbl)
+	lbl.global_position = _right_panel.get_global_rect().get_center() - Vector2(15, 12)
 
 	var direction: float = 1.0 if randi() % 2 == 0 else -1.0
 	var drift_x: float = direction * randf_range(20.0, 60.0)
