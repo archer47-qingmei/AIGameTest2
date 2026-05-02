@@ -84,6 +84,7 @@ func end_turn() -> void:
 	hand.clear()
 	if not player.sword_intent_retain:
 		player.sword_intent = player.sword_intent / 2
+	RelicEngine.apply_turn_end(_relics, self)
 	_do_enemy_turn()
 	state_changed.emit()
 	if not _check_end():
@@ -190,6 +191,7 @@ func _get_living_enemies() -> Array[Combatant]:
 
 func _check_end() -> bool:
 	if _get_living_enemies().is_empty():
+		RelicEngine.apply_combat_end(_relics, self)
 		combat_ended.emit("victory")
 		return true
 	if player.hp <= 0:
