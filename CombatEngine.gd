@@ -149,6 +149,7 @@ func _apply_engine_effects(card: CardData) -> void:
 		elif effect.type == "sword_intent_block_bonus":
 			player.sword_intent_block_bonus += effect.value
 		elif effect.type == "sword_intent_if_no_style":
+			# 仅用于非招式牌（招式打出后 played_style_this_turn 已为 true，会静默失效）
 			if not player.played_style_this_turn:
 				player.sword_intent = mini(player.sword_intent + effect.value, player.sword_intent_cap)
 		elif effect.type == "next_turn_si":

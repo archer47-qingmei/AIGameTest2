@@ -15,6 +15,7 @@ card_name = "惊鸿"
 cost = 2
 price = 0
 effects = Array[ExtResource("2_CardEffectData")]([SubResource("Effect_damage")])
+target_type = "single"
 card_type = "招式"
 is_finisher = true
 retain_si_if_target_attacks = true

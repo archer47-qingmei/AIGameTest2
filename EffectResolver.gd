@@ -32,7 +32,7 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 		var will_gain: bool = attacker.sword_intent < attacker.sword_intent_cap
 		if will_gain and not attacker.gained_sword_intent_this_turn:
 			attacker.add_block(attacker.first_si_block_bonus)
-			attacker.gained_sword_intent_this_turn = true  # 已达上限视为未获得
+			attacker.gained_sword_intent_this_turn = true  # 仅在实际获得剑意时置标记
 		attacker.sword_intent = mini(attacker.sword_intent + 1, attacker.sword_intent_cap)
 		attacker.played_style_this_turn = true
 
