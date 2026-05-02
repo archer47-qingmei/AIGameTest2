@@ -1,19 +1,19 @@
 extends Control
 
 @onready var _enemies_container: HBoxContainer = $VBoxContainer/EnemiesContainer
-@onready var _lbl_player_hp: Label     = $VBoxContainer/PlayerRow/CardArea/CardStats/LblPlayerHP
-@onready var _lbl_player_block: Label  = $VBoxContainer/PlayerRow/CardArea/CardStats/LblPlayerBlock
-@onready var _lbl_energy: Label        = $VBoxContainer/PlayerRow/LeftPanel/LblEnergy
-@onready var _lbl_sword_intent: Label  = $VBoxContainer/PlayerRow/LeftPanel/LblSwordIntent
-@onready var _player_card: Button      = $VBoxContainer/PlayerRow/CardArea/CardCenter/PlayerCard
+@onready var _lbl_player_hp: Label     = $VBoxContainer/PlayerCardRow/CardArea/CardStats/LblPlayerHP
+@onready var _lbl_player_block: Label  = $VBoxContainer/PlayerCardRow/CardArea/CardStats/LblPlayerBlock
+@onready var _lbl_energy: Label        = $VBoxContainer/BottomRow/LeftSection/LblEnergy
+@onready var _lbl_sword_intent: Label  = $VBoxContainer/BottomRow/LeftSection/LblSwordIntent
+@onready var _player_card: Button      = $VBoxContainer/PlayerCardRow/CardArea/CardCenter/PlayerCard
 @onready var _hand_container: HBoxContainer = $VBoxContainer/HandScroll/HandContainer
-@onready var _btn_end_turn: Button     = $VBoxContainer/PlayerRow/RightPanel/BtnEndTurn
+@onready var _btn_end_turn: Button     = $VBoxContainer/BottomRow/RightSection/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
 @onready var _btn_return_menu: Button  = $BtnReturnMenu
 @onready var _btn_get_reward: Button   = $BtnGetReward
 @onready var _btn_win: Button          = $BtnWin
-@onready var _btn_view_deck: Button    = $VBoxContainer/PlayerRow/RightPanel/BtnViewDeck
-@onready var _relics_panel: VBoxContainer = $VBoxContainer/RelicsPanel
+@onready var _btn_view_deck: Button    = $VBoxContainer/BottomRow/RightSection/BtnViewDeck
+@onready var _relics_panel: VBoxContainer = $VBoxContainer/BottomRow/LeftSection/RelicsPanel
 @onready var _deck_view_panel: Panel   = $DeckViewPanel
 @onready var _btn_close_deck: Button   = $DeckViewPanel/VBoxContainer/BtnCloseDeck
 @onready var _all_cards_list: VBoxContainer = $DeckViewPanel/VBoxContainer/TabContainer/完整牌组/AllCardsList
