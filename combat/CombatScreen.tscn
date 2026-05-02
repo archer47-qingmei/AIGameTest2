@@ -162,6 +162,14 @@ metadata/_tab_index = 2
 [node name="DiscardList" type="VBoxContainer" parent="DeckViewPanel/VBoxContainer/TabContainer/弃牌堆"]
 layout_mode = 2
 
+[node name="消耗区" type="ScrollContainer" parent="DeckViewPanel/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="ExhaustList" type="VBoxContainer" parent="DeckViewPanel/VBoxContainer/TabContainer/消耗区"]
+layout_mode = 2
+
 [node name="BtnCloseDeck" type="Button" parent="DeckViewPanel/VBoxContainer"]
 layout_mode = 2
 text = "关闭"
