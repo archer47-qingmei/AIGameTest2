@@ -17,6 +17,7 @@ extends Control
 @onready var _all_cards_list: VBoxContainer = $DeckViewPanel/VBoxContainer/TabContainer/完整牌组/AllCardsList
 @onready var _draw_list: VBoxContainer      = $DeckViewPanel/VBoxContainer/TabContainer/抽牌堆/DrawList
 @onready var _discard_list: VBoxContainer   = $DeckViewPanel/VBoxContainer/TabContainer/弃牌堆/DiscardList
+@onready var _exhaust_list: VBoxContainer   = $DeckViewPanel/VBoxContainer/TabContainer/消耗区/ExhaustList
 
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
@@ -161,9 +162,12 @@ func _on_view_deck_pressed() -> void:
 		all_cards.append(card)
 	for card: CardData in _engine.get_discard_pile():
 		all_cards.append(card)
+	for card: CardData in _engine.get_exhaust_pile():
+		all_cards.append(card)
 	_populate_list(_all_cards_list, all_cards)
 	_populate_list(_draw_list, _engine.get_draw_pile())
 	_populate_list(_discard_list, _engine.get_discard_pile())
+	_populate_list(_exhaust_list, _engine.get_exhaust_pile())
 	_deck_view_panel.show()
 
 func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
