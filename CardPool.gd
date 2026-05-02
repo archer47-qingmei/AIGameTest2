@@ -16,6 +16,12 @@ const CARDS: Array[String] = [
 const RELICS: Array[String] = [
 	"res://data/relics/burning_gem.tres",
 	"res://data/relics/life_ring.tres",
+	"res://data/relics/hua_fan.tres",
+	"res://data/relics/ran_hun.tres",
+	"res://data/relics/sui_dan.tres",
+	"res://data/relics/jie_lei_cui_ti.tres",
+	"res://data/relics/tian_dao_sui_pian.tres",
+	"res://data/relics/tian_jie_yu_yun.tres",
 ]
 
 const CHEST_RELICS: Array[String] = [
