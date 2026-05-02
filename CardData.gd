@@ -86,3 +86,76 @@ func get_description() -> String:
 	if si_if_no_style > 0: desc += "  无招式时+剑意%d" % si_if_no_style
 	if retain_si_if_target_attacks: desc += "  攻击意图→剑意不消耗"
 	return desc
+
+func get_upgrade_preview_bbcode() -> String:
+	if is_upgraded:
+		return get_description()
+	if is_venom:
+		return "%s+\n费用:%d  %s" % [card_name, cost, special_text]
+	var dmg: int = 0;        var dmg_bonus: int = 0; var dmg_times: int = 1
+	var blk: int = 0;        var blk_bonus: int = 0
+	var drw: int = 0;        var drw_bonus: int = 0
+	var nrg: int = 0;        var nrg_bonus: int = 0
+	var wk: int = 0;         var wk_bonus: int = 0
+	var vul: int = 0;        var vul_bonus: int = 0
+	var si_cap: int = 0;     var si_cap_bonus: int = 0
+	var si_bns: int = 0;     var si_bns_bonus: int = 0
+	var dpt: int = 0;        var dpt_bonus: int = 0
+	var si_retain: bool = false
+	var si_blk: int = 0;     var si_blk_bonus: int = 0
+	var nts: int = 0;        var nts_bonus: int = 0
+	var ntd: int = 0;        var ntd_bonus: int = 0
+	var fb: int = 0;         var fb_bonus: int = 0
+	var fsb: int = 0;        var fsb_bonus: int = 0
+	var sins: int = 0;       var sins_bonus: int = 0
+	for effect: CardEffectData in effects:
+		match effect.type:
+			"damage":            dmg = effect.value;  dmg_bonus = effect.upgrade_bonus;  dmg_times = effect.times
+			"block":             blk = effect.value;  blk_bonus = effect.upgrade_bonus
+			"draw":              drw = effect.value;  drw_bonus = effect.upgrade_bonus
+			"energy":            nrg = effect.value;  nrg_bonus = effect.upgrade_bonus
+			"weak":              wk  = effect.value;  wk_bonus  = effect.upgrade_bonus
+			"vulnerable":        vul = effect.value;  vul_bonus = effect.upgrade_bonus
+			"sword_intent_cap":  si_cap  = effect.value; si_cap_bonus  = effect.upgrade_bonus
+			"sword_intent_bonus":si_bns  = effect.value; si_bns_bonus  = effect.upgrade_bonus
+			"draw_per_turn":     dpt     = effect.value; dpt_bonus     = effect.upgrade_bonus
+			"sword_intent_retain": si_retain = true
+			"sword_intent_block_bonus": si_blk = effect.value; si_blk_bonus = effect.upgrade_bonus
+			"next_turn_si":      nts  = effect.value; nts_bonus  = effect.upgrade_bonus
+			"next_turn_draw":    ntd  = effect.value; ntd_bonus  = effect.upgrade_bonus
+			"finisher_block":    fb   = effect.value; fb_bonus   = effect.upgrade_bonus
+			"first_si_block":    fsb  = effect.value; fsb_bonus  = effect.upgrade_bonus
+			"sword_intent_if_no_style": sins = effect.value; sins_bonus = effect.upgrade_bonus
+	var desc: String = "%s+\n费用:%d" % [card_name, cost]
+	if dmg > 0:
+		if dmg_times > 1:
+			desc += "  攻:%s×%d" % [_green(dmg, dmg_bonus), dmg_times]
+		else:
+			desc += "  攻:%s" % _green(dmg, dmg_bonus)
+		if sword_intent_consume_bonus > 0:
+			desc += "(+剑意×%d)" % sword_intent_consume_bonus
+	if blk  > 0: desc += "  挡:%s"         % _green(blk,  blk_bonus)
+	if drw  > 0: desc += "  抽:%s"         % _green(drw,  drw_bonus)
+	if nrg  > 0: desc += "  能:%s"         % _green(nrg,  nrg_bonus)
+	if wk   > 0: desc += "  虚弱:%s"       % _green(wk,   wk_bonus)
+	if vul  > 0: desc += "  脆弱:%s"       % _green(vul,  vul_bonus)
+	if si_cap  > 0: desc += "  剑意上限+%s"  % _green(si_cap,  si_cap_bonus)
+	if si_bns  > 0: desc += "  剑意加成+%s"  % _green(si_bns,  si_bns_bonus)
+	if dpt     > 0: desc += "  多抽+%s张/回" % _green(dpt,     dpt_bonus)
+	if si_retain:   desc += "  剑意永续"
+	if si_blk  > 0: desc += "  剑意挡加成+%s"  % _green(si_blk, si_blk_bonus)
+	if nts     > 0: desc += "  下回合剑意+%s"   % _green(nts,    nts_bonus)
+	if ntd     > 0: desc += "  下回合抽+%s"     % _green(ntd,    ntd_bonus)
+	if fb      > 0: desc += "  终结技触发挡+%s" % _green(fb,     fb_bonus)
+	if fsb     > 0: desc += "  首剑意+挡%s"     % _green(fsb,    fsb_bonus)
+	if sins    > 0: desc += "  无招式时+剑意%s" % _green(sins,   sins_bonus)
+	if retain_si_if_target_attacks: desc += "  攻击意图→剑意不消耗"
+	var any_bonus: bool = effects.any(func(e: CardEffectData) -> bool: return e.upgrade_bonus > 0)
+	if not any_bonus:
+		desc += "\n（属性不变）"
+	return desc
+
+static func _green(val: int, bonus: int) -> String:
+	if bonus > 0:
+		return "[color=green]%d[/color]" % (val + bonus)
+	return "%d" % val
