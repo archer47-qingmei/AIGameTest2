@@ -22,9 +22,18 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 				if defender != null:
 					defender.add_vulnerable(effect.value)
 	if card.is_finisher:
-		attacker.sword_intent = 0
+		attacker.add_block(attacker.finisher_block_bonus)
+		var skip_consume: bool = card.retain_si_if_target_attacks \
+			and defender != null and defender.current_intent == "attack"
+		if not skip_consume:
+			attacker.sword_intent = 0
 	elif card.card_type == "招式":
+		var will_gain: bool = attacker.sword_intent < attacker.sword_intent_cap
+		if will_gain and not attacker.gained_sword_intent_this_turn:
+			attacker.add_block(attacker.first_si_block_bonus)
+			attacker.gained_sword_intent_this_turn = true
 		attacker.sword_intent = mini(attacker.sword_intent + 1, attacker.sword_intent_cap)
+		attacker.played_style_this_turn = true
 
 static func apply_damage(source: Combatant, target: Combatant, amount: int) -> void:
 	var dmg: int = amount
