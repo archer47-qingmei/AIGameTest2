@@ -27,7 +27,9 @@ func start_new_run(character: String) -> void:
 		_:
 			push_error("start_new_run: unknown character '%s'" % character)
 	for path in relic_paths:
-		player_state.relics.append((load(path) as RelicData).duplicate())
+		var relic: RelicData = (load(path) as RelicData).duplicate()
+		player_state.relics.append(relic)
+		RelicEngine.apply_on_equip(relic, player_state)
 
 	var zhan_tie: CardData      = preload("res://data/cards/zhan_tie.tres")
 	var po_feng: CardData       = preload("res://data/cards/po_feng.tres")
@@ -119,7 +121,9 @@ func start_debug_run(cards: Array[CardData]) -> void:
 	player_state = PlayerState.new()
 	player_state.character = "sword"
 	for path in CardPool.SWORD_START_RELICS:
-		player_state.relics.append((load(path) as RelicData).duplicate())
+		var relic: RelicData = (load(path) as RelicData).duplicate()
+		player_state.relics.append(relic)
+		RelicEngine.apply_on_equip(relic, player_state)
 	for card in cards:
 		player_state.deck.append(card.duplicate())
 	_setup_map()
@@ -156,5 +160,7 @@ func collect_gold(amount: int) -> void:
 func collect_relic() -> void:
 	if pending_relic == null:
 		return
-	player_state.relics.append(pending_relic.duplicate())
+	var relic: RelicData = pending_relic.duplicate()
+	player_state.relics.append(relic)
+	RelicEngine.apply_on_equip(relic, player_state)
 	pending_relic = null

@@ -32,6 +32,8 @@ func buy_relic(relic: RelicData, player_state: PlayerState) -> bool:
 	if player_state.gold < relic.price:
 		return false
 	player_state.gold -= relic.price
-	player_state.relics.append(relic.duplicate())
+	var equipped: RelicData = relic.duplicate()
+	player_state.relics.append(equipped)
+	RelicEngine.apply_on_equip(equipped, player_state)
 	inventory_relics.erase(relic)
 	return true
