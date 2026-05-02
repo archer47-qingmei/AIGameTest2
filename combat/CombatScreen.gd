@@ -5,7 +5,8 @@ extends Control
 @onready var _lbl_player_block: Label  = $VBoxContainer/PlayerCardRow/CardArea/CardStats/LblPlayerBlock
 @onready var _lbl_energy: Label        = $VBoxContainer/BottomRow/LeftSection/LblEnergy
 @onready var _lbl_sword_intent: Label  = $VBoxContainer/BottomRow/LeftSection/LblSwordIntent
-@onready var _player_card: Button      = $VBoxContainer/PlayerCardRow/CardArea/CardCenter/PlayerCard
+@onready var _player_card: Panel       = $VBoxContainer/PlayerCardRow/CardArea/CardCenter/PlayerCardPanel
+@onready var _player_status_row: HBoxContainer = $VBoxContainer/PlayerCardRow/CardArea/CardCenter/PlayerCardPanel/VBoxContainer/PlayerStatusRow
 @onready var _hand_container: HBoxContainer = $VBoxContainer/HandScroll/HandContainer
 @onready var _btn_end_turn: Button     = $VBoxContainer/BottomRow/RightSection/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
@@ -139,6 +140,7 @@ func _refresh_ui() -> void:
 		var lbl: Label = Label.new()
 		lbl.text = r.display_name
 		_relics_panel.add_child(lbl)
+	_build_status_row(_player_status_row, _engine.player)
 	_rebuild_hand()
 
 func _intent_text(action: EnemyActionData, e: Combatant) -> String:
