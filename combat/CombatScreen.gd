@@ -152,7 +152,8 @@ func _on_card_button_down(card_index: int) -> void:
 		card.get_description(),
 		card.target_type,
 		enemy_positions,
-		enemy_indices
+		enemy_indices,
+		_player_card.get_global_rect().get_center()
 	)
 
 func _shake_card(card_index: int) -> void:
