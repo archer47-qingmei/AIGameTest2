@@ -8,13 +8,8 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 			match effect.type:
 				"damage":
 					if defender != null:
-						var dmg_bonus: int = 0
-						if card.is_finisher:
-							dmg_bonus = attacker.sword_intent * card.sword_intent_consume_bonus
-						elif card.card_type == "招式":
-							dmg_bonus = attacker.sword_intent * attacker.sword_intent_damage_bonus
 						var hp_before := defender.hp
-						apply_damage(attacker, defender, effect.value + dmg_bonus)
+						apply_damage(attacker, defender, effect.value + _dmg_bonus(card, attacker))
 						hit_amounts.append(hp_before - defender.hp)
 				"block":
 					var blk_bonus: int = attacker.sword_intent * attacker.sword_intent_block_bonus
@@ -43,24 +38,25 @@ static func resolve(card: CardData, attacker: Combatant, defender: Combatant) ->
 static func preview_damage(card: CardData, attacker: Combatant, target: Combatant) -> Dictionary:
 	for effect: CardEffectData in card.effects:
 		if effect.type == "damage":
-			var dmg_bonus: int = 0
-			if card.is_finisher:
-				dmg_bonus = attacker.sword_intent * card.sword_intent_consume_bonus
-			elif card.card_type == "招式":
-				dmg_bonus = attacker.sword_intent * attacker.sword_intent_damage_bonus
-			var dmg: int = effect.value + dmg_bonus
-			if attacker.weak > 0:
-				dmg = int(dmg * 0.75)
-			if target.vulnerable > 0:
-				dmg = int(dmg * 1.5)
+			var dmg_bonus: int = _dmg_bonus(card, attacker)
+			var dmg: int = _apply_modifiers(effect.value + dmg_bonus, attacker, target)
 			var boosted: bool = (target.vulnerable > 0) or (dmg_bonus > 0)
 			return {per_hit = dmg, hits = effect.times, boosted = boosted}
 	return {}
 
 static func apply_damage(source: Combatant, target: Combatant, amount: int) -> void:
-	var dmg: int = amount
+	target.take_damage(_apply_modifiers(amount, source, target))
+
+static func _dmg_bonus(card: CardData, attacker: Combatant) -> int:
+	if card.is_finisher:
+		return attacker.sword_intent * card.sword_intent_consume_bonus
+	if card.card_type == "招式":
+		return attacker.sword_intent * attacker.sword_intent_damage_bonus
+	return 0
+
+static func _apply_modifiers(dmg: int, source: Combatant, target: Combatant) -> int:
 	if source.weak > 0:
 		dmg = int(dmg * 0.75)
 	if target.vulnerable > 0:
 		dmg = int(dmg * 1.5)
-	target.take_damage(dmg)
+	return dmg
