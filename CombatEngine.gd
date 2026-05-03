@@ -271,6 +271,16 @@ func _do_enemy_turn() -> void:
 			"charge":
 				enemies[i].is_charging = true
 				enemies[i].charge_value = action.value
+			"pre_charge":
+				pass
+			"group_strengthen":
+				for j in enemies.size():
+					if enemies[j].hp > 0:
+						enemies[j].strength += action.value
+			"group_block":
+				for j in enemies.size():
+					if enemies[j].hp > 0:
+						enemies[j].add_block(action.value)
 			"poison":
 				for _j in action.value:
 					_draw_pile.append(VENOM_CARD.duplicate())

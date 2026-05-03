@@ -129,7 +129,8 @@ func _refresh_ui() -> void:
 	_rebuild_hand()
 
 func _intent_text(action: EnemyActionData, e: Combatant) -> String:
-	var val: int = int(action.value * 0.75) if e.weak > 0 else action.value
+	var base: int = action.value + e.strength
+	var val: int = int(base * 0.75) if e.weak > 0 else base
 	match action.type:
 		"attack":
 			return "意图：攻击 %d" % val
@@ -143,6 +144,12 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 			return "意图：连斩 %d ×%d" % [val, action.count]
 		"charge":
 			return "意图：蓄力"
+		"pre_charge":
+			return "意图：蓄力"
+		"group_strengthen":
+			return "意图：强化 +%d力量" % action.value
+		"group_block":
+			return "意图：守护 +%d格挡" % action.value
 		"poison":
 			return "意图：投毒 %d" % action.value
 		"discard_curse":
