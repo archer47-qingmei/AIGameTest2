@@ -138,11 +138,23 @@ func _on_card_button_down(card_index: int) -> void:
 	btn.position.y -= 20
 	var enemy_positions: Array[Vector2] = []
 	var enemy_indices: Array[int] = []
+	var damage_labels: Array[String] = []
+	var damage_boosted: Array[bool] = []
 	for i in _engine.enemies.size():
 		if _engine.enemies[i].hp > 0:
 			var panel := _enemies_container.get_child(i) as Panel
 			enemy_positions.append(panel.get_global_rect().get_center())
 			enemy_indices.append(i)
+			var preview := EffectResolver.preview_damage(card, _engine.player, _engine.enemies[i])
+			if preview.is_empty():
+				damage_labels.append("")
+				damage_boosted.append(false)
+			elif preview.hits == 1:
+				damage_labels.append(str(preview.per_hit))
+				damage_boosted.append(preview.boosted)
+			else:
+				damage_labels.append("%d×%d" % [preview.per_hit, preview.hits])
+				damage_boosted.append(preview.boosted)
 	if card.target_type == "all":
 		for idx in enemy_indices:
 			(_enemies_container.get_child(idx) as Panel).modulate = Color(1.3, 1.3, 1.0)
@@ -153,7 +165,9 @@ func _on_card_button_down(card_index: int) -> void:
 		card.target_type,
 		enemy_positions,
 		enemy_indices,
-		_player_card.get_global_rect().get_center()
+		_player_card.get_global_rect().get_center(),
+		damage_labels,
+		damage_boosted
 	)
 
 func _shake_card(card_index: int) -> void:
