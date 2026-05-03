@@ -194,7 +194,10 @@ func _layout_hand() -> void:
 		step = min(natural_step, max_step)
 	var total_w := CARD_W + float(n - 1) * step
 	var start_x := (W - total_w) / 2.0
-	var start_y := (CONTAINER_H - CARD_H) / 2.0
+	var H := _hand_area.size.y
+	if H == 0.0:
+		H = CONTAINER_H
+	var start_y := (H - CARD_H) / 2.0
 	for i in n:
 		_hand_buttons[i].position = Vector2(start_x + float(i) * step, start_y)
 
