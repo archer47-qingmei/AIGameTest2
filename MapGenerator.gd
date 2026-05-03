@@ -4,18 +4,12 @@ extends RefCounted
 const TOTAL_COLUMNS: int = 10
 
 const EARLY_GROUP_PATHS: Array[String] = [
-	"res://data/enemy_groups/single_jaw_worm.tres",
-	"res://data/enemy_groups/single_fire_lizard.tres",
-	"res://data/enemy_groups/pair_early.tres",
 	"res://data/enemy_groups/single_stone_demon.tres",
 	"res://data/enemy_groups/pair_fire_bat.tres",
 	"res://data/enemy_groups/triple_fire_bat.tres",
 	"res://data/enemy_groups/single_bronze_corpse.tres",
 ]
 const MID_GROUP_PATHS: Array[String] = [
-	"res://data/enemy_groups/single_poison_spider.tres",
-	"res://data/enemy_groups/single_swamp_slime.tres",
-	"res://data/enemy_groups/pair_mid.tres",
 	"res://data/enemy_groups/single_illusion_moth.tres",
 	"res://data/enemy_groups/single_poison_slime.tres",
 ]
