@@ -1,16 +1,19 @@
 class_name EffectResolver
 extends RefCounted
 
-static func resolve(card: CardData, attacker: Combatant, defender: Combatant) -> Array[int]:
+static func resolve(card: CardData, attacker: Combatant, defender: Combatant, out_block: Array[int]) -> Array[int]:
 	var hit_amounts: Array[int] = []
+	out_block.clear()
 	for effect: CardEffectData in card.effects:
 		for _i in effect.times:
 			match effect.type:
 				"damage":
 					if defender != null:
 						var hp_before := defender.hp
+						var blk_before := defender.block
 						apply_damage(attacker, defender, effect.value + _dmg_bonus(card, attacker))
 						hit_amounts.append(hp_before - defender.hp)
+						out_block.append(blk_before - defender.block)
 				"block":
 					var blk_bonus: int = attacker.sword_intent * attacker.sword_intent_block_bonus
 					attacker.add_block(effect.value + blk_bonus)

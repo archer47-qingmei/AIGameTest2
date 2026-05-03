@@ -40,6 +40,7 @@ func _ready() -> void:
 	_engine.combat_ended.connect(_on_combat_ended)
 	_engine.hits_dealt.connect(_on_hits_dealt)
 	_engine.player_damaged.connect(_on_player_damaged)
+	_engine.player_gained_block.connect(_on_player_gained_block)
 	_btn_end_turn.pressed.connect(_engine.end_turn)
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
 	_btn_get_reward.pressed.connect(_on_proceed)
@@ -290,18 +291,63 @@ func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
 		lbl.text = card.get_description()
 		container.add_child(lbl)
 
-func _on_hits_dealt(enemy_index: int, amounts: Array[int]) -> void:
+func _on_hits_dealt(enemy_index: int, hp_amounts: Array[int], block_amounts: Array[int]) -> void:
 	var panel: Panel = _enemies_container.get_child(enemy_index) as Panel
 	if panel == null:
 		return
 	var tw := create_tween()
-	for amount: int in amounts:
-		if amount > 0:
-			tw.tween_callback(_play_damage_animation.bind(panel, str(amount), ENEMY_SHAKE_KF))
+	for i in hp_amounts.size():
+		var hp: int = hp_amounts[i]
+		var blk: int = block_amounts[i] if i < block_amounts.size() else 0
+		if hp > 0:
+			tw.tween_callback(_play_damage_animation.bind(panel, str(hp), ENEMY_SHAKE_KF))
+			tw.tween_interval(0.22)
+		elif blk > 0:
+			tw.tween_callback(_play_blocked_animation.bind(panel, blk))
 			tw.tween_interval(0.22)
 
 func _on_player_damaged(amount: int) -> void:
 	_play_damage_animation(_player_card, "-%d" % amount, PLAYER_SHAKE_KF)
+
+func _on_player_gained_block(amount: int) -> void:
+	_player_card.pivot_offset = _player_card.size / 2
+	var flash := create_tween()
+	flash.tween_property(_player_card, "modulate", Color(0.5, 0.8, 1.0), 0.05)
+	flash.tween_property(_player_card, "modulate", Color(1.0, 1.0, 1.0), 0.2)
+	var lbl := Label.new()
+	lbl.text = "+%d 格挡" % amount
+	lbl.add_theme_font_size_override("font_size", 20)
+	lbl.pivot_offset = Vector2(30, 10)
+	lbl.z_index = 10
+	lbl.add_theme_color_override("font_color", Color(0.4, 0.8, 1.0))
+	add_child(lbl)
+	lbl.global_position = _player_card.get_global_rect().get_center() - Vector2(30, 10)
+	var flyout := create_tween().set_parallel(true)
+	flyout.tween_property(lbl, "position:y", lbl.position.y - 30.0, 0.4)
+	flyout.tween_property(lbl, "modulate:a", 0.0, 0.3).set_delay(0.1)
+	flyout.finished.connect(lbl.queue_free)
+
+func _play_blocked_animation(target: Control, blk_absorbed: int) -> void:
+	target.pivot_offset = target.size / 2
+	var flash := create_tween()
+	flash.tween_property(target, "modulate", Color(0.7, 0.9, 1.0), 0.05)
+	flash.tween_property(target, "modulate", Color(1.0, 1.0, 1.0), 0.15)
+	var shake := create_tween()
+	for kf: Vector2 in [Vector2(1.05, 0.97), Vector2(0.97, 1.02)]:
+		shake.tween_property(target, "scale", kf, 0.07)
+	shake.tween_property(target, "scale", Vector2(1.0, 1.0), 0.07)
+	var lbl := Label.new()
+	lbl.text = "格挡 -%d" % blk_absorbed
+	lbl.add_theme_font_size_override("font_size", 18)
+	lbl.pivot_offset = Vector2(30, 10)
+	lbl.z_index = 10
+	lbl.add_theme_color_override("font_color", Color(0.5, 0.8, 1.0))
+	add_child(lbl)
+	lbl.global_position = target.get_global_rect().get_center() - Vector2(30, 10)
+	var flyout := create_tween().set_parallel(true)
+	flyout.tween_property(lbl, "position:y", lbl.position.y - 20.0, 0.4)
+	flyout.tween_property(lbl, "modulate:a", 0.0, 0.35).set_delay(0.05)
+	flyout.finished.connect(lbl.queue_free)
 
 func _play_damage_animation(target: Control, label_text: String, shake_kf: Array[Vector2]) -> void:
 	target.pivot_offset = target.size / 2

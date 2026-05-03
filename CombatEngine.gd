@@ -6,8 +6,9 @@ const VENOM_CARD: CardData = preload("res://data/cards/venom.tres")
 
 signal state_changed
 signal combat_ended(result: String)
-signal hits_dealt(enemy_index: int, amounts: Array[int])
+signal hits_dealt(enemy_index: int, hp_amounts: Array[int], block_amounts: Array[int])
 signal player_damaged(amount: int)
+signal player_gained_block(amount: int)
 
 var player: Combatant
 var enemies: Array[Combatant] = []
@@ -63,17 +64,23 @@ func play_card(card_index: int, target_index: int) -> bool:
 	if card.cost > energy:
 		return false
 	energy -= card.cost
+	var block_before := player.block
 	if card.target_type == "all":
 		for i in enemies.size():
 			if enemies[i].hp > 0:
-				var amounts: Array[int] = EffectResolver.resolve(card, player, enemies[i])
-				if not amounts.is_empty():
-					hits_dealt.emit(i, amounts)
+				var blk_amounts: Array[int] = []
+				var hp_amounts: Array[int] = EffectResolver.resolve(card, player, enemies[i], blk_amounts)
+				if not hp_amounts.is_empty():
+					hits_dealt.emit(i, hp_amounts, blk_amounts)
 	else:
 		var target: Combatant = enemies[target_index] if target_index >= 0 else null
-		var amounts: Array[int] = EffectResolver.resolve(card, player, target)
-		if target_index >= 0 and not amounts.is_empty():
-			hits_dealt.emit(target_index, amounts)
+		var blk_amounts: Array[int] = []
+		var hp_amounts: Array[int] = EffectResolver.resolve(card, player, target, blk_amounts)
+		if target_index >= 0 and not hp_amounts.is_empty():
+			hits_dealt.emit(target_index, hp_amounts, blk_amounts)
+	var block_gained := player.block - block_before
+	if block_gained > 0:
+		player_gained_block.emit(block_gained)
 	_apply_engine_effects(card)
 	hand.remove_at(card_index)
 	if card.card_type == "功法":
