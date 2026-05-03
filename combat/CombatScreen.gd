@@ -139,6 +139,10 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 			return "意图：攻击 %d + 虚弱" % val
 		"attack_vulnerable":
 			return "意图：攻击 %d + 易伤" % val
+		"multi_attack":
+			return "意图：连斩 %d ×%d" % [val, action.count]
+		"charge":
+			return "意图：蓄力"
 		"poison":
 			return "意图：投毒 %d" % action.value
 		"discard_curse":

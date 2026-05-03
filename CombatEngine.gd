@@ -23,6 +23,7 @@ var _discard_pile: Array[CardData] = []
 var _exhaust_pile: Array[CardData] = []
 var _enemy_data_list: Array[EnemyData] = []
 var _relics: Array[RelicData] = []
+var _pending_actions: Array[EnemyActionData] = []
 
 func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_hp: int, max_hp: int, relics: Array[RelicData] = []) -> void:
 	assert(not enemy_group.enemies.is_empty(), "EnemyGroupData has no enemies")
@@ -48,8 +49,34 @@ func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_h
 	_start_player_turn()
 
 func get_enemy_action(i: int) -> EnemyActionData:
-	var actions: Array = _enemy_data_list[i].actions
-	return actions[(turn_number - 1) % actions.size()]
+	return _pending_actions[i]
+
+func _resolve_enemy_actions() -> void:
+	_pending_actions.resize(enemies.size())
+	for i in enemies.size():
+		if enemies[i].hp <= 0:
+			continue
+		if enemies[i].is_charging:
+			var a := EnemyActionData.new()
+			a.type = "charge_attack"
+			a.value = enemies[i].charge_value
+			_pending_actions[i] = a
+		elif _enemy_data_list[i].random_actions:
+			_pending_actions[i] = _weighted_random_action(_enemy_data_list[i].actions)
+		else:
+			_pending_actions[i] = _enemy_data_list[i].actions[(turn_number - 1) % _enemy_data_list[i].actions.size()]
+
+func _weighted_random_action(actions: Array[EnemyActionData]) -> EnemyActionData:
+	var total: int = 0
+	for a: EnemyActionData in actions:
+		total += a.weight
+	var roll: int = randi() % total
+	var cumulative: int = 0
+	for a: EnemyActionData in actions:
+		cumulative += a.weight
+		if roll < cumulative:
+			return a
+	return actions[-1]
 
 func get_draw_pile() -> Array[CardData]:
 	return _draw_pile.duplicate()
@@ -136,6 +163,7 @@ func _start_player_turn() -> void:
 	if player.next_turn_draw > 0:
 		_draw_cards(player.next_turn_draw)
 		player.next_turn_draw = 0
+	_resolve_enemy_actions()
 	for i in enemies.size():
 		if enemies[i].hp > 0:
 			enemies[i].current_intent = get_enemy_action(i).type
@@ -203,6 +231,8 @@ func _do_enemy_turn() -> void:
 		enemies[i].block = 0
 		enemies[i].vulnerable = max(0, enemies[i].vulnerable - 1)
 		var action: EnemyActionData = get_enemy_action(i)
+		enemies[i].is_charging = false
+		enemies[i].charge_value = 0
 		match action.type:
 			"attack", "charge_attack":
 				var hp_before: int = player.hp
@@ -227,6 +257,17 @@ func _do_enemy_turn() -> void:
 					player_damaged.emit(dmg)
 				player.add_vulnerable(1)
 				enemies[i].weak = max(0, enemies[i].weak - 1)
+			"multi_attack":
+				var hp_before: int = player.hp
+				for _hit in action.count:
+					EffectResolver.apply_damage(enemies[i], player, action.value)
+				var dmg: int = hp_before - player.hp
+				if dmg > 0:
+					player_damaged.emit(dmg)
+				enemies[i].weak = max(0, enemies[i].weak - 1)
+			"charge":
+				enemies[i].is_charging = true
+				enemies[i].charge_value = action.value
 			"poison":
 				for _j in action.value:
 					_draw_pile.append(VENOM_CARD.duplicate())
