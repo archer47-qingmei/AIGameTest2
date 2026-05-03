@@ -8,7 +8,15 @@ signal target_changed(old_engine_index: int, new_engine_index: int)
 enum State { IDLE, LIFTED, DRAGGING }
 
 const DRAG_THRESHOLD := 8.0
+const TARGET_NONE := "none"
+const TARGET_SINGLE := "single"
+const TARGET_ALL := "all"
+const GHOST_SIZE := Vector2(110.0, 150.0)
+const PLAY_ZONE_RATIO := 0.65
+const LINE_WIDTH := 2.0
+const LINE_DASH := 12.0
 
+var _drag_gen: int = 0
 var _state: State = State.IDLE
 var _card_index: int = -1
 var _target_type: String = ""
@@ -22,6 +30,10 @@ var _target_line_ends: Array[Vector2] = []
 func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 		target_type: String, enemy_global_positions: Array[Vector2],
 		enemy_engine_indices: Array[int]) -> void:
+	_drag_gen += 1
+	if _ghost_card != null:
+		_ghost_card.queue_free()
+		_ghost_card = null
 	_card_index = card_index
 	_target_type = target_type
 	_origin_local_pos = to_local(card_global_pos)
@@ -33,15 +45,15 @@ func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 	_state = State.LIFTED
 	mouse_filter = MOUSE_FILTER_STOP
 	_create_ghost(card_text, _origin_local_pos)
-	if target_type == "all":
+	if target_type == TARGET_ALL:
 		_target_line_ends = _enemy_local_positions.duplicate()
 		if not _enemy_local_positions.is_empty():
 			_current_slot = 0
 
 func _create_ghost(text: String, local_pos: Vector2) -> void:
 	_ghost_card = Panel.new()
-	_ghost_card.custom_minimum_size = Vector2(110, 150)
-	_ghost_card.size = Vector2(110, 150)
+	_ghost_card.custom_minimum_size = GHOST_SIZE
+	_ghost_card.size = GHOST_SIZE
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.2, 0.2, 0.2)
 	style.border_width_left = 2
@@ -85,8 +97,8 @@ func _on_move(local_pos: Vector2) -> void:
 			_state = State.DRAGGING
 	if _state != State.DRAGGING:
 		return
-	_ghost_card.position = local_pos - Vector2(55, 75)
-	if _target_type == "single":
+	_ghost_card.position = local_pos - GHOST_SIZE / 2.0
+	if _target_type == TARGET_SINGLE:
 		var new_slot := _detect_slot(local_pos.x)
 		if new_slot != _current_slot:
 			var old_engine := _engine_index(_current_slot)
@@ -98,13 +110,13 @@ func _on_move(local_pos: Vector2) -> void:
 
 func _on_release(local_pos: Vector2) -> void:
 	var viewport_h := get_viewport_rect().size.y
-	var above := local_pos.y < viewport_h * 0.65
+	var above := local_pos.y < viewport_h * PLAY_ZONE_RATIO
 	var can_play := false
 	if _state == State.DRAGGING:
 		match _target_type:
-			"none", "all":
+			TARGET_NONE, TARGET_ALL:
 				can_play = above
-			"single":
+			TARGET_SINGLE:
 				can_play = above and _current_slot >= 0
 	if can_play:
 		_finish_play()
@@ -113,7 +125,7 @@ func _on_release(local_pos: Vector2) -> void:
 
 func _finish_play() -> void:
 	var idx := _card_index
-	var engine_idx := _engine_index(_current_slot) if _target_type == "single" else -1
+	var engine_idx := _engine_index(_current_slot) if _target_type == TARGET_SINGLE else -1
 	_cleanup()
 	card_played.emit(idx, engine_idx)
 
@@ -123,9 +135,12 @@ func _start_cancel() -> void:
 		_cleanup()
 		drag_cancelled.emit(idx_capture)
 		return
+	var gen_capture := _drag_gen
 	var tw := create_tween()
 	tw.tween_property(_ghost_card, "position", _origin_local_pos, 0.15).set_ease(Tween.EASE_OUT)
 	tw.tween_callback(func() -> void:
+		if gen_capture != _drag_gen:
+			return
 		_cleanup()
 		drag_cancelled.emit(idx_capture)
 	)
@@ -164,6 +179,6 @@ func _engine_index(slot: int) -> int:
 func _draw() -> void:
 	if _state != State.DRAGGING or _ghost_card == null:
 		return
-	var from := _ghost_card.position + Vector2(55, 0)
+	var from := _ghost_card.position + Vector2(GHOST_SIZE.x / 2.0, 0.0)
 	for target_pos: Vector2 in _target_line_ends:
-		draw_dashed_line(from, target_pos, Color(1.0, 1.0, 1.0, 0.85), 2.0, 12.0)
+		draw_dashed_line(from, target_pos, Color(1.0, 1.0, 1.0, 0.85), LINE_WIDTH, LINE_DASH)
