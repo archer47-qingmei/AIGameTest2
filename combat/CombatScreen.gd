@@ -1,5 +1,12 @@
 extends Control
 
+const ENEMY_SHAKE_KF: Array[Vector2] = [
+	Vector2(1.15, 0.85), Vector2(0.9, 1.1), Vector2(1.05, 0.95)
+]
+const PLAYER_SHAKE_KF: Array[Vector2] = [
+	Vector2(1.05, 0.95), Vector2(0.97, 1.03), Vector2(1.02, 0.99)
+]
+
 @onready var _enemies_container: HBoxContainer = $VBoxContainer/EnemiesContainer
 @onready var _lbl_player_hp: Label     = $VBoxContainer/PlayerCardRow/CardArea/CardStats/LblPlayerHP
 @onready var _lbl_player_block: Label  = $VBoxContainer/PlayerCardRow/CardArea/CardStats/LblPlayerBlock
@@ -261,19 +268,18 @@ func _on_combat_ended(result: String) -> void:
 		GameManager.go_to_game_over()
 
 func _on_view_deck_pressed() -> void:
+	var draw_pile := _engine.get_draw_pile()
+	var discard_pile := _engine.get_discard_pile()
+	var exhaust_pile := _engine.get_exhaust_pile()
 	var all_cards: Array[CardData] = []
-	for card: CardData in _engine.hand:
-		all_cards.append(card)
-	for card: CardData in _engine.get_draw_pile():
-		all_cards.append(card)
-	for card: CardData in _engine.get_discard_pile():
-		all_cards.append(card)
-	for card: CardData in _engine.get_exhaust_pile():
-		all_cards.append(card)
+	all_cards.append_array(_engine.hand)
+	all_cards.append_array(draw_pile)
+	all_cards.append_array(discard_pile)
+	all_cards.append_array(exhaust_pile)
 	_populate_list(_all_cards_list, all_cards)
-	_populate_list(_draw_list, _engine.get_draw_pile())
-	_populate_list(_discard_list, _engine.get_discard_pile())
-	_populate_list(_exhaust_list, _engine.get_exhaust_pile())
+	_populate_list(_draw_list, draw_pile)
+	_populate_list(_discard_list, discard_pile)
+	_populate_list(_exhaust_list, exhaust_pile)
 	_deck_view_panel.show()
 
 func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
@@ -291,59 +297,31 @@ func _on_hits_dealt(enemy_index: int, amounts: Array[int]) -> void:
 	var tw := create_tween()
 	for amount: int in amounts:
 		if amount > 0:
-			tw.tween_callback(_play_hit_animation.bind(panel, amount))
+			tw.tween_callback(_play_damage_animation.bind(panel, str(amount), ENEMY_SHAKE_KF))
 			tw.tween_interval(0.22)
 
-func _play_hit_animation(panel: Panel, amount: int) -> void:
-	panel.pivot_offset = panel.size / 2
-
-	var flash_tween: Tween = create_tween()
-	flash_tween.tween_property(panel, "modulate", Color(1.0, 0.2, 0.2), 0.05)
-	flash_tween.tween_property(panel, "modulate", Color(1.0, 1.0, 1.0), 0.2)
-
-	var shake_tween: Tween = create_tween()
-	shake_tween.tween_property(panel, "scale", Vector2(1.15, 0.85), 0.06)
-	shake_tween.tween_property(panel, "scale", Vector2(0.9, 1.1), 0.06)
-	shake_tween.tween_property(panel, "scale", Vector2(1.05, 0.95), 0.06)
-	shake_tween.tween_property(panel, "scale", Vector2(1.0, 1.0), 0.07)
-
-	var lbl: Label = Label.new()
-	lbl.text = str(amount)
-	lbl.add_theme_font_size_override("font_size", 24)
-	lbl.pivot_offset = Vector2(15, 12)
-	lbl.z_index = 10
-	add_child(lbl)
-	lbl.global_position = panel.get_global_rect().get_center() - Vector2(15, 12)
-
-	var direction: float = 1.0 if randi() % 2 == 0 else -1.0
-	var drift_x: float = direction * randf_range(20.0, 60.0)
-
-	var flyout_tween: Tween = create_tween().set_parallel(true)
-	flyout_tween.tween_property(lbl, "scale", Vector2(1.5, 1.5), 0.15).set_ease(Tween.EASE_OUT)
-	flyout_tween.tween_property(lbl, "position:x", lbl.position.x + drift_x, 0.4)
-	flyout_tween.tween_property(lbl, "modulate:a", 0.0, 0.3).set_delay(0.1)
-	flyout_tween.finished.connect(lbl.queue_free)
-
 func _on_player_damaged(amount: int) -> void:
-	_player_card.pivot_offset = _player_card.size / 2
+	_play_damage_animation(_player_card, "-%d" % amount, PLAYER_SHAKE_KF)
+
+func _play_damage_animation(target: Control, label_text: String, shake_kf: Array[Vector2]) -> void:
+	target.pivot_offset = target.size / 2
 
 	var flash_tween: Tween = create_tween()
-	flash_tween.tween_property(_player_card, "modulate", Color(1.0, 0.2, 0.2), 0.05)
-	flash_tween.tween_property(_player_card, "modulate", Color(1.0, 1.0, 1.0), 0.2)
+	flash_tween.tween_property(target, "modulate", Color(1.0, 0.2, 0.2), 0.05)
+	flash_tween.tween_property(target, "modulate", Color(1.0, 1.0, 1.0), 0.2)
 
 	var shake_tween: Tween = create_tween()
-	shake_tween.tween_property(_player_card, "scale", Vector2(1.05, 0.95), 0.06)
-	shake_tween.tween_property(_player_card, "scale", Vector2(0.97, 1.03), 0.06)
-	shake_tween.tween_property(_player_card, "scale", Vector2(1.02, 0.99), 0.06)
-	shake_tween.tween_property(_player_card, "scale", Vector2(1.0, 1.0), 0.07)
+	for kf: Vector2 in shake_kf:
+		shake_tween.tween_property(target, "scale", kf, 0.06)
+	shake_tween.tween_property(target, "scale", Vector2(1.0, 1.0), 0.07)
 
 	var lbl: Label = Label.new()
-	lbl.text = "-%d" % amount
+	lbl.text = label_text
 	lbl.add_theme_font_size_override("font_size", 24)
 	lbl.pivot_offset = Vector2(15, 12)
 	lbl.z_index = 10
 	add_child(lbl)
-	lbl.global_position = _player_card.get_global_rect().get_center() - Vector2(15, 12)
+	lbl.global_position = target.get_global_rect().get_center() - Vector2(15, 12)
 
 	var direction: float = 1.0 if randi() % 2 == 0 else -1.0
 	var drift_x: float = direction * randf_range(20.0, 60.0)
