@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_attack1"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 5
+
+[sub_resource type="Resource" id="Action_precharge"]
+script = ExtResource("2_EnemyActionData")
+type = "pre_charge"
+value = 0
+
+[sub_resource type="Resource" id="Action_attack2"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 14
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "雷蛙"
+hp = 56
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_attack1"), SubResource("Action_precharge"), SubResource("Action_attack2")])
