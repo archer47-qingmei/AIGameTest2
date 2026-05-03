@@ -75,12 +75,13 @@ func _build_enemy_panels() -> void:
 		var btn := Button.new()
 		btn.name = "BtnOverlay"
 		btn.flat = true
-		btn.anchors_preset = Control.PRESET_FULL_RECT
 		btn.pressed.connect(_on_enemy_pressed.bind(i))
 		btn.disabled = true
 		panel.add_child(btn)
 
 		_enemies_container.add_child(panel)
+		vbox.anchors_preset = Control.PRESET_FULL_RECT
+		btn.anchors_preset = Control.PRESET_FULL_RECT
 
 func _on_card_pressed(card_index: int) -> void:
 	if _pending_card_index >= 0:
