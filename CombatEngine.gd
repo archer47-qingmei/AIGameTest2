@@ -204,17 +204,36 @@ func _do_enemy_turn() -> void:
 		enemies[i].vulnerable = max(0, enemies[i].vulnerable - 1)
 		var action: EnemyActionData = get_enemy_action(i)
 		match action.type:
-			"attack":
+			"attack", "charge_attack":
 				var hp_before: int = player.hp
 				EffectResolver.apply_damage(enemies[i], player, action.value)
 				var dmg: int = hp_before - player.hp
 				if dmg > 0:
 					player_damaged.emit(dmg)
 				enemies[i].weak = max(0, enemies[i].weak - 1)
+			"attack_weak":
+				var hp_before: int = player.hp
+				EffectResolver.apply_damage(enemies[i], player, action.value)
+				var dmg: int = hp_before - player.hp
+				if dmg > 0:
+					player_damaged.emit(dmg)
+				player.add_weak(1)
+				enemies[i].weak = max(0, enemies[i].weak - 1)
+			"attack_vulnerable":
+				var hp_before: int = player.hp
+				EffectResolver.apply_damage(enemies[i], player, action.value)
+				var dmg: int = hp_before - player.hp
+				if dmg > 0:
+					player_damaged.emit(dmg)
+				player.add_vulnerable(1)
+				enemies[i].weak = max(0, enemies[i].weak - 1)
 			"poison":
 				for _j in action.value:
 					_draw_pile.append(VENOM_CARD.duplicate())
 				_draw_pile.shuffle()
+			"discard_curse":
+				for _j in action.value:
+					_discard_pile.append(VENOM_CARD.duplicate())
 			_:
 				enemies[i].add_block(action.value)
 
