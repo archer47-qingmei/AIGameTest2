@@ -7,7 +7,7 @@ extends Control
 @onready var _lbl_sword_intent: Label  = $VBoxContainer/BottomRow/LeftSection/LblSwordIntent
 @onready var _player_card: Panel       = $VBoxContainer/PlayerCardRow/CardArea/CardCenter/PlayerCardPanel
 @onready var _player_status_row: HBoxContainer = $VBoxContainer/PlayerCardRow/CardArea/CardCenter/PlayerCardPanel/VBoxContainer/PlayerStatusRow
-@onready var _hand_container: HBoxContainer = $VBoxContainer/HandScroll/HandContainer
+@onready var _hand_area: Control = $VBoxContainer/HandArea
 @onready var _btn_end_turn: Button     = $VBoxContainer/BottomRow/RightSection/BtnEndTurn
 @onready var _lbl_result: Label        = $LblResult
 @onready var _btn_return_menu: Button  = $BtnReturnMenu
@@ -48,6 +48,7 @@ func _ready() -> void:
 	)
 	_build_enemy_panels()
 	_engine.state_changed.connect(_refresh_ui)
+	_hand_area.resized.connect(_layout_hand)
 	_refresh_ui()
 
 func _build_enemy_panels() -> void:
@@ -162,16 +163,40 @@ func _rebuild_hand() -> void:
 	_hand_buttons.clear()
 	for i in _engine.hand.size():
 		var card: CardData = _engine.hand[i]
-		var btn: Button = Button.new()
+		var btn := Button.new()
 		btn.custom_minimum_size = Vector2(110, 150)
+		btn.size = Vector2(110, 150)
 		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		btn.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 		btn.text = card.get_description()
 		btn.pressed.connect(_on_card_pressed.bind(i))
-		_hand_container.add_child(btn)
+		_hand_area.add_child(btn)
 		_hand_buttons.append(btn)
+	_layout_hand()
 	if _pending_card_index >= 0:
 		_set_targeting_mode(true)
+
+func _layout_hand() -> void:
+	var n := _hand_buttons.size()
+	if n == 0:
+		return
+	const CARD_W := 110.0
+	const CARD_H := 150.0
+	const CONTAINER_H := 170.0
+	const MIN_GAP := 8.0
+	var W := _hand_area.size.x
+	if W == 0.0:
+		W = get_viewport_rect().size.x
+	var step := 0.0
+	if n > 1:
+		var natural_step := CARD_W + MIN_GAP
+		var max_step := (W - CARD_W) / float(n - 1)
+		step = min(natural_step, max_step)
+	var total_w := CARD_W + float(n - 1) * step
+	var start_x := (W - total_w) / 2.0
+	var start_y := (CONTAINER_H - CARD_H) / 2.0
+	for i in n:
+		_hand_buttons[i].position = Vector2(start_x + float(i) * step, start_y)
 
 func _on_combat_ended(result: String) -> void:
 	_pending_card_index = -1
