@@ -114,7 +114,7 @@ func _on_move(local_pos: Vector2) -> void:
 			var old_engine := _engine_index(_current_slot)
 			var new_engine := _engine_index(new_slot)
 			_current_slot = new_slot
-			_target_line_ends = [_enemy_local_positions[new_slot]] if new_slot >= 0 else []
+			_target_line_ends = [_enemy_local_positions[new_slot]]
 			target_changed.emit(old_engine, new_engine)
 	queue_redraw()
 
