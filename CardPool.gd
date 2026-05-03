@@ -38,6 +38,8 @@ const SWORD_START_RELICS: Array[String] = [
 ]
 
 const SWORD_REWARD_CARDS: Array[String] = [
+	"res://data/cards/bash.tres",
+	"res://data/cards/entangle.tres",
 	"res://data/cards/zhan_tie.tres",
 	"res://data/cards/po_feng.tres",
 	"res://data/cards/ce_bu.tres",
