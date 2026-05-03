@@ -17,7 +17,10 @@ const MID_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/triple_fire_bat.tres",
 	"res://data/enemy_groups/banner_fire_bat_pair.tres",
 ]
-const ELITE_GROUP_PATH: String = "res://data/enemy_groups/single_elite_sorcerer.tres"
+const ELITE_GROUP_PATHS: Array[String] = [
+	"res://data/enemy_groups/single_elite_sorcerer.tres",
+	"res://data/enemy_groups/single_three_headed_python.tres",
+]
 const BOSS_GROUP_PATH: String = "res://data/enemy_groups/single_boss.tres"
 const ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"
 const BOSS_REWARD_RELIC_PATH: String = "res://data/relics/life_ring.tres"
@@ -57,7 +60,7 @@ static func _make_column(col: int) -> Array[NodeData]:
 			NodeConfig.Type.COMBAT:
 				nd.config.enemy_group = _random_combat_group(col)
 			NodeConfig.Type.ELITE:
-				nd.config.enemy_group = load(ELITE_GROUP_PATH) as EnemyGroupData
+				nd.config.enemy_group = load(ELITE_GROUP_PATHS[randi() % ELITE_GROUP_PATHS.size()]) as EnemyGroupData
 				nd.config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
 		result.append(nd)
 	return result

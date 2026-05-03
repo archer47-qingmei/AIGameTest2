@@ -8,7 +8,7 @@ func _ready() -> void:
 	var all_paths: Array[String] = []
 	all_paths.append_array(MapGenerator.EARLY_GROUP_PATHS)
 	all_paths.append_array(MapGenerator.MID_GROUP_PATHS)
-	all_paths.append(MapGenerator.ELITE_GROUP_PATH)
+	all_paths.append_array(MapGenerator.ELITE_GROUP_PATHS)
 	all_paths.append(MapGenerator.BOSS_GROUP_PATH)
 	for path in all_paths:
 		var group: EnemyGroupData = load(path) as EnemyGroupData
