@@ -42,12 +42,13 @@ func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 		_ghost_card = null
 	_card_index = card_index
 	_target_type = target_type
-	_origin_local_pos = get_global_transform().affine_inverse() * card_global_pos
+	var inv := get_global_transform().affine_inverse()
+	_origin_local_pos = inv * card_global_pos
 	_enemy_engine_indices = enemy_engine_indices.duplicate()
 	_enemy_local_positions.clear()
 	for gp in enemy_global_positions:
-		_enemy_local_positions.append(get_global_transform().affine_inverse() * gp)
-	_player_local_pos = get_global_transform().affine_inverse() * player_global_pos
+		_enemy_local_positions.append(inv * gp)
+	_player_local_pos = inv * player_global_pos
 	_damage_labels = damage_labels.duplicate()
 	_damage_boosted = damage_boosted.duplicate()
 	_current_slot = -1
@@ -71,10 +72,7 @@ func _create_ghost(text: String, local_pos: Vector2) -> void:
 	_ghost_card.size = GHOST_SIZE
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.2, 0.2, 0.2)
-	style.border_width_left = 2
-	style.border_width_right = 2
-	style.border_width_top = 2
-	style.border_width_bottom = 2
+	style.set_border_width_all(2)
 	style.border_color = Color.WHITE
 	_ghost_card.add_theme_stylebox_override("panel", style)
 	_ghost_card.modulate.a = 0.9
