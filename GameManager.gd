@@ -109,6 +109,7 @@ func go_to_win() -> void:
 	get_tree().change_scene_to_file("res://win/WinScreen.tscn")
 
 func go_to_game_over() -> void:
+	is_test_mode = false
 	current_phase = Phase.GAME_OVER
 	get_tree().change_scene_to_file("res://game_over/GameOverScreen.tscn")
 
@@ -159,6 +160,7 @@ func go_to_test_select() -> void:
 func start_test_combat(group: EnemyGroupData) -> void:
 	is_test_mode = true
 	player_state = PlayerState.new()
+	player_state.character = "sword"
 	var zhan_tie: CardData      = preload("res://data/cards/zhan_tie.tres")
 	var po_feng: CardData       = preload("res://data/cards/po_feng.tres")
 	var ce_bu: CardData         = preload("res://data/cards/ce_bu.tres")
