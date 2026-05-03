@@ -115,6 +115,9 @@ func _on_move(local_pos: Vector2) -> void:
 	_ghost_card.position = local_pos - GHOST_SIZE / 2.0
 	if _target_type == TARGET_SINGLE:
 		var new_slot := _detect_slot(local_pos.x)
+		if new_slot < 0:
+			queue_redraw()
+			return
 		if new_slot != _current_slot:
 			var old_engine := _engine_index(_current_slot)
 			var new_engine := _engine_index(new_slot)
