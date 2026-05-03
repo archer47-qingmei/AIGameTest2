@@ -21,10 +21,10 @@ extends Control
 @onready var _draw_list: VBoxContainer      = $DeckViewPanel/VBoxContainer/TabContainer/抽牌堆/DrawList
 @onready var _discard_list: VBoxContainer   = $DeckViewPanel/VBoxContainer/TabContainer/弃牌堆/DiscardList
 @onready var _exhaust_list: VBoxContainer   = $DeckViewPanel/VBoxContainer/TabContainer/消耗区/ExhaustList
+@onready var _drag_layer: DragLayer = $DragLayer
 
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
-var _pending_card_index: int = -1
 
 func _ready() -> void:
 	_lbl_player_hp.add_theme_font_size_override("font_size", 18)
@@ -49,6 +49,9 @@ func _ready() -> void:
 	_build_enemy_panels()
 	_engine.state_changed.connect(_refresh_ui)
 	_hand_area.resized.connect(_layout_hand)
+	_drag_layer.card_played.connect(_on_drag_card_played)
+	_drag_layer.drag_cancelled.connect(_on_drag_cancelled)
+	_drag_layer.target_changed.connect(_on_drag_target_changed)
 	_refresh_ui()
 
 func _build_enemy_panels() -> void:
@@ -76,7 +79,6 @@ func _build_enemy_panels() -> void:
 		var btn := Button.new()
 		btn.name = "BtnOverlay"
 		btn.flat = true
-		btn.pressed.connect(_on_enemy_pressed.bind(i))
 		btn.disabled = true
 		panel.add_child(btn)
 
@@ -85,36 +87,6 @@ func _build_enemy_panels() -> void:
 		vbox.anchor_bottom = 1.0
 		btn.anchor_right = 1.0
 		btn.anchor_bottom = 1.0
-
-func _on_card_pressed(card_index: int) -> void:
-	if _pending_card_index >= 0:
-		_pending_card_index = -1
-		_set_targeting_mode(false)
-	var card: CardData = _engine.hand[card_index]
-	if card.target_type in ["none", "all"]:
-		_engine.play_card(card_index, -1)
-	else:
-		_pending_card_index = card_index
-		_set_targeting_mode(true)
-
-func _unhandled_input(event: InputEvent) -> void:
-	if _pending_card_index >= 0 and event is InputEventMouseButton and event.pressed:
-		_pending_card_index = -1
-		_set_targeting_mode(false)
-
-func _on_enemy_pressed(enemy_index: int) -> void:
-	if _pending_card_index >= 0:
-		_engine.play_card(_pending_card_index, enemy_index)
-		_pending_card_index = -1
-		_set_targeting_mode(false)
-
-func _set_targeting_mode(active: bool) -> void:
-	_btn_end_turn.disabled = active
-	for i in _enemies_container.get_child_count():
-		var panel: Panel = _enemies_container.get_child(i) as Panel
-		var btn: Button = panel.get_node("BtnOverlay") as Button
-		if i < _engine.enemies.size() and _engine.enemies[i].hp > 0:
-			btn.disabled = not active
 
 func _refresh_ui() -> void:
 	for i in _engine.enemies.size():
@@ -132,7 +104,7 @@ func _refresh_ui() -> void:
 			var action: EnemyActionData = _engine.get_enemy_action(i)
 			lbl_info.text = "%s\nHP:%d/%d 挡:%d" % [e.display_name, e.hp, e.max_hp, e.block]
 			lbl_intent.text = _intent_text(action, e)
-			btn.disabled = (_pending_card_index < 0)
+			btn.disabled = true
 		_build_status_row(status_row, e)
 	_lbl_player_hp.text = "生命：%d / %d" % [_engine.player.hp, _engine.player.max_hp]
 	_lbl_player_block.text = "格挡：%d" % _engine.player.block
@@ -157,6 +129,62 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 		_:
 			return "意图：格挡 %d" % action.value
 
+func _on_card_button_down(card_index: int) -> void:
+	var card: CardData = _engine.hand[card_index]
+	if _engine.energy < card.cost:
+		_shake_card(card_index)
+		return
+	var btn := _hand_buttons[card_index]
+	btn.position.y -= 20
+	var enemy_positions: Array[Vector2] = []
+	var enemy_indices: Array[int] = []
+	for i in _engine.enemies.size():
+		if _engine.enemies[i].hp > 0:
+			var panel := _enemies_container.get_child(i) as Panel
+			enemy_positions.append(panel.get_global_rect().get_center())
+			enemy_indices.append(i)
+	if card.target_type == "all":
+		for idx in enemy_indices:
+			(_enemies_container.get_child(idx) as Panel).modulate = Color(1.3, 1.3, 1.0)
+	_drag_layer.begin_drag(
+		card_index,
+		btn.global_position,
+		card.get_description(),
+		card.target_type,
+		enemy_positions,
+		enemy_indices
+	)
+
+func _shake_card(card_index: int) -> void:
+	var btn := _hand_buttons[card_index]
+	var orig_x := btn.position.x
+	var tw := create_tween()
+	tw.tween_property(btn, "position:x", orig_x + 4.0, 0.05)
+	tw.tween_property(btn, "position:x", orig_x - 4.0, 0.05)
+	tw.tween_property(btn, "position:x", orig_x + 4.0, 0.05)
+	tw.tween_property(btn, "position:x", orig_x, 0.05)
+
+func _clear_target_highlights() -> void:
+	for i in _enemies_container.get_child_count():
+		(_enemies_container.get_child(i) as Panel).modulate = Color.WHITE
+
+func _on_drag_card_played(card_index: int, target_engine_index: int) -> void:
+	_clear_target_highlights()
+	_engine.play_card(card_index, target_engine_index)
+
+func _on_drag_cancelled(card_index: int) -> void:
+	_clear_target_highlights()
+	if card_index >= 0 and card_index < _hand_buttons.size():
+		var btn := _hand_buttons[card_index]
+		if is_instance_valid(btn):
+			btn.position.y += 20
+
+func _on_drag_target_changed(old_engine_index: int, new_engine_index: int) -> void:
+	if old_engine_index >= 0 and old_engine_index < _enemies_container.get_child_count():
+		(_enemies_container.get_child(old_engine_index) as Panel).modulate = Color.WHITE
+	if new_engine_index >= 0 and new_engine_index < _enemies_container.get_child_count():
+		(_enemies_container.get_child(new_engine_index) as Panel).modulate = Color(1.3, 1.3, 1.0)
+
 func _rebuild_hand() -> void:
 	for btn: Button in _hand_buttons:
 		btn.queue_free()
@@ -169,12 +197,10 @@ func _rebuild_hand() -> void:
 		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		btn.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 		btn.text = card.get_description()
-		btn.pressed.connect(_on_card_pressed.bind(i))
+		btn.button_down.connect(_on_card_button_down.bind(i))
 		_hand_area.add_child(btn)
 		_hand_buttons.append(btn)
 	_layout_hand()
-	if _pending_card_index >= 0:
-		_set_targeting_mode(true)
 
 func _layout_hand() -> void:
 	var n := _hand_buttons.size()
@@ -202,7 +228,6 @@ func _layout_hand() -> void:
 		_hand_buttons[i].position = Vector2(start_x + float(i) * step, start_y)
 
 func _on_combat_ended(result: String) -> void:
-	_pending_card_index = -1
 	_btn_end_turn.disabled = true
 	for btn: Button in _hand_buttons:
 		btn.disabled = true
