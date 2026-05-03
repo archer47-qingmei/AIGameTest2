@@ -53,6 +53,10 @@ func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 		_target_line_ends = _enemy_local_positions.duplicate()
 		if not _enemy_local_positions.is_empty():
 			_current_slot = 0
+	elif target_type == TARGET_SINGLE:
+		if not _enemy_local_positions.is_empty():
+			_current_slot = 0
+			_target_line_ends = [_enemy_local_positions[0]]
 	elif target_type == TARGET_NONE:
 		_target_line_ends = [_player_local_pos]
 
