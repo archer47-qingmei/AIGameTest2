@@ -12,7 +12,7 @@ const TARGET_NONE := "none"
 const TARGET_SINGLE := "single"
 const TARGET_ALL := "all"
 const GHOST_SIZE := Vector2(110.0, 150.0)
-const PLAY_ZONE_RATIO := 0.65
+const PLAY_ZONE_CARD_HEIGHTS := 1.5
 const LINE_WIDTH := 2.0
 const LINE_DASH := 12.0
 const LINE_COLOR_ENEMY := Color(1.0, 0.3, 0.3, 0.85)
@@ -120,7 +120,7 @@ func _on_move(local_pos: Vector2) -> void:
 
 func _on_release(local_pos: Vector2) -> void:
 	var viewport_h := get_viewport_rect().size.y
-	var above := local_pos.y < viewport_h * PLAY_ZONE_RATIO
+	var above := local_pos.y < viewport_h - GHOST_SIZE.y * PLAY_ZONE_CARD_HEIGHTS
 	var can_play := false
 	if _state == State.DRAGGING:
 		match _target_type:
