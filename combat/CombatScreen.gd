@@ -150,6 +150,10 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 			return "意图：强化 +%d力量" % action.value
 		"group_block":
 			return "意图：守护 +%d格挡" % action.value
+		"attack_curse":
+			return "意图：攻击 %d + 心魔 ×%d" % [val, action.count]
+		"block_curse":
+			return "意图：格挡 %d + 心魔 ×%d" % [action.value, action.count]
 		"poison":
 			return "意图：投毒 %d" % action.value
 		"discard_curse":
