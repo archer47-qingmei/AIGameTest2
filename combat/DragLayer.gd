@@ -36,11 +36,11 @@ func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 		_ghost_card = null
 	_card_index = card_index
 	_target_type = target_type
-	_origin_local_pos = to_local(card_global_pos)
+	_origin_local_pos = get_global_transform().affine_inverse() * card_global_pos
 	_enemy_engine_indices = enemy_engine_indices.duplicate()
 	_enemy_local_positions.clear()
 	for gp in enemy_global_positions:
-		_enemy_local_positions.append(to_local(gp))
+		_enemy_local_positions.append(get_global_transform().affine_inverse() * gp)
 	_current_slot = -1
 	_state = State.LIFTED
 	mouse_filter = MOUSE_FILTER_STOP
