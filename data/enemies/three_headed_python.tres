@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_attack"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 13
+
+[sub_resource type="Resource" id="Action_block"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 14
+
+[sub_resource type="Resource" id="Action_poison"]
+script = ExtResource("2_EnemyActionData")
+type = "poison"
+value = 4
+
+[sub_resource type="Resource" id="Action_poison_curse"]
+script = ExtResource("2_EnemyActionData")
+type = "poison_curse"
+value = 4
+count = 2
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "三首妖蟒"
+hp = 147
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_attack"), SubResource("Action_block"), SubResource("Action_poison")])
+phase2_threshold = 0.5
+phase2_actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_attack"), SubResource("Action_block"), SubResource("Action_poison_curse")])
