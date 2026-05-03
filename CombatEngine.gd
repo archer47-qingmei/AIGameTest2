@@ -57,11 +57,18 @@ func _resolve_enemy_actions() -> void:
 		if enemies[i].hp <= 0:
 			_pending_actions[i] = null
 			continue
+		var data: EnemyData = _enemy_data_list[i]
+		var use_phase2: bool = (
+			data.phase2_threshold > 0.0
+			and not data.phase2_actions.is_empty()
+			and float(enemies[i].hp) / float(data.hp) <= data.phase2_threshold
+		)
+		var action_list: Array[EnemyActionData] = data.phase2_actions if use_phase2 else data.actions
 		var action: EnemyActionData
-		if _enemy_data_list[i].random_actions:
-			action = _weighted_random_action(_enemy_data_list[i].actions)
+		if data.random_actions:
+			action = _weighted_random_action(action_list)
 		else:
-			action = _enemy_data_list[i].actions[(turn_number - 1) % _enemy_data_list[i].actions.size()]
+			action = action_list[(turn_number - 1) % action_list.size()]
 		if enemies[i].is_charging and action.type in ["attack", "attack_weak", "attack_vulnerable", "multi_attack"]:
 			var doubled := EnemyActionData.new()
 			doubled.type = action.type
@@ -296,6 +303,12 @@ func _do_enemy_turn() -> void:
 				_draw_pile.shuffle()
 			"discard_curse":
 				for _j in action.value:
+					_discard_pile.append(VENOM_CARD.duplicate())
+			"poison_curse":
+				for _j in action.value:
+					_draw_pile.append(VENOM_CARD.duplicate())
+				_draw_pile.shuffle()
+				for _j in action.count:
 					_discard_pile.append(VENOM_CARD.duplicate())
 			_:
 				enemies[i].add_block(action.value)
