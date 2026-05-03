@@ -31,7 +31,7 @@ func _ready() -> void:
 	_lbl_player_block.add_theme_font_size_override("font_size", 18)
 	_engine = CombatEngine.new()
 	_engine.combat_ended.connect(_on_combat_ended)
-	_engine.damage_dealt.connect(_on_damage_dealt)
+	_engine.hits_dealt.connect(_on_hits_dealt)
 	_engine.player_damaged.connect(_on_player_damaged)
 	_btn_end_turn.pressed.connect(_engine.end_turn)
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
@@ -270,10 +270,17 @@ func _populate_list(container: VBoxContainer, cards: Array[CardData]) -> void:
 		lbl.text = card.get_description()
 		container.add_child(lbl)
 
-func _on_damage_dealt(enemy_index: int, amount: int) -> void:
+func _on_hits_dealt(enemy_index: int, amounts: Array[int]) -> void:
 	var panel: Panel = _enemies_container.get_child(enemy_index) as Panel
 	if panel == null:
 		return
+	var tw := create_tween()
+	for amount: int in amounts:
+		if amount > 0:
+			tw.tween_callback(_play_hit_animation.bind(panel, amount))
+			tw.tween_interval(0.22)
+
+func _play_hit_animation(panel: Panel, amount: int) -> void:
 	panel.pivot_offset = panel.size / 2
 
 	var flash_tween: Tween = create_tween()

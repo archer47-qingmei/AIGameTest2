@@ -5,7 +5,7 @@ const BASE_ENERGY: int = 3
 
 signal state_changed
 signal combat_ended(result: String)
-signal damage_dealt(enemy_index: int, amount: int)
+signal hits_dealt(enemy_index: int, amounts: Array[int])
 signal player_damaged(amount: int)
 
 var player: Combatant
@@ -62,20 +62,17 @@ func play_card(card_index: int, target_index: int) -> bool:
 	if card.cost > energy:
 		return false
 	energy -= card.cost
-	var hp_before: Array[int] = []
-	for e: Combatant in enemies:
-		hp_before.append(e.hp)
 	if card.target_type == "all":
-		for enemy in enemies:
-			if enemy.hp > 0:
-				EffectResolver.resolve(card, player, enemy)
+		for i in enemies.size():
+			if enemies[i].hp > 0:
+				var amounts: Array[int] = EffectResolver.resolve(card, player, enemies[i])
+				if not amounts.is_empty():
+					hits_dealt.emit(i, amounts)
 	else:
 		var target: Combatant = enemies[target_index] if target_index >= 0 else null
-		EffectResolver.resolve(card, player, target)
-	for i in enemies.size():
-		var dmg: int = hp_before[i] - enemies[i].hp
-		if dmg > 0:
-			damage_dealt.emit(i, dmg)
+		var amounts: Array[int] = EffectResolver.resolve(card, player, target)
+		if target_index >= 0 and not amounts.is_empty():
+			hits_dealt.emit(target_index, amounts)
 	_apply_engine_effects(card)
 	hand.remove_at(card_index)
 	if card.card_type == "功法":
