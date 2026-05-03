@@ -20,6 +20,8 @@ var next_turn_sword_intent: int = 0
 var next_turn_draw: int = 0
 var finisher_block_bonus: int = 0
 var current_intent: String = ""
+var is_charging: bool = false
+var charge_value: int = 0
 
 func take_damage(amount: int) -> void:
 	if amount <= block:
