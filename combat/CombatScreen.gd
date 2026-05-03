@@ -30,7 +30,6 @@ func _ready() -> void:
 	_lbl_player_hp.add_theme_font_size_override("font_size", 18)
 	_lbl_player_block.add_theme_font_size_override("font_size", 18)
 	_engine = CombatEngine.new()
-	_engine.state_changed.connect(_refresh_ui)
 	_engine.combat_ended.connect(_on_combat_ended)
 	_engine.damage_dealt.connect(_on_damage_dealt)
 	_engine.player_damaged.connect(_on_player_damaged)
@@ -48,6 +47,7 @@ func _ready() -> void:
 		GameManager.player_state.relics
 	)
 	_build_enemy_panels()
+	_engine.state_changed.connect(_refresh_ui)
 	_refresh_ui()
 
 func _build_enemy_panels() -> void:
