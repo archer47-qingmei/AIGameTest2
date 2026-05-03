@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_strengthen"]
+script = ExtResource("2_EnemyActionData")
+type = "group_strengthen"
+value = 3
+
+[sub_resource type="Resource" id="Action_block"]
+script = ExtResource("2_EnemyActionData")
+type = "group_block"
+value = 6
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "阵旗"
+hp = 44
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_strengthen"), SubResource("Action_block")])

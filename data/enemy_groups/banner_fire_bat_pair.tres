@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyGroupData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://EnemyGroupData.gd" id="1_GroupData"]
+[ext_resource type="Script" path="res://EnemyData.gd" id="2_EnemyData"]
+[ext_resource type="Resource" path="res://data/enemies/battle_banner.tres" id="3_battle_banner"]
+[ext_resource type="Resource" path="res://data/enemies/fire_bat.tres" id="4_fire_bat"]
+
+[resource]
+script = ExtResource("1_GroupData")
+enemies = Array[ExtResource("2_EnemyData")]([ExtResource("3_battle_banner"), ExtResource("4_fire_bat"), ExtResource("4_fire_bat")])
