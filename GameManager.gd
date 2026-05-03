@@ -15,6 +15,7 @@ var player_state: PlayerState
 var pending_relic: RelicData = null
 var pending_gold: int = 0
 var pending_card_reward: bool = true
+var is_test_mode: bool = false
 
 func start_new_run(character: String) -> void:
 	pending_card_reward = true
@@ -67,6 +68,10 @@ func go_to_combat() -> void:
 
 func end_combat(final_hp: int) -> void:
 	player_state.hp = final_hp
+	if is_test_mode:
+		is_test_mode = false
+		go_to_test_select()
+		return
 	pending_gold = RewardEngine.get_gold_reward(is_elite_node(), is_final_node())
 	pending_relic = player_state.current_node.config.reward_relic
 	go_to_reward()
@@ -146,6 +151,35 @@ func go_to_menu() -> void:
 	player_state = null
 	current_phase = Phase.MENU
 	get_tree().change_scene_to_file("res://menu/MainMenu.tscn")
+
+func go_to_test_select() -> void:
+	current_phase = Phase.MENU
+	get_tree().change_scene_to_file("res://menu/TestSelectScreen.tscn")
+
+func start_test_combat(group: EnemyGroupData) -> void:
+	is_test_mode = true
+	player_state = PlayerState.new()
+	var zhan_tie: CardData      = preload("res://data/cards/zhan_tie.tres")
+	var po_feng: CardData       = preload("res://data/cards/po_feng.tres")
+	var ce_bu: CardData         = preload("res://data/cards/ce_bu.tres")
+	var lian_xi: CardData       = preload("res://data/cards/lian_xi.tres")
+	var chuan_xin: CardData     = preload("res://data/cards/chuan_xin.tres")
+	var yang_jian_shu: CardData = preload("res://data/cards/yang_jian_shu.tres")
+	for i in 4:
+		player_state.deck.append(zhan_tie.duplicate())
+	for i in 2:
+		player_state.deck.append(po_feng.duplicate())
+	for i in 4:
+		player_state.deck.append(ce_bu.duplicate())
+	player_state.deck.append(lian_xi.duplicate())
+	player_state.deck.append(chuan_xin.duplicate())
+	player_state.deck.append(yang_jian_shu.duplicate())
+	var node := NodeData.new()
+	node.config = NodeConfig.new()
+	node.config.type = NodeConfig.Type.COMBAT
+	node.config.enemy_group = group
+	player_state.current_node = node
+	go_to_combat()
 
 func get_current_enemy_group() -> EnemyGroupData:
 	return player_state.current_node.config.enemy_group
