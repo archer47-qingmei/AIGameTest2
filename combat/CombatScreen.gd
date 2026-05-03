@@ -80,8 +80,10 @@ func _build_enemy_panels() -> void:
 		panel.add_child(btn)
 
 		_enemies_container.add_child(panel)
-		vbox.anchors_preset = Control.PRESET_FULL_RECT
-		btn.anchors_preset = Control.PRESET_FULL_RECT
+		vbox.anchor_right = 1.0
+		vbox.anchor_bottom = 1.0
+		btn.anchor_right = 1.0
+		btn.anchor_bottom = 1.0
 
 func _on_card_pressed(card_index: int) -> void:
 	if _pending_card_index >= 0:
@@ -100,6 +102,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_set_targeting_mode(false)
 
 func _on_enemy_pressed(enemy_index: int) -> void:
+	print("[CombatScreen] _on_enemy_pressed(%d) pending=%d" % [enemy_index, _pending_card_index])
 	if _pending_card_index >= 0:
 		_engine.play_card(_pending_card_index, enemy_index)
 		_pending_card_index = -1
