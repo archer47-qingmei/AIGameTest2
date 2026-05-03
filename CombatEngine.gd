@@ -55,6 +55,7 @@ func _resolve_enemy_actions() -> void:
 	_pending_actions.resize(enemies.size())
 	for i in enemies.size():
 		if enemies[i].hp <= 0:
+			_pending_actions[i] = null
 			continue
 		if enemies[i].is_charging:
 			var a := EnemyActionData.new()
@@ -70,6 +71,8 @@ func _weighted_random_action(actions: Array[EnemyActionData]) -> EnemyActionData
 	var total: int = 0
 	for a: EnemyActionData in actions:
 		total += a.weight
+	if total <= 0:
+		return actions[randi() % actions.size()]
 	var roll: int = randi() % total
 	var cumulative: int = 0
 	for a: EnemyActionData in actions:
