@@ -16,7 +16,12 @@ func _ready() -> void:
 	_map_content.queue_redraw()
 	_scroll.get_v_scroll_bar().custom_minimum_size.x = 0
 	await get_tree().process_frame
-	_scroll.scroll_vertical = int(_map_content.get_minimum_size().y)
+	var target_y := _map_content.get_minimum_size().y
+	for nd: NodeData in _state.available_nodes:
+		if _node_positions.has(nd):
+			target_y = _node_positions[nd].y
+			break
+	_scroll.scroll_vertical = int(target_y - _scroll.size.y / 2.0)
 
 func _build_map(state: PlayerState) -> void:
 	for nd: NodeData in state.map_all_nodes:
