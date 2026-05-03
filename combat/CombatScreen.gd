@@ -41,6 +41,7 @@ func _ready() -> void:
 	_engine.hits_dealt.connect(_on_hits_dealt)
 	_engine.player_damaged.connect(_on_player_damaged)
 	_engine.player_gained_block.connect(_on_player_gained_block)
+	_engine.player_gained_sword_intent.connect(_on_player_gained_sword_intent)
 	_btn_end_turn.pressed.connect(_engine.end_turn)
 	_btn_return_menu.pressed.connect(GameManager.go_to_menu)
 	_btn_get_reward.pressed.connect(_on_proceed)
@@ -327,6 +328,21 @@ func _on_player_gained_block(amount: int) -> void:
 	flyout.tween_property(lbl, "modulate:a", 0.0, 0.3).set_delay(0.1)
 	flyout.finished.connect(lbl.queue_free)
 
+func _on_player_gained_sword_intent(amount: int) -> void:
+	var lbl := Label.new()
+	lbl.text = "+%d 剑意" % amount
+	lbl.add_theme_font_size_override("font_size", 20)
+	lbl.pivot_offset = Vector2(25, 10)
+	lbl.z_index = 10
+	lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2))
+	add_child(lbl)
+	lbl.global_position = _player_card.get_global_rect().get_center() - Vector2(25, 10)
+	var end_pos := _lbl_sword_intent.get_global_rect().get_center()
+	var flyout := create_tween().set_parallel(true)
+	flyout.tween_property(lbl, "global_position", end_pos, 0.5).set_ease(Tween.EASE_IN)
+	flyout.tween_property(lbl, "modulate:a", 0.0, 0.4).set_delay(0.15)
+	flyout.finished.connect(lbl.queue_free)
+
 func _play_blocked_animation(target: Control, blk_absorbed: int) -> void:
 	target.pivot_offset = target.size / 2
 	var flash := create_tween()
@@ -344,9 +360,12 @@ func _play_blocked_animation(target: Control, blk_absorbed: int) -> void:
 	lbl.add_theme_color_override("font_color", Color(0.5, 0.8, 1.0))
 	add_child(lbl)
 	lbl.global_position = target.get_global_rect().get_center() - Vector2(30, 10)
+	var direction: float = 1.0 if randi() % 2 == 0 else -1.0
+	var drift_x: float = direction * randf_range(20.0, 60.0)
 	var flyout := create_tween().set_parallel(true)
-	flyout.tween_property(lbl, "position:y", lbl.position.y - 20.0, 0.4)
-	flyout.tween_property(lbl, "modulate:a", 0.0, 0.35).set_delay(0.05)
+	flyout.tween_property(lbl, "scale", Vector2(1.3, 1.3), 0.15).set_ease(Tween.EASE_OUT)
+	flyout.tween_property(lbl, "position:x", lbl.position.x + drift_x, 0.4)
+	flyout.tween_property(lbl, "modulate:a", 0.0, 0.3).set_delay(0.1)
 	flyout.finished.connect(lbl.queue_free)
 
 func _play_damage_animation(target: Control, label_text: String, shake_kf: Array[Vector2]) -> void:

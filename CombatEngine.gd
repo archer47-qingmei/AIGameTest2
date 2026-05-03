@@ -9,6 +9,7 @@ signal combat_ended(result: String)
 signal hits_dealt(enemy_index: int, hp_amounts: Array[int], block_amounts: Array[int])
 signal player_damaged(amount: int)
 signal player_gained_block(amount: int)
+signal player_gained_sword_intent(amount: int)
 
 var player: Combatant
 var enemies: Array[Combatant] = []
@@ -65,6 +66,7 @@ func play_card(card_index: int, target_index: int) -> bool:
 		return false
 	energy -= card.cost
 	var block_before := player.block
+	var si_before := player.sword_intent
 	if card.target_type == "all":
 		for i in enemies.size():
 			if enemies[i].hp > 0:
@@ -82,6 +84,9 @@ func play_card(card_index: int, target_index: int) -> bool:
 	if block_gained > 0:
 		player_gained_block.emit(block_gained)
 	_apply_engine_effects(card)
+	var si_gained := player.sword_intent - si_before
+	if si_gained > 0:
+		player_gained_sword_intent.emit(si_gained)
 	hand.remove_at(card_index)
 	if card.card_type == "功法":
 		_exhaust_pile.append(card)
