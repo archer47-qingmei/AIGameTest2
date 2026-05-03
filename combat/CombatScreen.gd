@@ -140,6 +140,8 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 			return "意图：攻击 %d + 易伤" % val
 		"multi_attack":
 			return "意图：连斩 %d ×%d" % [val, action.count]
+		"steal_block":
+			return "意图：夺舍"
 		"charge":
 			return "意图：蓄力"
 		"pre_charge":

@@ -275,6 +275,13 @@ func _do_enemy_turn() -> void:
 				enemies[i].is_charging = true
 			"pre_charge":
 				pass
+			"steal_block":
+				var stolen: int = player.block
+				player.block = 0
+				if stolen > 0:
+					enemies[i].add_block(stolen)
+				else:
+					enemies[i].strength += 3
 			"group_strengthen":
 				for j in enemies.size():
 					if enemies[j].hp > 0:
