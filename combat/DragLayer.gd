@@ -15,6 +15,8 @@ const GHOST_SIZE := Vector2(110.0, 150.0)
 const PLAY_ZONE_RATIO := 0.65
 const LINE_WIDTH := 2.0
 const LINE_DASH := 12.0
+const LINE_COLOR_ENEMY := Color(1.0, 0.3, 0.3, 0.85)
+const LINE_COLOR_SELF  := Color(0.3, 1.0, 0.4, 0.85)
 
 var _drag_gen: int = 0
 var _state: State = State.IDLE
@@ -26,10 +28,11 @@ var _current_slot: int = -1
 var _ghost_card: Panel = null
 var _origin_local_pos: Vector2 = Vector2.ZERO
 var _target_line_ends: Array[Vector2] = []
+var _player_local_pos: Vector2 = Vector2.ZERO
 
 func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 		target_type: String, enemy_global_positions: Array[Vector2],
-		enemy_engine_indices: Array[int]) -> void:
+		enemy_engine_indices: Array[int], player_global_pos: Vector2) -> void:
 	_drag_gen += 1
 	if _ghost_card != null:
 		_ghost_card.queue_free()
@@ -41,6 +44,7 @@ func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 	_enemy_local_positions.clear()
 	for gp in enemy_global_positions:
 		_enemy_local_positions.append(get_global_transform().affine_inverse() * gp)
+	_player_local_pos = get_global_transform().affine_inverse() * player_global_pos
 	_current_slot = -1
 	_state = State.LIFTED
 	mouse_filter = MOUSE_FILTER_STOP
@@ -49,6 +53,8 @@ func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 		_target_line_ends = _enemy_local_positions.duplicate()
 		if not _enemy_local_positions.is_empty():
 			_current_slot = 0
+	elif target_type == TARGET_NONE:
+		_target_line_ends = [_player_local_pos]
 
 func _create_ghost(text: String, local_pos: Vector2) -> void:
 	_ghost_card = Panel.new()
@@ -156,6 +162,7 @@ func _cleanup() -> void:
 	_enemy_engine_indices.clear()
 	_target_line_ends.clear()
 	_current_slot = -1
+	_player_local_pos = Vector2.ZERO
 	mouse_filter = MOUSE_FILTER_IGNORE
 	queue_redraw()
 
@@ -180,5 +187,6 @@ func _draw() -> void:
 	if _state != State.DRAGGING or _ghost_card == null:
 		return
 	var from := _ghost_card.position + Vector2(GHOST_SIZE.x / 2.0, 0.0)
+	var color := LINE_COLOR_SELF if _target_type == TARGET_NONE else LINE_COLOR_ENEMY
 	for target_pos: Vector2 in _target_line_ends:
-		draw_dashed_line(from, target_pos, Color(1.0, 1.0, 1.0, 0.85), LINE_WIDTH, LINE_DASH)
+		draw_dashed_line(from, target_pos, color, LINE_WIDTH, LINE_DASH)
