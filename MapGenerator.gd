@@ -9,13 +9,13 @@ const EARLY_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/single_sword_shadow.tres",
 	"res://data/enemy_groups/single_thunder_frog.tres",
 	"res://data/enemy_groups/banner_stone_demon.tres",
-	"res://data/enemy_groups/banner_fire_bat_pair.tres",
 ]
 const MID_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/single_illusion_moth.tres",
 	"res://data/enemy_groups/single_poison_slime.tres",
 	"res://data/enemy_groups/pair_fire_bat.tres",
 	"res://data/enemy_groups/triple_fire_bat.tres",
+	"res://data/enemy_groups/banner_fire_bat_pair.tres",
 ]
 const ELITE_GROUP_PATH: String = "res://data/enemy_groups/single_elite_guard.tres"
 const BOSS_GROUP_PATH: String = "res://data/enemy_groups/single_boss.tres"
