@@ -17,7 +17,7 @@ const MID_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/triple_fire_bat.tres",
 	"res://data/enemy_groups/banner_fire_bat_pair.tres",
 ]
-const ELITE_GROUP_PATH: String = "res://data/enemy_groups/single_elite_guard.tres"
+const ELITE_GROUP_PATH: String = "res://data/enemy_groups/single_elite_sorcerer.tres"
 const BOSS_GROUP_PATH: String = "res://data/enemy_groups/single_boss.tres"
 const ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"
 const BOSS_REWARD_RELIC_PATH: String = "res://data/relics/life_ring.tres"
