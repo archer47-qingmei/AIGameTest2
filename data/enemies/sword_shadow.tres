@@ -20,7 +20,7 @@ count = 2
 [sub_resource type="Resource" id="Action_charge"]
 script = ExtResource("2_EnemyActionData")
 type = "charge"
-value = 16
+value = 0
 weight = 1
 count = 1
 

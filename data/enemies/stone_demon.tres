@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
 [ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
@@ -20,11 +20,16 @@ value = 9
 
 [sub_resource type="Resource" id="Action_charge"]
 script = ExtResource("2_EnemyActionData")
-type = "charge_attack"
-value = 14
+type = "charge"
+value = 0
+
+[sub_resource type="Resource" id="Action_attack2"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 7
 
 [resource]
 script = ExtResource("1_EnemyData")
 display_name = "石妖"
 hp = 62
-actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_block1"), SubResource("Action_attack1"), SubResource("Action_block2"), SubResource("Action_charge")])
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_block1"), SubResource("Action_attack1"), SubResource("Action_block2"), SubResource("Action_charge"), SubResource("Action_attack2")])

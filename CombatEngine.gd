@@ -57,15 +57,19 @@ func _resolve_enemy_actions() -> void:
 		if enemies[i].hp <= 0:
 			_pending_actions[i] = null
 			continue
-		if enemies[i].is_charging:
-			var a := EnemyActionData.new()
-			a.type = "charge_attack"
-			a.value = enemies[i].charge_value
-			_pending_actions[i] = a
-		elif _enemy_data_list[i].random_actions:
-			_pending_actions[i] = _weighted_random_action(_enemy_data_list[i].actions)
+		var action: EnemyActionData
+		if _enemy_data_list[i].random_actions:
+			action = _weighted_random_action(_enemy_data_list[i].actions)
 		else:
-			_pending_actions[i] = _enemy_data_list[i].actions[(turn_number - 1) % _enemy_data_list[i].actions.size()]
+			action = _enemy_data_list[i].actions[(turn_number - 1) % _enemy_data_list[i].actions.size()]
+		if enemies[i].is_charging and action.type in ["attack", "attack_weak", "attack_vulnerable", "multi_attack"]:
+			var doubled := EnemyActionData.new()
+			doubled.type = action.type
+			doubled.value = action.value * 2
+			doubled.count = action.count
+			_pending_actions[i] = doubled
+		else:
+			_pending_actions[i] = action
 
 func _weighted_random_action(actions: Array[EnemyActionData]) -> EnemyActionData:
 	var total: int = 0
@@ -235,9 +239,8 @@ func _do_enemy_turn() -> void:
 		enemies[i].vulnerable = max(0, enemies[i].vulnerable - 1)
 		var action: EnemyActionData = get_enemy_action(i)
 		enemies[i].is_charging = false
-		enemies[i].charge_value = 0
 		match action.type:
-			"attack", "charge_attack":
+			"attack":
 				var hp_before: int = player.hp
 				EffectResolver.apply_damage(enemies[i], player, action.value)
 				var dmg: int = hp_before - player.hp
@@ -270,7 +273,6 @@ func _do_enemy_turn() -> void:
 				enemies[i].weak = max(0, enemies[i].weak - 1)
 			"charge":
 				enemies[i].is_charging = true
-				enemies[i].charge_value = action.value
 			"pre_charge":
 				pass
 			"group_strengthen":

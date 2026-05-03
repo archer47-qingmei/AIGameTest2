@@ -134,8 +134,6 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 	match action.type:
 		"attack":
 			return "意图：攻击 %d" % val
-		"charge_attack":
-			return "意图：蓄力攻击 %d" % val
 		"attack_weak":
 			return "意图：攻击 %d + 虚弱" % val
 		"attack_vulnerable":
