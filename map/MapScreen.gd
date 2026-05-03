@@ -30,16 +30,13 @@ func _build_map(state: PlayerState) -> void:
 		var btn := Button.new()
 		btn.size = Vector2(110.0, 50.0)
 		btn.position = center - Vector2(55.0, 25.0)
-		var is_available: bool = state.available_nodes.has(nd)
-		var is_completed: bool = state.completed_nodes.has(nd)
-		if is_completed:
-			btn.text = "✓ " + _get_node_label(nd)
+		btn.text = _get_node_label(nd)
+		if state.completed_nodes.has(nd):
+			btn.text = "✓ " + btn.text
 			btn.disabled = true
-		elif is_available:
-			btn.text = _get_node_label(nd)
+		elif state.available_nodes.has(nd):
 			btn.pressed.connect(GameManager.select_node.bind(nd))
 		else:
-			btn.text = _get_node_label(nd)
 			btn.disabled = true
 		_map_content.add_child(btn)
 
