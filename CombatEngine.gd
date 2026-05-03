@@ -2,6 +2,7 @@ class_name CombatEngine
 extends RefCounted
 
 const BASE_ENERGY: int = 3
+const VENOM_CARD: CardData = preload("res://data/cards/venom.tres")
 
 signal state_changed
 signal combat_ended(result: String)
@@ -176,7 +177,7 @@ func draw_cards(n: int) -> void:
 	_draw_cards(n)
 
 func _draw_cards(n: int) -> void:
-	for i: int in n:
+	for _i in n:
 		_refill_draw_pile_if_needed()
 		if _draw_pile.is_empty():
 			break
@@ -199,9 +200,8 @@ func _do_enemy_turn() -> void:
 					player_damaged.emit(dmg)
 				enemies[i].weak = max(0, enemies[i].weak - 1)
 			"poison":
-				var venom_card: CardData = load("res://data/cards/venom.tres") as CardData
-				for j in action.value:
-					_draw_pile.append(venom_card.duplicate())
+				for _j in action.value:
+					_draw_pile.append(VENOM_CARD.duplicate())
 				_draw_pile.shuffle()
 			_:
 				enemies[i].add_block(action.value)
