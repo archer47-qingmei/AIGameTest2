@@ -3,6 +3,7 @@ extends RefCounted
 
 const BASE_ENERGY: int = 3
 const VENOM_CARD: CardData = preload("res://data/cards/venom.tres")
+const CURSE_CARD: CardData = preload("res://data/cards/xin_mo.tres")
 
 signal state_changed
 signal combat_ended(result: String)
@@ -103,6 +104,8 @@ func get_exhaust_pile() -> Array[CardData]:
 
 func play_card(card_index: int, target_index: int) -> bool:
 	var card: CardData = hand[card_index]
+	if card.is_curse:
+		return false
 	if card.cost > energy:
 		return false
 	energy -= card.cost
@@ -236,7 +239,10 @@ func _draw_cards(n: int) -> void:
 		if _draw_pile.is_empty():
 			break
 		var card: CardData = _draw_pile.pop_back()
-		hand.append(card)
+		if card.is_curse:
+			_discard_pile.append(card)
+		else:
+			hand.append(card)
 
 func _do_enemy_turn() -> void:
 	for i in enemies.size():
@@ -303,13 +309,13 @@ func _do_enemy_turn() -> void:
 				_draw_pile.shuffle()
 			"discard_curse":
 				for _j in action.value:
-					_discard_pile.append(VENOM_CARD.duplicate())
+					_discard_pile.append(CURSE_CARD.duplicate())
 			"poison_curse":
 				for _j in action.value:
 					_draw_pile.append(VENOM_CARD.duplicate())
 				_draw_pile.shuffle()
 				for _j in action.count:
-					_discard_pile.append(VENOM_CARD.duplicate())
+					_discard_pile.append(CURSE_CARD.duplicate())
 			_:
 				enemies[i].add_block(action.value)
 
