@@ -8,6 +8,7 @@ const EARLY_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/pair_fire_bat.tres",
 	"res://data/enemy_groups/triple_fire_bat.tres",
 	"res://data/enemy_groups/single_bronze_corpse.tres",
+	"res://data/enemy_groups/single_sword_shadow.tres",
 ]
 const MID_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/single_illusion_moth.tres",
