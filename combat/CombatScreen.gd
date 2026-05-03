@@ -102,7 +102,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		_set_targeting_mode(false)
 
 func _on_enemy_pressed(enemy_index: int) -> void:
-	print("[CombatScreen] _on_enemy_pressed(%d) pending=%d" % [enemy_index, _pending_card_index])
 	if _pending_card_index >= 0:
 		_engine.play_card(_pending_card_index, enemy_index)
 		_pending_card_index = -1
