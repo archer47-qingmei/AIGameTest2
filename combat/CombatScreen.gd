@@ -339,8 +339,8 @@ func _on_player_gained_sword_intent(amount: int) -> void:
 	lbl.global_position = _player_card.get_global_rect().get_center() - Vector2(25, 10)
 	var end_pos := _lbl_sword_intent.get_global_rect().get_center()
 	var flyout := create_tween().set_parallel(true)
-	flyout.tween_property(lbl, "global_position", end_pos, 0.5).set_ease(Tween.EASE_IN)
-	flyout.tween_property(lbl, "modulate:a", 0.0, 0.4).set_delay(0.15)
+	flyout.tween_property(lbl, "global_position", end_pos, 0.33).set_ease(Tween.EASE_IN)
+	flyout.tween_property(lbl, "modulate:a", 0.0, 0.27).set_delay(0.1)
 	flyout.finished.connect(lbl.queue_free)
 
 func _play_blocked_animation(target: Control, blk_absorbed: int) -> void:
