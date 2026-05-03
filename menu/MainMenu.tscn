@@ -17,10 +17,23 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -60.0
-offset_top = -15.0
+offset_top = -40.0
 offset_right = 60.0
-offset_bottom = 15.0
+offset_bottom = -10.0
 text = "开始游戏"
+
+[node name="BtnDebug" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = 10.0
+offset_right = 60.0
+offset_bottom = 40.0
+text = "测试战斗"
 
 [node name="LblVersion" type="Label" parent="."]
 layout_mode = 1
@@ -32,5 +45,5 @@ offset_left = -60.0
 offset_top = -40.0
 offset_right = 60.0
 offset_bottom = -15.0
-text = "v0.56.0"
+text = "v0.57.0"
 horizontal_alignment = 1
