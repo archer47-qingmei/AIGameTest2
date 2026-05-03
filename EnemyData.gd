@@ -5,3 +5,5 @@ extends Resource
 @export var hp: int
 @export var actions: Array[EnemyActionData]
 @export var random_actions: bool = false
+@export var phase2_threshold: float = 0.0
+@export var phase2_actions: Array[EnemyActionData] = []
