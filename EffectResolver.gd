@@ -48,7 +48,7 @@ static func preview_damage(card: CardData, attacker: Combatant, target: Combatan
 	return {}
 
 static func apply_damage(source: Combatant, target: Combatant, amount: int) -> void:
-	target.take_damage(_apply_modifiers(amount, source, target))
+	target.take_damage(_apply_modifiers(amount + source.strength, source, target))
 
 static func _dmg_bonus(card: CardData, attacker: Combatant) -> int:
 	if card.is_finisher:
