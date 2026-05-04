@@ -7,5 +7,5 @@ script = ExtResource("1_CardData")
 card_name = "心魔"
 cost = 0
 is_curse = true
-special_text = "无法打出，摸到即弃"
+special_text = "无法打出。留在手中直到回合结束"
 target_type = "none"
