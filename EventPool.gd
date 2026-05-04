@@ -23,5 +23,6 @@ static func pick_event(player_state: PlayerState) -> EventData:
 		if EventEngine.check_condition(event, player_state):
 			candidates.append(event)
 	if candidates.is_empty():
+		# 无满足条件的事件时，保底返回第一个（NONE条件，必然通过）
 		return load(EVENTS[0]) as EventData
 	return candidates[randi() % candidates.size()]

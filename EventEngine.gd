@@ -7,6 +7,7 @@ static func check_condition(event: EventData, player_state: PlayerState) -> bool
 	match event.appear_condition:
 		EventData.AppearCondition.NONE:
 			return true
+		# 境界系统尚未实装，暂时无条件通过
 		EventData.AppearCondition.AFTER_REALM:
 			return true
 		EventData.AppearCondition.MIN_DECK_SIZE:
@@ -84,6 +85,7 @@ static func _apply_effect(effect: EventEffectData, player_state: PlayerState) ->
 			var loss: int = int(player_state.max_hp * effect.value / 100.0)
 			player_state.max_hp = maxi(1, player_state.max_hp - loss)
 			player_state.hp = mini(player_state.hp, player_state.max_hp)
+		# RelicData 无品级字段，暂从全池随机；relic_grade 仅用于描述文本
 		EventEffectData.EffectType.GAIN_RELIC:
 			if not CardPool.RELICS.is_empty():
 				var idx: int = randi() % CardPool.RELICS.size()
