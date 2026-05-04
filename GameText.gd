@@ -1,7 +1,7 @@
 class_name GameText
-extends Object
+extends RefCounted
 
-static func get_buff_info(key: String) -> Dictionary:
+static func get_buff_info(key: String) -> Dictionary[String, String]:
 	match key:
 		"weak":
 			return {"name": "虚弱", "description": "造成的伤害降低 25%，每回合结束减少 1 层。"}
@@ -11,4 +11,5 @@ static func get_buff_info(key: String) -> Dictionary:
 			return {"name": "力量", "description": "每点力量使普通攻击伤害 +1。"}
 		"sword_intent":
 			return {"name": "剑意", "description": "积累剑意可提升下次攻击伤害，每层 +1 伤害，上限 10 层。"}
+	push_warning("GameText: unknown buff key: %s" % key)
 	return {"name": key, "description": "（暂无说明）"}
