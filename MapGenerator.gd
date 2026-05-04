@@ -5,6 +5,12 @@ const TOTAL_COLUMNS: int = 10
 const NUM_PATHS: int = 5
 const NUM_ROWS: int = 3
 
+const REST_COL: int = 4
+const CHEST_REST_COL: int = 5
+const ELITE_START_COL: int = 6
+const ELITE_FULL_COL: int = 8
+const BOSS_MAP_POSITION: Vector2 = Vector2(300.0, 80.0)
+
 const EARLY_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/single_stone_demon.tres",
 	"res://data/enemy_groups/single_bronze_corpse.tres",
@@ -44,7 +50,7 @@ static func generate() -> Array[NodeData]:
 	boss.config.type = NodeConfig.Type.COMBAT
 	boss.config.enemy_group = load(BOSS_GROUP_PATH) as EnemyGroupData
 	boss.config.reward_relic = load(BOSS_REWARD_RELIC_PATH) as RelicData
-	boss.config.map_position = Vector2(300.0, 80.0)
+	boss.config.map_position = BOSS_MAP_POSITION
 	node_grid[Vector2i(TOTAL_COLUMNS - 1, 1)] = boss
 
 	for _p in NUM_PATHS:
@@ -98,24 +104,24 @@ static func _assign_types(all: Array[NodeData]) -> void:
 		for nd: NodeData in nodes:
 			nd.config.enemy_group = _random_combat_group(col)
 		match col:
-			4:
+			REST_COL:
 				if nodes.size() >= 2:
 					nodes.shuffle()
 					nodes[0].config.type = NodeConfig.Type.REST
 					nodes[0].config.enemy_group = null
-			5:
+			CHEST_REST_COL:
 				nodes.shuffle()
 				nodes[0].config.type = NodeConfig.Type.CHEST
 				nodes[0].config.enemy_group = null
 				if nodes.size() >= 2:
 					nodes[1].config.type = NodeConfig.Type.REST
 					nodes[1].config.enemy_group = null
-			6, 7:
+			ELITE_START_COL, ELITE_START_COL + 1:
 				nodes.shuffle()
 				nodes[0].config.type = NodeConfig.Type.ELITE
 				nodes[0].config.enemy_group = load(ELITE_GROUP_PATHS[randi() % ELITE_GROUP_PATHS.size()]) as EnemyGroupData
 				nodes[0].config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
-			8:
+			ELITE_FULL_COL:
 				for nd: NodeData in nodes:
 					nd.config.type = NodeConfig.Type.ELITE
 					nd.config.enemy_group = load(ELITE_GROUP_PATHS[randi() % ELITE_GROUP_PATHS.size()]) as EnemyGroupData
@@ -128,7 +134,7 @@ static func _random_combat_group(col: int) -> EnemyGroupData:
 static func _add_shop_nodes(all_nodes: Array[NodeData]) -> void:
 	var candidates: Array[NodeData] = []
 	for nd: NodeData in all_nodes:
-		if nd.config.column >= 4 and nd.config.column <= 7 and nd.config.type == NodeConfig.Type.COMBAT:
+		if nd.config.column >= REST_COL and nd.config.column <= ELITE_START_COL + 1 and nd.config.type == NodeConfig.Type.COMBAT:
 			candidates.append(nd)
 	candidates.shuffle()
 	for i in mini(2, candidates.size()):
