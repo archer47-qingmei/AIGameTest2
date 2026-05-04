@@ -63,6 +63,9 @@ static func _apply_effect(effect_type: RelicData.EffectType, value: int, engine:
 		RelicData.EffectType.ENERGY_IF_LOW_HP:
 			if engine.player.hp < int(engine.player.max_hp * 0.3):
 				engine.energy += value
+		RelicData.EffectType.DRAW_IF_LOW_HP:
+			if engine.player.hp < int(engine.player.max_hp * 0.3):
+				engine.draw_cards(value)
 
 static func _apply_equip_effect(effect_type: RelicData.EffectType, value: int, player_state: PlayerState) -> void:
 	match effect_type:

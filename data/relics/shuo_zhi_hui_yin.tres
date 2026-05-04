@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "朔之回音"
+description = "一粒暗淡的法器。里面封着三次极短的闪烁。不是道法，不是文字，就是亮。它不亮的时候是空的。亮的时候——恰好在你最暗的时候。\n\nHP 低于 30% 时，每回合开始额外抽 1 张牌"
+trigger = 1
+effect_type = 14
+value = 1
+price = 150
