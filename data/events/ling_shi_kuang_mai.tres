@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_ling_shi_kuang_mai"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 1
+value = 50
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 4
+value = 8
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "深入开采"
+result_text = "你往里走。光越来越亮。然后头顶一声裂响——你被埋在石头里，爬出来的时候手里攥满了灵石。还有血。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 1
+value = 20
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "浅尝即止"
+result_text = "在入口敲了几块。够用了。深处的蓝光还在闪。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "灵石矿脉"
+mood = "安静"
+flavor_text = "山壁上有一道裂缝，里面透出淡蓝的光。有人在入口刻了一行字：「后辈修士，留一脉给后来人。」字迹潦草——写完就走，没有回头。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""
