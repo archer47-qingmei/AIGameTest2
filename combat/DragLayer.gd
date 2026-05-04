@@ -77,10 +77,11 @@ func _create_ghost(text: String, local_pos: Vector2) -> void:
 	_ghost_card.add_theme_stylebox_override("panel", style)
 	_ghost_card.modulate.a = 0.9
 	_ghost_card.mouse_filter = MOUSE_FILTER_IGNORE
-	var lbl := Label.new()
+	var lbl := RichTextLabel.new()
+	lbl.bbcode_enabled = true
 	lbl.text = text
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	lbl.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	lbl.scroll_active = false
 	lbl.anchor_right = 1.0
 	lbl.anchor_bottom = 1.0
 	lbl.mouse_filter = MOUSE_FILTER_IGNORE
@@ -110,7 +111,7 @@ func _on_move(local_pos: Vector2) -> void:
 			_state = State.DRAGGING
 	if _state != State.DRAGGING:
 		return
-	_ghost_card.position = local_pos - GHOST_SIZE / 2.0
+	_ghost_card.position = local_pos - Vector2(GHOST_SIZE.x / 2.0, GHOST_SIZE.y)
 	if _target_type == TARGET_SINGLE:
 		var new_slot := _detect_slot(local_pos.x)
 		if new_slot < 0:
@@ -209,3 +210,10 @@ func _draw() -> void:
 			var mid := (from + target_pos) * 0.5
 			draw_string(ThemeDB.fallback_font, mid, _damage_labels[slot],
 				HORIZONTAL_ALIGNMENT_CENTER, -1, 20, label_color)
+
+func update_card_description(text: String) -> void:
+	if _ghost_card == null:
+		return
+	var lbl := _ghost_card.get_child(0) as RichTextLabel
+	if lbl != null:
+		lbl.text = text
