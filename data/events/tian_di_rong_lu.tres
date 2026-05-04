@@ -1,0 +1,103 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_tian_di_rong_lu"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 10
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 21
+value = 1
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "投入遗物"
+result_text = "把一件遗物投进炉口。它没有烧——是把它还原成了最原始的样子。纯灵灌进丹田。但遗物不在了。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 15
+value = 3
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 1
+value = 200
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "投入卡牌"
+result_text = "三张牌扔进去。牌在消失前烧了一瞬——你看到它们在火里从纸变成金。然后没了。炉底掉出一堆灵石。"
+effects = [SubResource("e3"), SubResource("e4")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e5"]
+script = ExtResource("3_EFD")
+effect_type = 4
+value = 20
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e6"]
+script = ExtResource("3_EFD")
+effect_type = 14
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "诅咒"
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "投入自己"
+result_text = "深吸一口气，上半身探进炉口。炉膛里不是烫——是在烧你心里那些暗的东西。出来的时候身上少了什么。"
+effects = [SubResource("e5"), SubResource("e6")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c4"]
+script = ExtResource("2_ECD")
+button_text = "不投"
+result_text = "站了很久。转过了身。"
+effects = []
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "天地熔炉"
+mood = "神秘"
+flavor_text = "一口大炉，没有盖子，炉口朝天。旁边散落着断剑、碎玉、一截手臂骨。碑上写着：「投什么，得什么。」"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3"), SubResource("c4")]
+appear_condition = 3
+appear_condition_value = 2
+character_requirement = ""
