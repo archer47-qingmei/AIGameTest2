@@ -180,6 +180,19 @@ func end_turn() -> void:
 		state_changed.emit()
 		if _check_end():
 			return
+	var zao_count: int = 0
+	for card: CardData in hand:
+		if card.is_zahuorumuo:
+			zao_count += 1
+	for _z in zao_count:
+		var victims: Array[int] = []
+		for idx in hand.size():
+			if not hand[idx].is_zahuorumuo and not hand[idx].is_curse:
+				victims.append(idx)
+		if not victims.is_empty():
+			var victim_idx: int = victims[randi() % victims.size()]
+			_discard_pile.append(hand[victim_idx])
+			hand.remove_at(victim_idx)
 	for card: CardData in hand:
 		_discard_pile.append(card)
 	hand.clear()
