@@ -4,6 +4,7 @@ extends RefCounted
 const BASE_ENERGY: int = 3
 const VENOM_CARD: CardData = preload("res://data/cards/venom.tres")
 const CURSE_CARD: CardData = preload("res://data/cards/xin_mo.tres")
+const ZAHUORUMUO_CARD: CardData = preload("res://data/cards/zao_huo_ru_mo.tres")
 const ATTACK_TYPES_FOR_CHARGE: Array[String] = [
 	"attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse", "vampiric_attack"
 ]
@@ -24,6 +25,7 @@ var turn_number: int = 0
 
 var _draw_pile: Array[CardData] = []
 var _discard_pile: Array[CardData] = []
+var _boss_copied_cards: Array[CardData] = []
 var _exhaust_pile: Array[CardData] = []
 var _enemy_data_list: Array[EnemyData] = []
 var _relics: Array[RelicData] = []
@@ -50,6 +52,15 @@ func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_h
 	for card: CardData in initial_deck:
 		_draw_pile.append(card.duplicate())
 	_draw_pile.shuffle()
+	for data: EnemyData in enemy_group.enemies:
+		if data.copies_player_cards:
+			var style_cards: Array[CardData] = []
+			for card: CardData in _draw_pile:
+				if _is_pure_damage_style(card):
+					style_cards.append(card)
+			style_cards.shuffle()
+			_boss_copied_cards = style_cards.slice(0, mini(5, style_cards.size()))
+			break
 	_start_player_turn()
 
 func get_enemy_action(i: int) -> EnemyActionData:
@@ -352,3 +363,11 @@ func _check_end() -> bool:
 		combat_ended.emit("game_over")
 		return true
 	return false
+
+func _is_pure_damage_style(card: CardData) -> bool:
+	if card.card_type != "招式" or card.effects.is_empty():
+		return false
+	for effect: CardEffectData in card.effects:
+		if effect.type != "damage":
+			return false
+	return true
