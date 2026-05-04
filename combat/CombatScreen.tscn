@@ -90,7 +90,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="RelicsPanel" type="VBoxContainer" parent="VBoxContainer/BottomRow/LeftSection"]
+[node name="RelicsPanel" type="HBoxContainer" parent="VBoxContainer/BottomRow/LeftSection"]
 layout_mode = 2
 
 [node name="LblEnergy" type="Label" parent="VBoxContainer/BottomRow/LeftSection"]
