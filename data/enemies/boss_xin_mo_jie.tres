@@ -6,6 +6,7 @@
 [sub_resource type="Resource" id="Action_mirror"]
 script = ExtResource("2_EnemyActionData")
 type = "mirror_attack"
+value = 8
 
 [sub_resource type="Resource" id="Action_periodic"]
 script = ExtResource("2_EnemyActionData")
@@ -26,4 +27,5 @@ periodic_interval = 3
 periodic_action = SubResource("Action_periodic")
 actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_mirror")])
 phase2_threshold = 0.3
+phase2_passive_threshold = 0.5
 phase2_actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_p3")])

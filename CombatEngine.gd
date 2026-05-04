@@ -100,7 +100,7 @@ func _resolve_enemy_actions() -> void:
 			var resolved := EnemyActionData.new()
 			resolved.type = "mirror_attack"
 			if _boss_copied_cards.is_empty():
-				resolved.value = 8
+				resolved.value = action.value
 				resolved.display_label = "攻击"
 			else:
 				var chosen: CardData = _boss_copied_cards[randi() % _boss_copied_cards.size()]
@@ -388,14 +388,17 @@ func _do_enemy_turn() -> void:
 					if not hand[idx].is_curse and not hand[idx].is_zahuorumuo:
 						valid.append(idx)
 				if not valid.is_empty():
-					hand[valid[randi() % valid.size()]] = CURSE_CARD.duplicate()
+					var replace_idx: int = valid[randi() % valid.size()]
+					_discard_pile.append(hand[replace_idx])
+					hand[replace_idx] = CURSE_CARD.duplicate()
 			"attack_zahuorumuo":
 				_enemy_attack(enemies[i], action.value)
 				_add_zahuorumuo_to_discard(action.count)
 			_:
 				enemies[i].add_block(action.value)
 		if _enemy_data_list[i].copies_player_cards \
-				and float(enemies[i].hp) / float(enemies[i].max_hp) < 0.5 \
+				and _enemy_data_list[i].phase2_passive_threshold > 0.0 \
+				and float(enemies[i].hp) / float(enemies[i].max_hp) < _enemy_data_list[i].phase2_passive_threshold \
 				and enemies[i].hp > 0:
 			enemies[i].hp = max(0, enemies[i].hp - 3)
 			enemies[i].strength += 3
