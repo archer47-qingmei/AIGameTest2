@@ -39,7 +39,7 @@ func _rebuild_relic_list() -> void:
 		child.queue_free()
 	for relic: RelicData in _engine.inventory_relics:
 		var btn := Button.new()
-		btn.text = "%s — %s  [%d金]" % [relic.display_name, relic.description, relic.price]
+		btn.text = "%s — %s  [%d金]" % [relic.display_name, _relic_effect_text(relic), relic.price]
 		btn.disabled = GameManager.player_state.gold < relic.price or purchase_blocked
 		btn.pressed.connect(_on_buy_relic.bind(relic))
 		_relic_list.add_child(btn)
@@ -47,6 +47,10 @@ func _rebuild_relic_list() -> void:
 func _on_buy_card(card: CardData) -> void:
 	_engine.buy_card(card, GameManager.player_state)
 	_rebuild_ui()
+
+func _relic_effect_text(relic: RelicData) -> String:
+	var parts := relic.description.split("\n\n")
+	return parts[-1]
 
 func _on_buy_relic(relic: RelicData) -> void:
 	_engine.buy_relic(relic, GameManager.player_state)
