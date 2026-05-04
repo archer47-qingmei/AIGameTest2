@@ -4,6 +4,9 @@ extends RefCounted
 const BASE_ENERGY: int = 3
 const VENOM_CARD: CardData = preload("res://data/cards/venom.tres")
 const CURSE_CARD: CardData = preload("res://data/cards/xin_mo.tres")
+const ATTACK_TYPES_FOR_CHARGE: Array[String] = [
+	"attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse", "vampiric_attack"
+]
 
 signal state_changed
 signal combat_ended(result: String)
@@ -70,7 +73,7 @@ func _resolve_enemy_actions() -> void:
 			action = _weighted_random_action(action_list)
 		else:
 			action = action_list[(turn_number - 1) % action_list.size()]
-		if enemies[i].is_charging and action.type in ["attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse", "vampiric_attack"]:
+		if enemies[i].is_charging and action.type in ATTACK_TYPES_FOR_CHARGE:
 			var doubled := EnemyActionData.new()
 			doubled.type = action.type
 			doubled.value = action.value * 2
@@ -244,6 +247,27 @@ func _draw_cards(n: int) -> void:
 		else:
 			hand.append(card)
 
+func _enemy_attack(attacker: Combatant, value: int, hits: int = 1) -> void:
+	var hp_before: int = player.hp
+	for _h in hits:
+		EffectResolver.apply_damage(attacker, player, value)
+	var dmg: int = hp_before - player.hp
+	if dmg > 0:
+		player_damaged.emit(dmg)
+	attacker.weak = max(0, attacker.weak - 1)
+
+func _heal(c: Combatant, amount: int) -> void:
+	c.hp = mini(c.hp + amount, c.max_hp)
+
+func _add_curses_to_discard(n: int) -> void:
+	for _j in n:
+		_discard_pile.append(CURSE_CARD.duplicate())
+
+func _add_venoms_to_draw(n: int) -> void:
+	for _j in n:
+		_draw_pile.append(VENOM_CARD.duplicate())
+	_draw_pile.shuffle()
+
 func _do_enemy_turn() -> void:
 	for i in enemies.size():
 		if enemies[i].hp <= 0:
@@ -254,36 +278,15 @@ func _do_enemy_turn() -> void:
 		enemies[i].is_charging = false
 		match action.type:
 			"attack":
-				var hp_before: int = player.hp
-				EffectResolver.apply_damage(enemies[i], player, action.value)
-				var dmg: int = hp_before - player.hp
-				if dmg > 0:
-					player_damaged.emit(dmg)
-				enemies[i].weak = max(0, enemies[i].weak - 1)
+				_enemy_attack(enemies[i], action.value)
 			"attack_weak":
-				var hp_before: int = player.hp
-				EffectResolver.apply_damage(enemies[i], player, action.value)
-				var dmg: int = hp_before - player.hp
-				if dmg > 0:
-					player_damaged.emit(dmg)
+				_enemy_attack(enemies[i], action.value)
 				player.add_weak(1)
-				enemies[i].weak = max(0, enemies[i].weak - 1)
 			"attack_vulnerable":
-				var hp_before: int = player.hp
-				EffectResolver.apply_damage(enemies[i], player, action.value)
-				var dmg: int = hp_before - player.hp
-				if dmg > 0:
-					player_damaged.emit(dmg)
+				_enemy_attack(enemies[i], action.value)
 				player.add_vulnerable(1)
-				enemies[i].weak = max(0, enemies[i].weak - 1)
 			"multi_attack":
-				var hp_before: int = player.hp
-				for _hit in action.count:
-					EffectResolver.apply_damage(enemies[i], player, action.value)
-				var dmg: int = hp_before - player.hp
-				if dmg > 0:
-					player_damaged.emit(dmg)
-				enemies[i].weak = max(0, enemies[i].weak - 1)
+				_enemy_attack(enemies[i], action.value, action.count)
 			"charge":
 				enemies[i].is_charging = true
 			"pre_charge":
@@ -304,39 +307,21 @@ func _do_enemy_turn() -> void:
 					if enemies[j].hp > 0:
 						enemies[j].add_block(action.value)
 			"poison":
-				for _j in action.value:
-					_draw_pile.append(VENOM_CARD.duplicate())
-				_draw_pile.shuffle()
+				_add_venoms_to_draw(action.value)
 			"attack_curse":
-				var hp_before: int = player.hp
-				EffectResolver.apply_damage(enemies[i], player, action.value)
-				var dmg: int = hp_before - player.hp
-				if dmg > 0:
-					player_damaged.emit(dmg)
-				for _j in action.count:
-					_discard_pile.append(CURSE_CARD.duplicate())
-				enemies[i].weak = max(0, enemies[i].weak - 1)
+				_enemy_attack(enemies[i], action.value)
+				_add_curses_to_discard(action.count)
 			"block_curse":
 				enemies[i].add_block(action.value)
-				for _j in action.count:
-					_discard_pile.append(CURSE_CARD.duplicate())
+				_add_curses_to_discard(action.count)
 			"discard_curse":
-				for _j in action.value:
-					_discard_pile.append(CURSE_CARD.duplicate())
+				_add_curses_to_discard(action.value)
 			"poison_curse":
-				for _j in action.value:
-					_draw_pile.append(VENOM_CARD.duplicate())
-				_draw_pile.shuffle()
-				for _j in action.count:
-					_discard_pile.append(CURSE_CARD.duplicate())
+				_add_venoms_to_draw(action.value)
+				_add_curses_to_discard(action.count)
 			"vampiric_attack":
-				var hp_before: int = player.hp
-				EffectResolver.apply_damage(enemies[i], player, action.value)
-				var dmg: int = hp_before - player.hp
-				if dmg > 0:
-					player_damaged.emit(dmg)
-				enemies[i].hp = mini(enemies[i].hp + action.count, enemies[i].max_hp)
-				enemies[i].weak = max(0, enemies[i].weak - 1)
+				_enemy_attack(enemies[i], action.value)
+				_heal(enemies[i], action.count)
 			"devour_minion":
 				var target_idx: int = -1
 				for j in enemies.size():
@@ -345,7 +330,7 @@ func _do_enemy_turn() -> void:
 							target_idx = j
 				if target_idx >= 0:
 					enemies[target_idx].hp = 0
-					enemies[i].hp = mini(enemies[i].hp + 20, enemies[i].max_hp)
+					_heal(enemies[i], 20)
 					enemies[i].strength += 3
 			"revive_minions":
 				for j in enemies.size():
