@@ -22,10 +22,6 @@ offset_right = 200.0
 offset_bottom = 290.0
 theme_override_constants/separation = 10
 
-[node name="MoodLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-horizontal_alignment = 1
-
 [node name="EventNameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 horizontal_alignment = 1

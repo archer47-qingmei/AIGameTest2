@@ -1,7 +1,6 @@
 class_name EventScreen
 extends Control
 
-@onready var mood_label: Label = $VBoxContainer/MoodLabel
 @onready var event_name_label: Label = $VBoxContainer/EventNameLabel
 @onready var flavor_label: Label = $VBoxContainer/FlavorLabel
 @onready var choices_container: VBoxContainer = $VBoxContainer/ChoicesContainer
@@ -28,7 +27,6 @@ func _ready() -> void:
 	card_pick_confirm_button.pressed.connect(_on_card_pick_confirm_pressed)
 
 func _populate_event() -> void:
-	mood_label.text = "[%s]" % _current_event.mood
 	event_name_label.text = _current_event.display_name
 	flavor_label.text = _current_event.flavor_text
 	for child in choices_container.get_children():
