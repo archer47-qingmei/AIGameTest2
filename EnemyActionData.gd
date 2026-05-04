@@ -5,3 +5,4 @@ extends Resource
 @export var value: int
 @export var weight: int = 1
 @export var count: int = 1
+var display_label: String = ""
