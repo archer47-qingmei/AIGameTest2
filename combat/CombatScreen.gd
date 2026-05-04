@@ -68,9 +68,9 @@ func _ready() -> void:
 	_drag_layer.card_played.connect(_on_drag_card_played)
 	_drag_layer.drag_cancelled.connect(_on_drag_cancelled)
 	_drag_layer.target_changed.connect(_on_drag_target_changed)
-	_refresh_ui()
 	_info_panel = InfoPanel.new()
 	add_child(_info_panel)
+	_refresh_ui()
 
 func _build_enemy_panels() -> void:
 	for child in _enemies_container.get_children():
