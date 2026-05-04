@@ -72,25 +72,16 @@ func _show_card_pick(effect: EventEffectData) -> void:
 		child.queue_free()
 	_selected_card = null
 	card_pick_confirm_button.disabled = true
-	for card in GameManager.player_state.deck:
-		var filtered: bool = _is_filtered(card, effect)
+	var eligible: Array[CardData] = EventEngine.get_eligible_cards(GameManager.player_state.deck, effect)
+	for card in eligible:
 		var btn := Button.new()
 		btn.text = card.card_name
-		btn.disabled = filtered
 		btn.pressed.connect(_on_card_selected.bind(card))
 		card_grid.add_child(btn)
+	if eligible.is_empty():
+		GameManager.go_to_map()
+		return
 	card_pick_panel.show()
-
-func _is_filtered(card: CardData, effect: EventEffectData) -> bool:
-	if effect.card_type_filter.is_empty():
-		return false
-	match effect.card_type_filter:
-		"心魔":
-			return not card.is_curse
-		"走火入魔":
-			return not card.is_zahuorumuo
-		_:
-			return card.card_type != effect.card_type_filter
 
 func _on_card_selected(card: CardData) -> void:
 	_selected_card = card
@@ -98,6 +89,9 @@ func _on_card_selected(card: CardData) -> void:
 
 func _on_card_pick_confirm_pressed() -> void:
 	if _selected_card == null:
+		return
+	if _pending_interactive.is_empty():
+		GameManager.go_to_map()
 		return
 	EventEngine.apply_interactive_effect(_pending_interactive[0], _selected_card, GameManager.player_state)
 	_pending_interactive.remove_at(0)

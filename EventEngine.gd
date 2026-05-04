@@ -115,6 +115,25 @@ static func _apply_effect(effect: EventEffectData, player_state: PlayerState) ->
 		_:
 			push_warning("EventEngine: unhandled effect_type %d" % effect.effect_type)
 
+# Returns cards from deck that are eligible for selection for the given interactive effect.
+# Filtered cards (return false) are excluded from the result.
+static func get_eligible_cards(deck: Array[CardData], effect: EventEffectData) -> Array[CardData]:
+	if effect.card_type_filter.is_empty():
+		return deck
+	var result: Array[CardData] = []
+	for card in deck:
+		var matches: bool
+		match effect.card_type_filter:
+			"心魔":
+				matches = card.is_curse
+			"走火入魔":
+				matches = card.is_zahuorumuo
+			_:
+				matches = card.card_type == effect.card_type_filter
+		if matches:
+			result.append(card)
+	return result
+
 static func _describe_single(effect: EventEffectData) -> String:
 	var pct: String = "" if effect.probability >= 1.0 else "（%d%%概率）" % int(effect.probability * 100)
 	match effect.effect_type:
