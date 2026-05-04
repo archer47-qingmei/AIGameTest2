@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "融道"
-description = "真气上限 +1。装备时随机移除牌组中 2 张牌。"
+description = "一枚混沌色的法器，看不出形状。佩上它的瞬间，你感觉有什么东西从功法里被抽走了——不是力量，是两条走过太多遍的路。路没了，真气反而走得更快。\n\n真气上限 +1。装备时随机移除牌组中 2 张牌"
 trigger = 0
 effect_type = 6
 value = 1

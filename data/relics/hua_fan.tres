@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "化凡"
-description = "每场战斗开始获得 15 格挡。每回合结束失去 1 格挡（若没有格挡则扣 1 HP）。"
+description = "一块旧令牌，表面磨到看不出原来的字了。贴在身上会有一种不是你的沉稳——一个已经放下了所有东西的人的沉稳。沉稳不是无敌。它撑得住开头，撑不住太久。\n\n每场战斗开始获得 15 格挡。每回合结束失去 1 格挡（若没有格挡则扣 1 HP）"
 trigger = 0
 effect_type = 2
 value = 15

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "劫雷淬体"
-description = "真气上限 +1。最大血量 -10%（立即生效）。"
+description = "一枚被雷劈过的铜牌，表面有黑色的焦纹。佩上它，一股钝钝的电意在经脉里走——不痛，只是在告诉你：你的身体现在比昨天少了一些，但比昨天快了一点。\n\n真气上限 +1。最大血量 -10%（立即生效）"
 trigger = 0
 effect_type = 6
 value = 1

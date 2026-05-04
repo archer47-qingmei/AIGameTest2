@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_RelicData")
-display_name = "生命之环"
-description = "每回合开始时，恢复 1 点生命。"
+display_name = "归墟细络"
+description = "一根极细的银丝络，绕在你腕上，不知从哪儿来的。每隔一段时间，它会微微发暖——像有人把手搭上去，然后移开。你感觉比之前好了一点点。\n\n每回合开始时，恢复 1 点生命"
 trigger = 1
 effect_type = 1
 value = 1

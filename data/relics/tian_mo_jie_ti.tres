@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "天魔解体"
-description = "第 1 回合获得 5 点额外真气。第 2 回合真气 -1（最低 2）。"
+description = "一段魔功的残核，灼热，像一拳打进你丹田里的力道。第一息是最满的——然后散。散完了，留下一个空洞，不是虚无，是欠债。\n\n第 1 回合获得 5 点额外真气。第 2 回合真气 -1（最低 2）"
 trigger = 1
 effect_type = 11
 value = 5

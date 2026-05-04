@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "天劫余韵"
-description = "真气上限 +1。每场战斗首回合少抽 2 张牌。"
+description = "一段雷劫散去后留在空气里的余震，被一只符器困住了，没有散尽。它把那股势头压进你的脉里。你第一步迈得更重，但也更慢地起步。\n\n真气上限 +1。每场战斗首回合少抽 2 张牌"
 trigger = 0
 effect_type = 6
 value = 1

@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_RelicData")
-display_name = "智者之书"
-description = "每回合开始多抽 1 张牌。"
+display_name = "翻策残简"
+description = "一卷残破的竹简，只剩半段。字没有断——是某人在写到一半的时候把竹简折断了。另一半在哪里不知道。但就这半卷，每一个字都极用力，像是生怕写不完。\n\n每回合开始时，多抽 1 张牌"
 trigger = 1
 effect_type = 3
 value = 1
