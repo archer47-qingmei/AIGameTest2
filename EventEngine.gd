@@ -93,7 +93,8 @@ static func _apply_effect(effect: EventEffectData, player_state: PlayerState) ->
 				player_state.relics.append(relic)
 				RelicEngine.apply_on_equip(relic, player_state)
 		EventEffectData.EffectType.GAIN_CURSE_CARD:
-			var curse: CardData = (load("res://data/cards/xin_mo.tres") as CardData).duplicate()
+			var path: String = effect.curse_card_path if effect.curse_card_path != "" else "res://data/cards/xin_mo.tres"
+			var curse: CardData = (load(path) as CardData).duplicate()
 			player_state.deck.append(curse)
 		EventEffectData.EffectType.REMOVE_CARDS_TYPE:
 			var new_deck: Array[CardData] = []
@@ -102,6 +103,7 @@ static func _apply_effect(effect: EventEffectData, player_state: PlayerState) ->
 				match effect.card_type_filter:
 					"心魔": remove = c.is_curse
 					"走火入魔": remove = c.is_zahuorumuo
+					"诅咒": remove = c.is_curse or c.is_zahuorumuo
 					_: remove = (c.card_type == effect.card_type_filter)
 				if not remove:
 					new_deck.append(c)
@@ -111,6 +113,17 @@ static func _apply_effect(effect: EventEffectData, player_state: PlayerState) ->
 		EventEffectData.EffectType.GAIN_MAX_HP_PERCENT:
 			var gain: int = int(player_state.max_hp * effect.value / 100.0)
 			player_state.max_hp += gain
+		EventEffectData.EffectType.LOSE_RELIC_RANDOM:
+			if not player_state.relics.is_empty():
+				var idx: int = randi() % player_state.relics.size()
+				player_state.relics.remove_at(idx)
+		EventEffectData.EffectType.GAIN_ENERGY_CAP:
+			player_state.energy_cap += effect.value
+		EventEffectData.EffectType.REMOVE_CARDS_RANDOM:
+			var count: int = mini(effect.value, player_state.deck.size())
+			for _i in count:
+				var idx: int = randi() % player_state.deck.size()
+				player_state.deck.remove_at(idx)
 		EventEffectData.EffectType.COMBAT_ELITE_STUB:
 			pass
 		_:
@@ -129,6 +142,8 @@ static func get_eligible_cards(deck: Array[CardData], effect: EventEffectData) -
 				matches = card.is_curse
 			"走火入魔":
 				matches = card.is_zahuorumuo
+			"诅咒":
+				matches = card.is_curse or card.is_zahuorumuo
 			_:
 				matches = card.card_type == effect.card_type_filter
 		if matches:
@@ -160,4 +175,7 @@ static func _describe_single(effect: EventEffectData) -> String:
 		EventEffectData.EffectType.COPY_CARD_CHOOSE: return "选择一张牌复制"
 		EventEffectData.EffectType.GAIN_REINCARNATION_FRAGMENT: return pct + "获得 %d 个轮回碎片" % effect.value
 		EventEffectData.EffectType.GAIN_MAX_HP_PERCENT: return pct + "最大 HP 永久 +%d%%" % effect.value
+		EventEffectData.EffectType.LOSE_RELIC_RANDOM: return pct + "失去随机遗物"
+		EventEffectData.EffectType.GAIN_ENERGY_CAP: return pct + "真气上限永久 +%d" % effect.value
+		EventEffectData.EffectType.REMOVE_CARDS_RANDOM: return pct + "随机移除 %d 张牌" % effect.value
 		_: return ""
