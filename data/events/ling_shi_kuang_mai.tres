@@ -12,6 +12,7 @@ probability = 1.0
 card_grade = 0
 relic_grade = 0
 card_type_filter = ""
+curse_card_path = ""
 
 [sub_resource type="Resource" id="e2"]
 script = ExtResource("3_EFD")
@@ -21,6 +22,7 @@ probability = 1.0
 card_grade = 0
 relic_grade = 0
 card_type_filter = ""
+curse_card_path = ""
 
 [sub_resource type="Resource" id="c1"]
 script = ExtResource("2_ECD")
@@ -37,6 +39,7 @@ probability = 1.0
 card_grade = 0
 relic_grade = 0
 card_type_filter = ""
+curse_card_path = ""
 
 [sub_resource type="Resource" id="c2"]
 script = ExtResource("2_ECD")
