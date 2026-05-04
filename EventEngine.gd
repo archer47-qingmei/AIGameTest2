@@ -7,6 +7,8 @@ static func check_condition(event: EventData, player_state: PlayerState) -> bool
 	match event.appear_condition:
 		EventData.AppearCondition.NONE:
 			return true
+		EventData.AppearCondition.AFTER_REALM:
+			return true
 		EventData.AppearCondition.MIN_DECK_SIZE:
 			return player_state.deck.size() >= event.appear_condition_value
 		EventData.AppearCondition.MIN_RELIC_COUNT:
