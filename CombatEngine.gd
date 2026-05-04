@@ -73,6 +73,10 @@ func _resolve_enemy_actions() -> void:
 			_pending_actions[i] = null
 			continue
 		var data: EnemyData = _enemy_data_list[i]
+		if data.periodic_interval > 0 and data.periodic_action != null \
+				and turn_number % data.periodic_interval == 0:
+			_pending_actions[i] = data.periodic_action
+			continue
 		var use_phase2: bool = (
 			data.phase2_threshold > 0.0
 			and not data.phase2_actions.is_empty()
@@ -92,6 +96,17 @@ func _resolve_enemy_actions() -> void:
 			_pending_actions[i] = doubled
 		else:
 			_pending_actions[i] = action
+		if _pending_actions[i].type == "mirror_attack":
+			var resolved := EnemyActionData.new()
+			resolved.type = "mirror_attack"
+			if _boss_copied_cards.is_empty():
+				resolved.value = 8
+				resolved.display_label = "攻击"
+			else:
+				var chosen: CardData = _boss_copied_cards[randi() % _boss_copied_cards.size()]
+				resolved.value = chosen.effects[0].value
+				resolved.display_label = chosen.card_name
+			_pending_actions[i] = resolved
 
 func _weighted_random_action(actions: Array[EnemyActionData]) -> EnemyActionData:
 	var total: int = 0
