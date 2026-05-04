@@ -70,7 +70,7 @@ func _resolve_enemy_actions() -> void:
 			action = _weighted_random_action(action_list)
 		else:
 			action = action_list[(turn_number - 1) % action_list.size()]
-		if enemies[i].is_charging and action.type in ["attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse"]:
+		if enemies[i].is_charging and action.type in ["attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse", "vampiric_attack"]:
 			var doubled := EnemyActionData.new()
 			doubled.type = action.type
 			doubled.value = action.value * 2
@@ -329,6 +329,30 @@ func _do_enemy_turn() -> void:
 				_draw_pile.shuffle()
 				for _j in action.count:
 					_discard_pile.append(CURSE_CARD.duplicate())
+			"vampiric_attack":
+				var hp_before: int = player.hp
+				EffectResolver.apply_damage(enemies[i], player, action.value)
+				var dmg: int = hp_before - player.hp
+				if dmg > 0:
+					player_damaged.emit(dmg)
+				enemies[i].hp = mini(enemies[i].hp + action.count, enemies[i].max_hp)
+				enemies[i].weak = max(0, enemies[i].weak - 1)
+			"devour_minion":
+				var target_idx: int = -1
+				var lowest_hp: int = 9999
+				for j in enemies.size():
+					if j != i and enemies[j].hp > 0 and enemies[j].hp < lowest_hp:
+						lowest_hp = enemies[j].hp
+						target_idx = j
+				if target_idx >= 0:
+					enemies[target_idx].hp = 0
+					enemies[i].hp = mini(enemies[i].hp + 20, enemies[i].max_hp)
+					enemies[i].strength += 3
+			"revive_minions":
+				for j in enemies.size():
+					if j != i and enemies[j].hp <= 0:
+						enemies[j].hp = enemies[j].max_hp
+						enemies[j].block = 0
 			_:
 				enemies[i].add_block(action.value)
 
