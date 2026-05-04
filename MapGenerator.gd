@@ -9,7 +9,7 @@ const REST_COL: int = 4
 const CHEST_REST_COL: int = 5
 const ELITE_START_COL: int = 6
 const ELITE_FULL_COL: int = 8
-const BOSS_MAP_POSITION: Vector2 = Vector2(300.0, 80.0)
+const BOSS_MAP_POSITION: Vector2 = Vector2(240.0, 80.0)
 
 const EARLY_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/single_stone_demon.tres",
@@ -34,7 +34,7 @@ const BOSS_GROUP_PATH: String = "res://data/enemy_groups/single_boss.tres"
 const ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"
 const BOSS_REWARD_RELIC_PATH: String = "res://data/relics/life_ring.tres"
 
-const ROW_BASE_X: Array[float] = [100.0, 300.0, 500.0]
+const ROW_BASE_X: Array[float] = [80.0, 240.0, 400.0]
 const ROW_OFFSET_RANGE: float = 25.0
 const COL_BASE_Y: float = 1500.0
 const COL_STEP_Y: float = 150.0
