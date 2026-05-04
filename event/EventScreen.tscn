@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://event_screen"]
+
+[ext_resource type="Script" path="res://event/EventScreen.gd" id="1_script"]
+
+[node name="EventScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_script")
+
+[node name="MoodLabel" type="Label" parent="."]
+layout_mode = 2
+
+[node name="EventNameLabel" type="Label" parent="."]
+layout_mode = 2
+
+[node name="FlavorLabel" type="Label" parent="."]
+layout_mode = 2
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ResultView" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="ResultView"]
+layout_mode = 2
+
+[node name="EffectSummaryLabel" type="Label" parent="ResultView"]
+layout_mode = 2
+
+[node name="ConfirmButton" type="Button" parent="ResultView"]
+layout_mode = 2
+text = "确认"
+
+[node name="CardPickPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CardPickPanel"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CardPickPanel/CenterContainer"]
+layout_mode = 2
+
+[node name="PromptLabel" type="Label" parent="CardPickPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CardScrollContainer" type="ScrollContainer" parent="CardPickPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CardGrid" type="GridContainer" parent="CardPickPanel/CenterContainer/VBoxContainer/CardScrollContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="CardPickConfirmButton" type="Button" parent="CardPickPanel/CenterContainer/VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "确认"
