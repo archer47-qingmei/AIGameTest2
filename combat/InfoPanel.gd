@@ -69,6 +69,5 @@ func hide_info() -> void:
 
 func _on_overlay_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		var mb := event as InputEventMouseButton
-		if mb.button_index == MOUSE_BUTTON_LEFT and mb.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			hide_info()
