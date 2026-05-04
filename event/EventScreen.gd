@@ -49,6 +49,10 @@ func _on_choice_pressed(choice: EventChoiceData) -> void:
 	result_view.show()
 
 func _on_confirm_pressed() -> void:
+	if _selected_choice == null:
+		return
+	if _selected_choice.cost_gold > 0:
+		GameManager.player_state.gold -= _selected_choice.cost_gold
 	_pending_interactive = EventEngine.apply_immediate_effects(_selected_choice, GameManager.player_state)
 	if _pending_interactive.is_empty():
 		GameManager.go_to_map()
