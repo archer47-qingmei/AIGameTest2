@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_si_ceng_xiang_shi"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 19
+value = 1
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 5
+value = 10
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "停下来"
+result_text = "蹲下去摸那块石头。温度和掌心一样。没有记忆，但你的手有。坐了很久。站起来。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "继续赶路"
+result_text = "你知道这不是幻觉。但今天不想停。"
+effects = []
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "似曾相识"
+mood = "感动"
+flavor_text = "一段毫无特征的山道。你踩在一块石头上——缺了一个角。那个角的形状你认识。不是这一世。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""

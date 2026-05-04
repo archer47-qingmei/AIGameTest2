@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_liang_ge_xiu_shi"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 1
+value = 20
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 3
+value = 5
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "加入聊天"
+result_text = "你坐下来听了一会儿。打完了——他们很满意，留了些灵石和一股说不清来源的轻松。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "独自离开"
+result_text = "你走了。身后的争论声越来越远。"
+effects = []
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "两个修士"
+mood = "有趣"
+flavor_text = "路边有两个散修在吵架。一个人说他的功法最强。另一个人说他的功法更最强。你要不要试试？他们同时转向你。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""

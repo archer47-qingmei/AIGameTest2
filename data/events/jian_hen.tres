@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_jian_hen"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 16
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "用手指描摹剑痕"
+result_text = "你伸出手，指尖顺着那道剑痕走了一遍。剑式不是你的——但那股劲你认得。你闭上眼，把它记下来了。"
+effects = [SubResource("e1")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "离开"
+result_text = "那道剑不是你的。你走了。"
+effects = []
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "剑痕"
+mood = "神秘"
+flavor_text = "山壁上有一道很新的剑痕——是今天劈的。这不是你留下的。你拔剑对着那道痕比了一下：角度不同，力道也不一样。不是你。是一个和你用不同握法的人。剑痕旁边有一小块烤焦的红薯皮。红薯皮还是热的。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = "sword"

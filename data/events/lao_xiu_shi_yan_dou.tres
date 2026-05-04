@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_lao_xiu_shi_yan_dou"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 6
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 12
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "接下"
+result_text = "拿起烟斗。深吸一口。什么都没有——没有烟，没有火。只是暖。你递回去。他笑了。\"走吧。\"烟斗灭了。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "婉拒"
+result_text = "你摇了摇头。他也不坚持——只是把烟斗搁在腿上。\"走吧，小辈。路还长。\""
+effects = []
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "老修士的烟斗"
+mood = "感动"
+flavor_text = "一块石头上坐着个老头。旁边放着一根灭掉的烟斗。他看你走近，笑了。然后把烟斗递给你。烟斗是暖的。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""

@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_ku_jing"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 7
+value = 40
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 14
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "心魔"
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "跳入枯井"
+result_text = "你抓着井绳往下放。到了底——那道光不见了。黑暗里有什么东西触碰了你的心魔，把它们带走了一些。爬出来的时候血渗进了手掌。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "离开"
+result_text = "你往下看了一眼。走了。那道光还在井底闪着。"
+effects = []
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "枯井"
+mood = "惊悚"
+flavor_text = "路边一口井。井沿上长满青苔——没有人用过很久了。但井里是亮的。有光。那光不是水反射的，是井底自己发的。你往下看的时候，那光闪了一下。像是看到了你。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""
