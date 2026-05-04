@@ -401,6 +401,11 @@ func _check_end() -> bool:
 		combat_ended.emit("victory")
 		return true
 	if player.hp <= 0:
+		for r: RelicData in _relics:
+			if r.effect_type == RelicData.EffectType.PREVENT_DEATH_ONCE and not r.used:
+				player.hp = 1
+				r.used = true
+				return false
 		combat_ended.emit("game_over")
 		return true
 	return false
