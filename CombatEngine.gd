@@ -281,10 +281,7 @@ func _draw_cards(n: int) -> void:
 		if _draw_pile.is_empty():
 			break
 		var card: CardData = _draw_pile.pop_back()
-		if card.is_curse:
-			_discard_pile.append(card)
-		else:
-			hand.append(card)
+		hand.append(card)
 
 func _enemy_attack(attacker: Combatant, value: int, hits: int = 1) -> void:
 	var hp_before: int = player.hp
@@ -383,14 +380,7 @@ func _do_enemy_turn() -> void:
 			"mirror_attack":
 				_enemy_attack(enemies[i], action.value)
 			"xin_mo_fanshi":
-				var valid: Array[int] = []
-				for idx in hand.size():
-					if not hand[idx].is_curse and not hand[idx].is_zahuorumuo:
-						valid.append(idx)
-				if not valid.is_empty():
-					var replace_idx: int = valid[randi() % valid.size()]
-					_discard_pile.append(hand[replace_idx])
-					hand[replace_idx] = CURSE_CARD.duplicate()
+				_add_curses_to_discard(1)
 			"attack_zahuorumuo":
 				_enemy_attack(enemies[i], action.value)
 				_add_zahuorumuo_to_discard(action.count)
