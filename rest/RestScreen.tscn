@@ -37,7 +37,7 @@ text = "休息（+? 生命）"
 
 [node name="BtnUpgrade" type="Button" parent="VBoxContainer/PanelChoice"]
 layout_mode = 2
-text = "升级卡牌"
+text = "悟道"
 
 [node name="LblHeal" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -51,7 +51,7 @@ visible = false
 
 [node name="LblUpgradePrompt" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "选择一张牌升级："
+text = "选择一张牌悟道："
 visible = false
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
@@ -92,7 +92,7 @@ layout_mode = 2
 
 [node name="BtnConfirmUpgrade" type="Button" parent="VBoxContainer/PanelPreview/PreviewContent/HBoxContainer"]
 layout_mode = 2
-text = "确认升级"
+text = "确认悟道"
 
 [node name="BtnCancelPreview" type="Button" parent="VBoxContainer/PanelPreview/PreviewContent/HBoxContainer"]
 layout_mode = 2
