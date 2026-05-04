@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_bu_shi_zhe_yi_shi_de_yan_shen"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 19
+value = 1
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 6
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "举起手"
+result_text = "你举起一只手。他愣了一下——然后也举了。隔着很远，两个人在同一座登天路上，举起了一只手。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 3
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "低头继续走"
+result_text = "你看了一眼。然后继续低头赶路。但有一个人影，隔着岔路，隔着一万次回溯，和你同时走。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "不是这一世的眼神"
+mood = "神秘"
+flavor_text = "你在山道上停住了。眼角余光瞥见了一个人影——不是怪物。他在另一条岔路上。看你的时候，他点了下头。他不知道自己见过你一万次了。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 1
+appear_condition_value = 3
+character_requirement = ""

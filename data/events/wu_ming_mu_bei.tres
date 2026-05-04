@@ -1,0 +1,86 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_wu_ming_mu_bei"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 19
+value = 1
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 13
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "诅咒"
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "祭拜"
+result_text = "跪下。额头抵着碑石。站起来的时候心里一整块东西被提走了——背了很久连自己都不知道的东西。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 19
+value = 1
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 2
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e5"]
+script = ExtResource("3_EFD")
+effect_type = 12
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = "res://data/cards/ye_huo.tres"
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "挖掘"
+result_text = "挖开土。一副旧棺。棺里不是遗骨——是两件灵器叠在一起，还在亮。亮了一两万年。"
+effects = [SubResource("e3"), SubResource("e4"), SubResource("e5")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "走过"
+result_text = "看了碑一眼。走了。碑没有等你。"
+effects = []
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "无名墓碑"
+mood = "感动"
+flavor_text = "一块碑。没有名字，没有年月。碑前有一把剑，插在土里——剑柄烂了上半截。碑后的土是新的，一两天前被人翻过。"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""

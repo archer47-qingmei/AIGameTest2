@@ -1,0 +1,86 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_jing_hu_huan_jing"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 18
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "凝视湖面"
+result_text = "跪下。把手伸进湖水里。水下的那个你握住了你的手。"
+effects = [SubResource("e1")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 12
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 12
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "掷石碎影"
+result_text = "扔了块石头。所有的镜像碎了。湖底翻上来两团黑影，和一块沉了很久的东西。"
+effects = [SubResource("e2"), SubResource("e3"), SubResource("e4")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e5"]
+script = ExtResource("3_EFD")
+effect_type = 6
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "掬水而饮"
+result_text = "不看湖面。喝水。水是甜的。"
+effects = [SubResource("e5")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "镜湖幻境"
+mood = "神秘"
+flavor_text = "湖面没有波纹。水面下映的不是湖底——是你。上一次的你。下一次的你。还有一个你没见过的人影。"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 1
+appear_condition_value = 2
+character_requirement = ""
