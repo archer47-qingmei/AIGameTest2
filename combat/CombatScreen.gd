@@ -32,6 +32,7 @@ const PLAYER_SHAKE_KF: Array[Vector2] = [
 
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
+var _dragging_card_index: int = -1
 
 func _ready() -> void:
 	_lbl_player_hp.add_theme_font_size_override("font_size", 18)
@@ -175,13 +176,21 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 		_:
 			return "意图：格挡 %d" % action.value
 
+func _get_card_desc_for_target(card: CardData, enemy_engine_index: int) -> String:
+	if enemy_engine_index < 0 or enemy_engine_index >= _engine.enemies.size():
+		return card.get_description()
+	var preview: Dictionary = EffectResolver.preview_damage(card, _engine.player, _engine.enemies[enemy_engine_index])
+	if preview.is_empty():
+		return card.get_description()
+	return card.get_description_with_dmg(preview.per_hit)
+
 func _on_card_button_down(card_index: int) -> void:
 	var card: CardData = _engine.hand[card_index]
 	if _engine.energy < card.cost:
 		_shake_card(card_index)
 		return
 	var btn := _hand_buttons[card_index]
-	btn.position.y -= 20
+	btn.position.y -= 75
 	var enemy_positions: Array[Vector2] = []
 	var enemy_indices: Array[int] = []
 	var damage_labels: Array[String] = []
@@ -204,10 +213,15 @@ func _on_card_button_down(card_index: int) -> void:
 	if card.target_type == "all":
 		for idx in enemy_indices:
 			(_enemies_container.get_child(idx) as Panel).modulate = Color(1.3, 1.3, 1.0)
+	var initial_card_text: String
+	if not enemy_indices.is_empty() and card.target_type != "none":
+		initial_card_text = _get_card_desc_for_target(card, enemy_indices[0])
+	else:
+		initial_card_text = card.get_description()
 	_drag_layer.begin_drag(
 		card_index,
 		btn.global_position,
-		card.get_description(),
+		initial_card_text,
 		card.target_type,
 		enemy_positions,
 		enemy_indices,
@@ -215,6 +229,7 @@ func _on_card_button_down(card_index: int) -> void:
 		damage_labels,
 		damage_boosted
 	)
+	_dragging_card_index = card_index
 
 func _shake_card(card_index: int) -> void:
 	var btn := _hand_buttons[card_index]
@@ -230,21 +245,26 @@ func _clear_target_highlights() -> void:
 		(_enemies_container.get_child(i) as Panel).modulate = Color.WHITE
 
 func _on_drag_card_played(card_index: int, target_engine_index: int) -> void:
+	_dragging_card_index = -1
 	_clear_target_highlights()
 	_engine.play_card(card_index, target_engine_index)
 
 func _on_drag_cancelled(card_index: int) -> void:
+	_dragging_card_index = -1
 	_clear_target_highlights()
 	if card_index >= 0 and card_index < _hand_buttons.size():
 		var btn := _hand_buttons[card_index]
 		if is_instance_valid(btn):
-			btn.position.y += 20
+			btn.position.y += 75
 
 func _on_drag_target_changed(old_engine_index: int, new_engine_index: int) -> void:
 	if old_engine_index >= 0 and old_engine_index < _enemies_container.get_child_count():
 		(_enemies_container.get_child(old_engine_index) as Panel).modulate = Color.WHITE
 	if new_engine_index >= 0 and new_engine_index < _enemies_container.get_child_count():
 		(_enemies_container.get_child(new_engine_index) as Panel).modulate = Color(1.3, 1.3, 1.0)
+	if _dragging_card_index >= 0 and _dragging_card_index < _engine.hand.size():
+		var card: CardData = _engine.hand[_dragging_card_index]
+		_drag_layer.update_card_description(_get_card_desc_for_target(card, new_engine_index))
 
 func _rebuild_hand() -> void:
 	for btn: Button in _hand_buttons:
