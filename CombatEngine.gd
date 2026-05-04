@@ -339,11 +339,10 @@ func _do_enemy_turn() -> void:
 				enemies[i].weak = max(0, enemies[i].weak - 1)
 			"devour_minion":
 				var target_idx: int = -1
-				var lowest_hp: int = 9999
 				for j in enemies.size():
-					if j != i and enemies[j].hp > 0 and enemies[j].hp < lowest_hp:
-						lowest_hp = enemies[j].hp
-						target_idx = j
+					if j != i and enemies[j].hp > 0:
+						if target_idx < 0 or enemies[j].hp < enemies[target_idx].hp:
+							target_idx = j
 				if target_idx >= 0:
 					enemies[target_idx].hp = 0
 					enemies[i].hp = mini(enemies[i].hp + 20, enemies[i].max_hp)
