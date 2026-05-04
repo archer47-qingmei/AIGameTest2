@@ -25,4 +25,4 @@ enum EffectType {
 @export var blocks_relic_purchase: bool = false
 @export var blocks_card_purchase: bool = false
 @export var price: int = 0
-@export var used: bool = false
+var used: bool = false
