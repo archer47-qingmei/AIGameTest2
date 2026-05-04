@@ -4,6 +4,33 @@
 [ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
 [ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
 
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 4
+value = 12
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 3
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "解开封印"
+result_text = "撕开符咒。里面是一个人——闭着眼。他的衣服是仙器。你伸手的时候，灵压把你的手掌烧焦了一块。他没有动。"
+effects = [SubResource("e3"), SubResource("e4")]
+cost_gold = 0
+
 [sub_resource type="Resource" id="e1"]
 script = ExtResource("3_EFD")
 effect_type = 14
@@ -41,7 +68,7 @@ script = ExtResource("1_ED")
 display_name = "囚仙窟"
 mood = "惊悚"
 flavor_text = "石窟被旧符咒封着。洞里传出的气息不似妖气。封印石上刻着：「我自愿的。」笔迹很稳。"
-choices = [SubResource("c1"), SubResource("c2")]
+choices = [SubResource("c3"), SubResource("c1"), SubResource("c2")]
 appear_condition = 0
 appear_condition_value = 0
 character_requirement = ""

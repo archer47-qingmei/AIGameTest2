@@ -10,21 +10,69 @@ effect_type = 9
 value = 0
 probability = 1.0
 card_grade = 0
+relic_grade = 1
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 5
+value = 20
+probability = 1.0
+card_grade = 0
 relic_grade = 0
 card_type_filter = ""
+curse_card_path = ""
 
 [sub_resource type="Resource" id="c1"]
 script = ExtResource("2_ECD")
 button_text = "供奉香火"
-result_text = "把灵石摆在站立的神像前。神像不动。风吹进来的时候，火堆的余烬亮了一下。地上多了一件东西。"
-effects = [SubResource("e1")]
-cost_gold = 30
+result_text = "把灵石摆在站立的神像前。神像不动。风吹进来的时候，火堆的余烬亮了一下。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 40
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 5
+value = 20
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
 
 [sub_resource type="Resource" id="c2"]
 script = ExtResource("2_ECD")
-button_text = "悄悄离开"
-result_text = "没有供奉，没有打扰。你在门口坐了一会儿，然后继续上路了。"
-effects = []
+button_text = "借地歇脚"
+result_text = "躺下。屋顶有个破洞，能看到星星。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 2
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e5"]
+script = ExtResource("3_EFD")
+effect_type = 12
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "翻找遗迹"
+result_text = "供桌下有一个暗格——灵器，还有一个封了很久的心魔。"
+effects = [SubResource("e4"), SubResource("e5")]
 cost_gold = 0
 
 [resource]
@@ -32,7 +80,7 @@ script = ExtResource("1_ED")
 display_name = "破庙借宿"
 mood = "安静"
 flavor_text = "一座破庙。一尊神像倒了，另一尊还在站着——你不认得他是什么神。地上有干草铺和熄灭的篝火。匾只有半边：风……观。"
-choices = [SubResource("c1"), SubResource("c2")]
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
 appear_condition = 0
 appear_condition_value = 0
 character_requirement = ""

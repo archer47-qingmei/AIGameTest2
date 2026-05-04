@@ -45,12 +45,29 @@ result_text = "在入口敲了几块。够用了。深处的蓝光还在闪。"
 effects = [SubResource("e3")]
 cost_gold = 0
 
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 13
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "留给后辈"
+result_text = "把敲下来的又放了回去。"
+effects = [SubResource("e4")]
+cost_gold = 0
+
 [resource]
 script = ExtResource("1_ED")
 display_name = "灵石矿脉"
 mood = "安静"
 flavor_text = "山壁上有一道裂缝，里面透出淡蓝的光。有人在入口刻了一行字：「后辈修士，留一脉给后来人。」字迹潦草——写完就走，没有回头。"
-choices = [SubResource("c1"), SubResource("c2")]
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
 appear_condition = 0
 appear_condition_value = 0
 character_requirement = ""
