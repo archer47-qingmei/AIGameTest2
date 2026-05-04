@@ -91,6 +91,7 @@ static func _apply_effect(effect: EventEffectData, player_state: PlayerState) ->
 				var idx: int = randi() % CardPool.RELICS.size()
 				var relic: RelicData = (load(CardPool.RELICS[idx]) as RelicData).duplicate()
 				player_state.relics.append(relic)
+				RelicEngine.apply_on_equip(relic, player_state)
 		EventEffectData.EffectType.GAIN_CURSE_CARD:
 			var curse: CardData = (load("res://data/cards/xin_mo.tres") as CardData).duplicate()
 			player_state.deck.append(curse)
