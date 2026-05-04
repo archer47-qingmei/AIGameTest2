@@ -29,13 +29,9 @@ var _ghost_card: Panel = null
 var _origin_local_pos: Vector2 = Vector2.ZERO
 var _target_line_ends: Array[Vector2] = []
 var _player_local_pos: Vector2 = Vector2.ZERO
-var _damage_labels: Array[String] = []
-var _damage_boosted: Array[bool] = []
-
 func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 		target_type: String, enemy_global_positions: Array[Vector2],
-		enemy_engine_indices: Array[int], player_global_pos: Vector2,
-		damage_labels: Array[String], damage_boosted: Array[bool]) -> void:
+		enemy_engine_indices: Array[int], player_global_pos: Vector2) -> void:
 	_drag_gen += 1
 	if _ghost_card != null:
 		_ghost_card.queue_free()
@@ -49,8 +45,6 @@ func begin_drag(card_index: int, card_global_pos: Vector2, card_text: String,
 	for gp in enemy_global_positions:
 		_enemy_local_positions.append(inv * gp)
 	_player_local_pos = inv * player_global_pos
-	_damage_labels = damage_labels.duplicate()
-	_damage_boosted = damage_boosted.duplicate()
 	_current_slot = -1
 	_state = State.LIFTED
 	mouse_filter = MOUSE_FILTER_STOP
@@ -174,8 +168,6 @@ func _cleanup() -> void:
 	_target_line_ends.clear()
 	_current_slot = -1
 	_player_local_pos = Vector2.ZERO
-	_damage_labels.clear()
-	_damage_boosted.clear()
 	mouse_filter = MOUSE_FILTER_IGNORE
 	queue_redraw()
 
@@ -204,12 +196,6 @@ func _draw() -> void:
 	for i in _target_line_ends.size():
 		var target_pos: Vector2 = _target_line_ends[i]
 		draw_dashed_line(from, target_pos, color, LINE_WIDTH, LINE_DASH)
-		var slot := _current_slot if _target_type == TARGET_SINGLE else i
-		if slot >= 0 and slot < _damage_labels.size() and _damage_labels[slot] != "":
-			var label_color := Color(0.3, 1.0, 0.4) if _damage_boosted[slot] else Color.WHITE
-			var mid := (from + target_pos) * 0.5
-			draw_string(ThemeDB.fallback_font, mid, _damage_labels[slot],
-				HORIZONTAL_ALIGNMENT_CENTER, -1, 20, label_color)
 
 func update_card_description(text: String) -> void:
 	if _ghost_card == null:
