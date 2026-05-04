@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_vampiric"]
+script = ExtResource("2_EnemyActionData")
+type = "vampiric_attack"
+value = 10
+count = 5
+weight = 45
+
+[sub_resource type="Resource" id="Action_devour"]
+script = ExtResource("2_EnemyActionData")
+type = "devour_minion"
+weight = 25
+
+[sub_resource type="Resource" id="Action_revive"]
+script = ExtResource("2_EnemyActionData")
+type = "revive_minions"
+weight = 20
+
+[sub_resource type="Resource" id="Action_block"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 8
+weight = 10
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "血煞"
+hp = 128
+random_actions = true
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_vampiric"), SubResource("Action_devour"), SubResource("Action_revive"), SubResource("Action_block")])
