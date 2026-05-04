@@ -134,6 +134,7 @@ func _refresh_ui() -> void:
 		var btn := Button.new()
 		btn.flat = true
 		btn.text = r.display_name
+		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.pressed.connect(_info_panel.show_info.bind(r.display_name, r.description))
 		_relics_panel.add_child(btn)
 	_build_status_row(_player_status_row, _engine.player)
