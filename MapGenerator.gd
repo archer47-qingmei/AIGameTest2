@@ -137,22 +137,16 @@ static func _random_combat_group(col: int) -> EnemyGroupData:
 	return load(paths[randi() % paths.size()]) as EnemyGroupData
 
 static func _add_event_nodes(all_nodes: Array[NodeData]) -> void:
-	var event_count: int = 0
-	var by_col: Dictionary = {}
+	var count: int = 0
 	for nd: NodeData in all_nodes:
-		var col: int = nd.config.column
-		if not by_col.has(col):
-			by_col[col] = []
-		by_col[col].append(nd)
-	for col_idx in range(min(3, TOTAL_COLUMNS - 1)):
-		var nodes: Array = by_col.get(col_idx, [])
-		for nd: NodeData in nodes:
-			if event_count >= 3:
-				return
-			if nd.config.type == NodeConfig.Type.COMBAT and randf() < 0.2:
-				nd.config.type = NodeConfig.Type.EVENT
-				nd.config.enemy_group = null
-				event_count += 1
+		if count >= 3:
+			return
+		if nd.config.column >= 1 and nd.config.column <= 3 \
+				and nd.config.type == NodeConfig.Type.COMBAT \
+				and randf() < 0.2:
+			nd.config.type = NodeConfig.Type.EVENT
+			nd.config.enemy_group = null
+			count += 1
 
 static func _add_shop_nodes(all_nodes: Array[NodeData]) -> void:
 	var candidates: Array[NodeData] = []
