@@ -1,6 +1,6 @@
 extends Control
 
-const START_POS := Vector2(240.0, 1580.0)
+const START_POS := Vector2(240.0, 1650.0)
 
 @onready var _lbl_hp: Label = $LblHP
 @onready var _scroll: ScrollContainer = $ScrollContainer

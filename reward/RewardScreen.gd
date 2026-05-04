@@ -54,7 +54,7 @@ func _show_list() -> void:
 	else:
 		var relic: RelicData = GameManager.pending_relic
 		if relic != null:
-			_btn_relic.text = "%s — %s" % [relic.display_name, relic.description]
+			_btn_relic.text = "%s — %s" % [relic.display_name, _relic_effect_text(relic)]
 			_btn_relic.show()
 		else:
 			_btn_relic.hide()
@@ -69,8 +69,12 @@ func _show_list() -> void:
 		else:
 			_btn_gold.hide()
 
+func _relic_effect_text(relic: RelicData) -> String:
+	var parts := relic.description.split("\n\n")
+	return parts[-1]
+
 func _on_relic_pressed() -> void:
-	_btn_relic.text = "%s — %s" % [GameManager.pending_relic.display_name, GameManager.pending_relic.description]
+	_btn_relic.text = "%s — %s" % [GameManager.pending_relic.display_name, _relic_effect_text(GameManager.pending_relic)]
 	GameManager.collect_relic()
 	_btn_relic.disabled = true
 	_btn_relic.text += " ✓"
