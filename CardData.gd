@@ -7,6 +7,7 @@ extends Resource
 @export var effects: Array[CardEffectData]
 @export var is_venom: bool = false
 @export var is_curse: bool = false
+@export var is_zahuorumuo: bool = false
 @export var special_text: String = ""
 @export var target_type: String = "single"
 @export var card_type: String = ""
@@ -24,14 +25,14 @@ func upgrade() -> void:
 		effect.value += effect.upgrade_bonus
 
 func get_description() -> String:
-	if is_curse:
+	if is_curse or is_zahuorumuo:
 		return "%s\n%s" % [card_name, special_text]
 	if is_venom:
 		return "%s\n费用:%d  %s" % [card_name, cost, special_text]
 	return _format_description(card_name, false)
 
 func get_upgrade_preview_bbcode() -> String:
-	if is_upgraded or is_curse:
+	if is_upgraded or is_curse or is_zahuorumuo:
 		return get_description()
 	if is_venom:
 		return "%s+\n费用:%d  %s" % [card_name, cost, special_text]

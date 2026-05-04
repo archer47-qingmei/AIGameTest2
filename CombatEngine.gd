@@ -107,7 +107,7 @@ func get_exhaust_pile() -> Array[CardData]:
 
 func play_card(card_index: int, target_index: int) -> bool:
 	var card: CardData = hand[card_index]
-	if card.is_curse:
+	if card.is_curse or card.is_zahuorumuo:
 		return false
 	if card.cost > energy:
 		return false

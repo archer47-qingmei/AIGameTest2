@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://CardData.gd" id="1_CardData"]
+
+[resource]
+script = ExtResource("1_CardData")
+card_name = "走火入魔"
+cost = 0
+is_zahuorumuo = true
+special_text = "无法打出。回合结束：随机弃掉另1张手牌"
+target_type = "none"
