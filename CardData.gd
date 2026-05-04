@@ -31,6 +31,13 @@ func get_description() -> String:
 		return "%s\n费用:%d  %s" % [card_name, cost, special_text]
 	return _format_description(card_name, false)
 
+func get_description_with_dmg(real_dmg: int) -> String:
+	if is_curse or is_zahuorumuo:
+		return "%s\n%s" % [card_name, special_text]
+	if is_venom:
+		return "%s\n费用:%d  %s" % [card_name, cost, special_text]
+	return _format_description(card_name, false, real_dmg)
+
 func get_upgrade_preview_bbcode() -> String:
 	if is_upgraded or is_curse or is_zahuorumuo:
 		return get_description()
@@ -38,11 +45,20 @@ func get_upgrade_preview_bbcode() -> String:
 		return "%s+\n费用:%d  %s" % [card_name, cost, special_text]
 	return _format_description(card_name + "+", true)
 
-func _format_description(name: String, show_bonuses: bool) -> String:
+func _format_description(name: String, show_bonuses: bool, real_dmg: int = -1) -> String:
 	var v: Dictionary = _collect_effects()
 	var desc: String = "%s\n费用:%d" % [name, cost]
 	if v.dmg > 0:
-		var dmg_str: String = _fmt(v.dmg, v.dmg_bonus, show_bonuses)
+		var dmg_str: String
+		if real_dmg >= 0:
+			if real_dmg > v.dmg:
+				dmg_str = "[color=green]%d[/color]" % real_dmg
+			elif real_dmg < v.dmg:
+				dmg_str = "[color=red]%d[/color]" % real_dmg
+			else:
+				dmg_str = "%d" % real_dmg
+		else:
+			dmg_str = _fmt(v.dmg, v.dmg_bonus, show_bonuses)
 		if v.dmg_times > 1:
 			desc += "  攻:%s×%d" % [dmg_str, v.dmg_times]
 		else:
