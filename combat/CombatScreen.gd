@@ -1,5 +1,10 @@
 extends Control
 
+const CARD_SIZE := Vector2(110.0, 150.0)
+const CARD_LIFT_PX := 75.0
+const MODULATE_HIGHLIGHT := Color(1.3, 1.3, 1.0)
+const MODULATE_NORMAL := Color.WHITE
+
 const ENEMY_SHAKE_KF: Array[Vector2] = [
 	Vector2(1.15, 0.85), Vector2(0.9, 1.1), Vector2(1.05, 0.95)
 ]
@@ -190,7 +195,7 @@ func _on_card_button_down(card_index: int) -> void:
 		_shake_card(card_index)
 		return
 	var btn := _hand_buttons[card_index]
-	btn.position.y -= 75
+	btn.position.y -= CARD_LIFT_PX
 	var enemy_positions: Array[Vector2] = []
 	var enemy_indices: Array[int] = []
 	var damage_labels: Array[String] = []
@@ -212,7 +217,7 @@ func _on_card_button_down(card_index: int) -> void:
 				damage_boosted.append(preview.boosted)
 	if card.target_type == "all":
 		for idx in enemy_indices:
-			(_enemies_container.get_child(idx) as Panel).modulate = Color(1.3, 1.3, 1.0)
+			(_enemies_container.get_child(idx) as Panel).modulate = MODULATE_HIGHLIGHT
 	var initial_card_text: String
 	if not enemy_indices.is_empty() and card.target_type != "none":
 		initial_card_text = _get_card_desc_for_target(card, enemy_indices[0])
@@ -242,7 +247,7 @@ func _shake_card(card_index: int) -> void:
 
 func _clear_target_highlights() -> void:
 	for i in _enemies_container.get_child_count():
-		(_enemies_container.get_child(i) as Panel).modulate = Color.WHITE
+		(_enemies_container.get_child(i) as Panel).modulate = MODULATE_NORMAL
 
 func _on_drag_card_played(card_index: int, target_engine_index: int) -> void:
 	_dragging_card_index = -1
@@ -255,13 +260,13 @@ func _on_drag_cancelled(card_index: int) -> void:
 	if card_index >= 0 and card_index < _hand_buttons.size():
 		var btn := _hand_buttons[card_index]
 		if is_instance_valid(btn):
-			btn.position.y += 75
+			btn.position.y += CARD_LIFT_PX
 
 func _on_drag_target_changed(old_engine_index: int, new_engine_index: int) -> void:
 	if old_engine_index >= 0 and old_engine_index < _enemies_container.get_child_count():
-		(_enemies_container.get_child(old_engine_index) as Panel).modulate = Color.WHITE
+		(_enemies_container.get_child(old_engine_index) as Panel).modulate = MODULATE_NORMAL
 	if new_engine_index >= 0 and new_engine_index < _enemies_container.get_child_count():
-		(_enemies_container.get_child(new_engine_index) as Panel).modulate = Color(1.3, 1.3, 1.0)
+		(_enemies_container.get_child(new_engine_index) as Panel).modulate = MODULATE_HIGHLIGHT
 	if _dragging_card_index >= 0 and _dragging_card_index < _engine.hand.size():
 		var card: CardData = _engine.hand[_dragging_card_index]
 		_drag_layer.update_card_description(_get_card_desc_for_target(card, new_engine_index))
@@ -273,8 +278,8 @@ func _rebuild_hand() -> void:
 	for i in _engine.hand.size():
 		var card: CardData = _engine.hand[i]
 		var btn := Button.new()
-		btn.custom_minimum_size = Vector2(110, 150)
-		btn.size = Vector2(110, 150)
+		btn.custom_minimum_size = CARD_SIZE
+		btn.size = CARD_SIZE
 		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		btn.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 		btn.text = card.get_description()
@@ -287,8 +292,6 @@ func _layout_hand() -> void:
 	var n := _hand_buttons.size()
 	if n == 0:
 		return
-	const CARD_W := 110.0
-	const CARD_H := 150.0
 	const CONTAINER_H := 170.0
 	const MIN_GAP := 8.0
 	var W := _hand_area.size.x
@@ -296,15 +299,15 @@ func _layout_hand() -> void:
 		W = get_viewport_rect().size.x
 	var step := 0.0
 	if n > 1:
-		var natural_step := CARD_W + MIN_GAP
-		var max_step := (W - CARD_W) / float(n - 1)
+		var natural_step := CARD_SIZE.x + MIN_GAP
+		var max_step := (W - CARD_SIZE.x) / float(n - 1)
 		step = min(natural_step, max_step)
-	var total_w := CARD_W + float(n - 1) * step
+	var total_w := CARD_SIZE.x + float(n - 1) * step
 	var start_x := (W - total_w) / 2.0
 	var H := _hand_area.size.y
 	if H == 0.0:
 		H = CONTAINER_H
-	var start_y := (H - CARD_H) / 2.0
+	var start_y := (H - CARD_SIZE.y) / 2.0
 	for i in n:
 		_hand_buttons[i].position = Vector2(start_x + float(i) * step, start_y)
 

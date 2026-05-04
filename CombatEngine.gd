@@ -312,6 +312,7 @@ func _do_enemy_turn() -> void:
 	for i in enemies.size():
 		if enemies[i].hp <= 0:
 			continue
+		var data: EnemyData = _enemy_data_list[i]
 		enemies[i].block = 0
 		enemies[i].vulnerable = max(0, enemies[i].vulnerable - 1)
 		var action: EnemyActionData = get_enemy_action(i)
@@ -386,18 +387,16 @@ func _do_enemy_turn() -> void:
 				_add_zahuorumuo_to_discard(action.count)
 			_:
 				enemies[i].add_block(action.value)
-		if _enemy_data_list[i].copies_player_cards \
-				and _enemy_data_list[i].phase2_passive_threshold > 0.0 \
-				and float(enemies[i].hp) / float(enemies[i].max_hp) < _enemy_data_list[i].phase2_passive_threshold \
+		if data.copies_player_cards \
+				and data.phase2_passive_threshold > 0.0 \
+				and float(enemies[i].hp) / float(enemies[i].max_hp) < data.phase2_passive_threshold \
 				and enemies[i].hp > 0:
 			enemies[i].hp = max(0, enemies[i].hp - 3)
 			enemies[i].strength += 3
 
-func _get_living_enemies() -> Array[Combatant]:
-	return enemies.filter(func(e: Combatant) -> bool: return e.hp > 0)
-
 func _check_end() -> bool:
-	if _get_living_enemies().is_empty():
+	var any_alive: bool = enemies.any(func(e: Combatant) -> bool: return e.hp > 0)
+	if not any_alive:
 		RelicEngine.apply_combat_end(_relics, self)
 		combat_ended.emit("victory")
 		return true

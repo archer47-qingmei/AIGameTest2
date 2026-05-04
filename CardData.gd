@@ -51,12 +51,7 @@ func _format_description(name: String, show_bonuses: bool, real_dmg: int = -1) -
 	if v.dmg > 0:
 		var dmg_str: String
 		if real_dmg >= 0:
-			if real_dmg > v.dmg:
-				dmg_str = "[color=green]%d[/color]" % real_dmg
-			elif real_dmg < v.dmg:
-				dmg_str = "[color=red]%d[/color]" % real_dmg
-			else:
-				dmg_str = "%d" % real_dmg
+			dmg_str = _fmt_real_dmg(real_dmg, v.dmg)
 		else:
 			dmg_str = _fmt(v.dmg, v.dmg_bonus, show_bonuses)
 		if v.dmg_times > 1:
@@ -163,3 +158,10 @@ static func _fmt(val: int, bonus: int, show_bonus: bool) -> String:
 	if show_bonus and bonus > 0:
 		return "[color=green]%d[/color]" % (val + bonus)
 	return "%d" % val
+
+static func _fmt_real_dmg(real_dmg: int, base_dmg: int) -> String:
+	if real_dmg > base_dmg:
+		return "[color=green]%d[/color]" % real_dmg
+	if real_dmg < base_dmg:
+		return "[color=red]%d[/color]" % real_dmg
+	return "%d" % real_dmg
