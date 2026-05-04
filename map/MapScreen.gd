@@ -63,9 +63,9 @@ func _input(event: InputEvent) -> void:
 		_scroll.scroll_vertical -= int(event.relative.y)
 
 func _get_node_label(nd: NodeData) -> String:
-	if nd.connections.is_empty():
-		return "Boss 战斗"
 	match nd.config.type:
+		NodeConfig.Type.BOSS:
+			return "Boss 战斗"
 		NodeConfig.Type.REST:
 			return "休息站"
 		NodeConfig.Type.ELITE:

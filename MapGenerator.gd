@@ -47,7 +47,7 @@ static func generate() -> Array[NodeData]:
 	boss.config = NodeConfig.new()
 	boss.config.column = TOTAL_COLUMNS - 1
 	boss.config.row = 1
-	boss.config.type = NodeConfig.Type.COMBAT
+	boss.config.type = NodeConfig.Type.BOSS
 	boss.config.enemy_group = load(BOSS_GROUP_PATH) as EnemyGroupData
 	boss.config.reward_relic = load(BOSS_REWARD_RELIC_PATH) as RelicData
 	boss.config.map_position = BOSS_MAP_POSITION
