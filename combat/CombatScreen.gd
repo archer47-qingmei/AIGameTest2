@@ -160,6 +160,12 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 			return "意图：噬子"
 		"revive_minions":
 			return "意图：召唤"
+		"mirror_attack":
+			return "意图：%s %d" % [action.display_label, val]
+		"xin_mo_fanshi":
+			return "意图：心魔反噬"
+		"attack_zahuorumuo":
+			return "意图：攻击 %d + 走火入魔 ×%d" % [val, action.count]
 		"poison":
 			return "意图：投毒 %d" % action.value
 		"discard_curse":
