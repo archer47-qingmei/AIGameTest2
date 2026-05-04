@@ -8,7 +8,7 @@ const NUM_ROWS: int = 3
 const REST_COL: int = 4
 const CHEST_REST_COL: int = 5
 const ELITE_START_COL: int = 6
-const ELITE_FULL_COL: int = 8
+const ELITE_END_COL: int = 8
 const BOSS_MAP_POSITION: Vector2 = Vector2(240.0, 80.0)
 
 const EARLY_GROUP_PATHS: Array[String] = [
@@ -116,16 +116,11 @@ static func _assign_types(all: Array[NodeData]) -> void:
 				if nodes.size() >= 2:
 					nodes[1].config.type = NodeConfig.Type.REST
 					nodes[1].config.enemy_group = null
-			ELITE_START_COL, ELITE_START_COL + 1:
+			ELITE_START_COL, ELITE_START_COL + 1, ELITE_END_COL:
 				nodes.shuffle()
 				nodes[0].config.type = NodeConfig.Type.ELITE
 				nodes[0].config.enemy_group = load(ELITE_GROUP_PATHS[randi() % ELITE_GROUP_PATHS.size()]) as EnemyGroupData
 				nodes[0].config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
-			ELITE_FULL_COL:
-				for nd: NodeData in nodes:
-					nd.config.type = NodeConfig.Type.ELITE
-					nd.config.enemy_group = load(ELITE_GROUP_PATHS[randi() % ELITE_GROUP_PATHS.size()]) as EnemyGroupData
-					nd.config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
 
 static func _random_combat_group(col: int) -> EnemyGroupData:
 	var paths: Array[String] = EARLY_GROUP_PATHS if col <= 3 else MID_GROUP_PATHS
