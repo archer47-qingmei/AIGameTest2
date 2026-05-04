@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "残修魂晶"
+description = "一块通透的晶石，内部有雾状的东西在缓慢流动。凑近了看，雾里隐约有一张脸。他不记得自己是谁了。但你把它贴在掌心的时候，他的修为还在运转——很慢。像一个人的脉搏在很远的地方跳动。\n\n每场战斗开始时，获得 3 点格挡"
+trigger = 0
+effect_type = 2
+value = 3
+price = 100
