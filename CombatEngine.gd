@@ -294,6 +294,10 @@ func _add_venoms_to_draw(n: int) -> void:
 		_draw_pile.append(VENOM_CARD.duplicate())
 	_draw_pile.shuffle()
 
+func _add_zahuorumuo_to_discard(n: int) -> void:
+	for _j in n:
+		_discard_pile.append(ZAHUORUMUO_CARD.duplicate())
+
 func _do_enemy_turn() -> void:
 	for i in enemies.size():
 		if enemies[i].hp <= 0:
@@ -363,8 +367,25 @@ func _do_enemy_turn() -> void:
 					if j != i and enemies[j].hp <= 0:
 						enemies[j].hp = enemies[j].max_hp
 						enemies[j].block = 0
+			"mirror_attack":
+				_enemy_attack(enemies[i], action.value)
+			"xin_mo_fanshi":
+				var valid: Array[int] = []
+				for idx in hand.size():
+					if not hand[idx].is_curse and not hand[idx].is_zahuorumuo:
+						valid.append(idx)
+				if not valid.is_empty():
+					hand[valid[randi() % valid.size()]] = CURSE_CARD.duplicate()
+			"attack_zahuorumuo":
+				_enemy_attack(enemies[i], action.value)
+				_add_zahuorumuo_to_discard(action.count)
 			_:
 				enemies[i].add_block(action.value)
+		if _enemy_data_list[i].copies_player_cards \
+				and float(enemies[i].hp) / float(enemies[i].max_hp) < 0.5 \
+				and enemies[i].hp > 0:
+			enemies[i].hp = max(0, enemies[i].hp - 3)
+			enemies[i].strength += 3
 
 func _get_living_enemies() -> Array[Combatant]:
 	return enemies.filter(func(e: Combatant) -> bool: return e.hp > 0)
