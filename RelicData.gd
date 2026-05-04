@@ -8,7 +8,9 @@ enum EffectType {
 	FIRST_TURN_DRAW_PENALTY, BLOCK_DRAIN,
 	REMOVE_CARDS, FIRST_TURN_ENERGY,
 	SECOND_TURN_ENERGY_PENALTY, ENERGY_IF_LOW_HP,
-	DRAW_IF_LOW_HP
+	DRAW_IF_LOW_HP,
+	HEAL_ONCE_IF_HALF_HP,
+	PREVENT_DEATH_ONCE
 }
 
 @export var display_name: String = ""
@@ -23,3 +25,4 @@ enum EffectType {
 @export var blocks_relic_purchase: bool = false
 @export var blocks_card_purchase: bool = false
 @export var price: int = 0
+@export var used: bool = false

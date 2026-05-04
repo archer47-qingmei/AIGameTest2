@@ -22,11 +22,11 @@ static func apply_on_equip(relic: RelicData, player_state: PlayerState) -> void:
 static func _apply_for_trigger(relics: Array[RelicData], trigger: RelicData.Trigger, engine: CombatEngine) -> void:
 	for relic: RelicData in relics:
 		if relic.trigger == trigger:
-			_apply_effect(relic.effect_type, relic.value, engine)
+			_apply_effect(relic.effect_type, relic.value, engine, relic)
 		if relic.has_effect_b and relic.trigger_b == trigger:
-			_apply_effect(relic.effect_type_b, relic.value_b, engine)
+			_apply_effect(relic.effect_type_b, relic.value_b, engine, relic)
 
-static func _apply_effect(effect_type: RelicData.EffectType, value: int, engine: CombatEngine) -> void:
+static func _apply_effect(effect_type: RelicData.EffectType, value: int, engine: CombatEngine, relic: RelicData = null) -> void:
 	match effect_type:
 		RelicData.EffectType.ENERGY:
 			engine.energy += value
@@ -66,6 +66,14 @@ static func _apply_effect(effect_type: RelicData.EffectType, value: int, engine:
 		RelicData.EffectType.DRAW_IF_LOW_HP:
 			if engine.player.hp < int(engine.player.max_hp * 0.3):
 				engine.draw_cards(value)
+		RelicData.EffectType.HEAL_ONCE_IF_HALF_HP:
+			if relic == null or relic.used:
+				return
+			if engine.player.hp < int(engine.player.max_hp * 0.5):
+				engine.player.hp = mini(engine.player.hp + value, engine.player.max_hp)
+				relic.used = true
+		RelicData.EffectType.PREVENT_DEATH_ONCE:
+			pass
 
 static func _apply_equip_effect(effect_type: RelicData.EffectType, value: int, player_state: PlayerState) -> void:
 	match effect_type:
