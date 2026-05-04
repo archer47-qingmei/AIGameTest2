@@ -191,7 +191,7 @@ func end_turn() -> void:
 				victims.append(idx)
 		if not victims.is_empty():
 			var victim_idx: int = victims[randi() % victims.size()]
-			_discard_pile.append(hand[victim_idx])
+			_exhaust_pile.append(hand[victim_idx])
 			hand.remove_at(victim_idx)
 	for card: CardData in hand:
 		_discard_pile.append(card)

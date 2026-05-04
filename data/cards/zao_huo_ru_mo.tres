@@ -7,5 +7,5 @@ script = ExtResource("1_CardData")
 card_name = "走火入魔"
 cost = 0
 is_zahuorumuo = true
-special_text = "无法打出。回合结束：随机弃掉另1张手牌"
+special_text = "无法打出。回合结束：随机消耗另1张手牌"
 target_type = "none"
