@@ -38,6 +38,7 @@ const PLAYER_SHAKE_KF: Array[Vector2] = [
 var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
 var _dragging_card_index: int = -1
+var _info_panel: InfoPanel
 
 func _ready() -> void:
 	_lbl_player_hp.add_theme_font_size_override("font_size", 18)
@@ -68,6 +69,8 @@ func _ready() -> void:
 	_drag_layer.drag_cancelled.connect(_on_drag_cancelled)
 	_drag_layer.target_changed.connect(_on_drag_target_changed)
 	_refresh_ui()
+	_info_panel = InfoPanel.new()
+	add_child(_info_panel)
 
 func _build_enemy_panels() -> void:
 	for child in _enemies_container.get_children():
@@ -128,9 +131,11 @@ func _refresh_ui() -> void:
 	for child in _relics_panel.get_children():
 		child.queue_free()
 	for r: RelicData in GameManager.player_state.relics:
-		var lbl: Label = Label.new()
-		lbl.text = r.display_name
-		_relics_panel.add_child(lbl)
+		var btn := Button.new()
+		btn.flat = true
+		btn.text = r.display_name
+		btn.pressed.connect(_info_panel.show_info.bind(r.display_name, r.description))
+		_relics_panel.add_child(btn)
 	_build_status_row(_player_status_row, _engine.player)
 	_rebuild_hand()
 
@@ -447,15 +452,21 @@ func _build_status_row(row: HBoxContainer, combatant: Combatant) -> void:
 	for child in row.get_children():
 		child.free()
 	if combatant.weak > 0:
-		var lbl := Label.new()
-		lbl.text = "虚弱×%d" % combatant.weak
-		lbl.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))
-		row.add_child(lbl)
+		var btn := Button.new()
+		btn.flat = true
+		btn.text = "虚弱×%d" % combatant.weak
+		btn.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))
+		var info := GameText.get_buff_info("weak")
+		btn.pressed.connect(_info_panel.show_info.bind(info["name"], info["description"]))
+		row.add_child(btn)
 	if combatant.vulnerable > 0:
-		var lbl := Label.new()
-		lbl.text = "脆弱×%d" % combatant.vulnerable
-		lbl.add_theme_color_override("font_color", Color(1.0, 0.55, 0.1))
-		row.add_child(lbl)
+		var btn := Button.new()
+		btn.flat = true
+		btn.text = "脆弱×%d" % combatant.vulnerable
+		btn.add_theme_color_override("font_color", Color(1.0, 0.55, 0.1))
+		var info := GameText.get_buff_info("vulnerable")
+		btn.pressed.connect(_info_panel.show_info.bind(info["name"], info["description"]))
+		row.add_child(btn)
 
 func _on_proceed() -> void:
 	GameManager.end_combat(_engine.player.hp)
