@@ -31,7 +31,8 @@ var _enemy_data_list: Array[EnemyData] = []
 var _relics: Array[RelicData] = []
 var _pending_actions: Array[EnemyActionData] = []
 
-func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_hp: int, max_hp: int, relics: Array[RelicData] = []) -> void:
+func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_hp: int, max_hp: int, relics: Array[RelicData] = [], initial_energy_cap: int = 3) -> void:
+	energy_cap = initial_energy_cap
 	assert(not enemy_group.enemies.is_empty(), "EnemyGroupData has no enemies")
 	_relics = relics
 	for data: EnemyData in enemy_group.enemies:

@@ -33,3 +33,4 @@ enum EffectType {
 @export var card_grade: int = 0
 @export var relic_grade: int = 0
 @export var card_type_filter: String = ""
+@export var curse_card_path: String = ""

@@ -60,7 +60,8 @@ func _ready() -> void:
 		GameManager.get_current_enemy_group(),
 		GameManager.player_state.hp,
 		GameManager.player_state.max_hp,
-		GameManager.player_state.relics
+		GameManager.player_state.relics,
+		GameManager.player_state.energy_cap
 	)
 	_build_enemy_panels()
 	_engine.state_changed.connect(_refresh_ui)
