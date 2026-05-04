@@ -85,7 +85,7 @@ static func _make_node(col: int, row: int) -> NodeData:
 	nd.config.type = NodeConfig.Type.COMBAT
 	nd.config.map_position = Vector2(
 		ROW_BASE_X[row] + randf_range(-ROW_OFFSET_RANGE, ROW_OFFSET_RANGE),
-		COL_BASE_Y - col * COL_STEP_Y + randf_range(-COL_OFFSET_RANGE, COL_OFFSET_RANGE)
+		COL_BASE_Y - col * COL_STEP_Y
 	)
 	return nd
 
