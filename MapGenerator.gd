@@ -5,6 +5,7 @@ const TOTAL_COLUMNS: int = 10
 const NUM_PATHS: int = 5
 const NUM_ROWS: int = 3
 
+const EARLY_ELITE_MAX_COL: int = 3
 const REST_COL: int = 4
 const CHEST_REST_COL: int = 5
 const ELITE_START_COL: int = 6
@@ -121,6 +122,14 @@ static func _assign_types(all: Array[NodeData]) -> void:
 				nodes[0].config.type = NodeConfig.Type.ELITE
 				nodes[0].config.enemy_group = load(ELITE_GROUP_PATHS[randi() % ELITE_GROUP_PATHS.size()]) as EnemyGroupData
 				nodes[0].config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
+
+	var early_elite_col: int = randi() % (EARLY_ELITE_MAX_COL + 1)
+	var early_nodes: Array = by_col.get(early_elite_col, [])
+	if not early_nodes.is_empty():
+		early_nodes.shuffle()
+		early_nodes[0].config.type = NodeConfig.Type.ELITE
+		early_nodes[0].config.enemy_group = load(ELITE_GROUP_PATHS[randi() % ELITE_GROUP_PATHS.size()]) as EnemyGroupData
+		early_nodes[0].config.reward_relic = load(ELITE_REWARD_RELIC_PATH) as RelicData
 
 static func _random_combat_group(col: int) -> EnemyGroupData:
 	var paths: Array[String] = EARLY_GROUP_PATHS if col <= 3 else MID_GROUP_PATHS
