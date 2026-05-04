@@ -1,7 +1,7 @@
 class_name NodeConfig
 extends Resource
 
-enum Type { COMBAT, REST, ELITE, SHOP, CHEST, BOSS }
+enum Type { COMBAT, REST, ELITE, SHOP, CHEST, BOSS, EVENT }
 
 @export var type: Type = Type.COMBAT
 @export var enemy_group: EnemyGroupData

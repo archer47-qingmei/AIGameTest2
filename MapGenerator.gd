@@ -74,6 +74,7 @@ static func generate() -> Array[NodeData]:
 		all.append(nd)
 	_assign_types(all)
 	_add_shop_nodes(all)
+	_add_event_nodes(all)
 	return all
 
 static func _make_node(col: int, row: int) -> NodeData:
@@ -134,6 +135,24 @@ static func _assign_types(all: Array[NodeData]) -> void:
 static func _random_combat_group(col: int) -> EnemyGroupData:
 	var paths: Array[String] = EARLY_GROUP_PATHS if col <= 3 else MID_GROUP_PATHS
 	return load(paths[randi() % paths.size()]) as EnemyGroupData
+
+static func _add_event_nodes(all_nodes: Array[NodeData]) -> void:
+	var event_count: int = 0
+	var by_col: Dictionary = {}
+	for nd: NodeData in all_nodes:
+		var col: int = nd.config.column
+		if not by_col.has(col):
+			by_col[col] = []
+		by_col[col].append(nd)
+	for col_idx in range(min(3, TOTAL_COLUMNS - 1)):
+		var nodes: Array = by_col.get(col_idx, [])
+		for nd: NodeData in nodes:
+			if event_count >= 3:
+				return
+			if nd.config.type == NodeConfig.Type.COMBAT and randf() < 0.2:
+				nd.config.type = NodeConfig.Type.EVENT
+				nd.config.enemy_group = null
+				event_count += 1
 
 static func _add_shop_nodes(all_nodes: Array[NodeData]) -> void:
 	var candidates: Array[NodeData] = []
