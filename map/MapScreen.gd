@@ -56,11 +56,7 @@ func _draw_connections() -> void:
 			_map_content.draw_line(from, to, color, 2.0)
 
 func _get_node_pos(nd: NodeData) -> Vector2:
-	if nd.config.column == MapGenerator.TOTAL_COLUMNS - 1:
-		return Vector2(240.0, 150.0)
-	var row_x: float = 140.0 if nd.config.row == 0 else 340.0
-	var col_y: float = 1500.0 - nd.config.column * 150.0
-	return Vector2(row_x, col_y)
+	return nd.config.map_position
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenDrag:

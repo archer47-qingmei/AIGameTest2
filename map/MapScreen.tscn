@@ -47,5 +47,5 @@ scroll_horizontal_enabled = false
 
 [node name="MapContent" type="Control" parent="ScrollContainer"]
 layout_mode = 2
-custom_minimum_size = Vector2(480, 1650)
+custom_minimum_size = Vector2(600, 1650)
 script = ExtResource("2_content_script")
