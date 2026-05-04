@@ -1,5 +1,7 @@
 extends Control
 
+const START_POS := Vector2(240.0, 1580.0)
+
 @onready var _lbl_hp: Label = $LblHP
 @onready var _scroll: ScrollContainer = $ScrollContainer
 @onready var _map_content: Control = $ScrollContainer/MapContent
@@ -24,6 +26,13 @@ func _ready() -> void:
 	_scroll.scroll_vertical = int(target_y - _scroll.size.y / 2.0)
 
 func _build_map(state: PlayerState) -> void:
+	if state.completed_nodes.is_empty() and state.current_node == null:
+		var start_btn := Button.new()
+		start_btn.size = Vector2(110.0, 50.0)
+		start_btn.position = START_POS - Vector2(55.0, 25.0)
+		start_btn.text = "★ 起点"
+		start_btn.disabled = true
+		_map_content.add_child(start_btn)
 	for nd: NodeData in state.map_all_nodes:
 		var center: Vector2 = _get_node_pos(nd)
 		_node_positions[nd] = center
@@ -43,6 +52,10 @@ func _build_map(state: PlayerState) -> void:
 func _draw_connections() -> void:
 	if _state == null:
 		return
+	if _state.completed_nodes.is_empty() and _state.current_node == null:
+		for nd: NodeData in _state.available_nodes:
+			if _node_positions.has(nd):
+				_map_content.draw_line(START_POS, _node_positions[nd], Color(0.5, 0.5, 0.5), 2.0)
 	for nd: NodeData in _state.map_all_nodes:
 		if not _node_positions.has(nd):
 			continue
