@@ -1,18 +1,18 @@
 class_name EventScreen
 extends Control
 
-@onready var mood_label: Label = $MoodLabel
-@onready var event_name_label: Label = $EventNameLabel
-@onready var flavor_label: Label = $FlavorLabel
-@onready var choices_container: VBoxContainer = $ChoicesContainer
-@onready var result_view: VBoxContainer = $ResultView
-@onready var result_label: Label = $ResultView/ResultLabel
-@onready var effect_summary_label: Label = $ResultView/EffectSummaryLabel
-@onready var confirm_button: Button = $ResultView/ConfirmButton
+@onready var mood_label: Label = $VBoxContainer/MoodLabel
+@onready var event_name_label: Label = $VBoxContainer/EventNameLabel
+@onready var flavor_label: Label = $VBoxContainer/FlavorLabel
+@onready var choices_container: VBoxContainer = $VBoxContainer/ChoicesContainer
+@onready var result_view: VBoxContainer = $VBoxContainer/ResultView
+@onready var result_label: Label = $VBoxContainer/ResultView/ResultLabel
+@onready var effect_summary_label: Label = $VBoxContainer/ResultView/EffectSummaryLabel
+@onready var confirm_button: Button = $VBoxContainer/ResultView/ConfirmButton
 @onready var card_pick_panel: PanelContainer = $CardPickPanel
-@onready var prompt_label: Label = $CardPickPanel/CenterContainer/VBoxContainer/PromptLabel
-@onready var card_grid: GridContainer = $CardPickPanel/CenterContainer/VBoxContainer/CardScrollContainer/CardGrid
-@onready var card_pick_confirm_button: Button = $CardPickPanel/CenterContainer/VBoxContainer/CardPickConfirmButton
+@onready var prompt_label: Label = $CardPickPanel/CenterContainer/InnerBox/PromptLabel
+@onready var card_grid: GridContainer = $CardPickPanel/CenterContainer/InnerBox/CardScrollContainer/CardGrid
+@onready var card_pick_confirm_button: Button = $CardPickPanel/CenterContainer/InnerBox/CardPickConfirmButton
 
 var _current_event: EventData
 var _pending_interactive: Array[EventEffectData] = []
