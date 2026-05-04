@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_bu_shi_zhe_yi_shi_de_yu"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 19
+value = 1
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 21
+value = 1
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "张开手心"
+result_text = "你伸出手。雨水砸在掌心里。每一滴都裂成一圈微弱的荧光。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 5
+value = 30
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = ""
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "低头赶路"
+result_text = "你不想看天。低下头走。雨打在后颈上——那感觉跟上次一样。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "不是这一世的雨"
+mood = "神秘"
+flavor_text = "下雨了。雨穿过天劫区落下来，每一滴都带着微弱的静电。你抬起头——在雨的间隙里，你看见天空的颜色不对。它在看着你。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""
