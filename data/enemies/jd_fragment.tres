@@ -6,16 +6,19 @@
 [sub_resource type="Resource" id="Action_charge1"]
 script = ExtResource("2_EnemyActionData")
 type = "charge"
+display_label = "吸纳"
 
 [sub_resource type="Resource" id="Action_charge2"]
 script = ExtResource("2_EnemyActionData")
 type = "charge"
+display_label = "充能"
 
 [sub_resource type="Resource" id="Action_burst"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_self_damage"
 value = 9
 count = 5
+display_label = "绽放"
 
 [sub_resource type="Resource" id="Action_atk1"]
 script = ExtResource("2_EnemyActionData")
