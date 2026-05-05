@@ -54,7 +54,7 @@ static func _dmg_bonus(card: CardData, attacker: Combatant) -> int:
 	if card.is_finisher:
 		return attacker.sword_intent * card.sword_intent_consume_bonus
 	if card.card_type == "招式":
-		return attacker.sword_intent * attacker.sword_intent_damage_bonus
+		return attacker.sword_intent * attacker.sword_intent_damage_bonus + attacker.first_attack_bonus
 	return 0
 
 static func _apply_modifiers(dmg: int, source: Combatant, target: Combatant) -> int:

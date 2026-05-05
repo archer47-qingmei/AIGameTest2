@@ -22,6 +22,9 @@ var hand: Array[CardData] = []
 var energy: int = 0
 var energy_cap: int = BASE_ENERGY
 var turn_number: int = 0
+var took_damage: bool = false
+var combat_gold: int = 0
+var _block_gold_count: int = 0
 
 var _draw_pile: Array[CardData] = []
 var _discard_pile: Array[CardData] = []
@@ -158,6 +161,9 @@ func play_card(card_index: int, target_index: int) -> bool:
 	if block_gained > 0:
 		player_gained_block.emit(block_gained)
 	_apply_engine_effects(card)
+	if card.card_type == "招式":
+		RelicEngine.apply_on_attack_played(_relics, self)
+		player.first_attack_bonus = 0
 	var si_gained := player.sword_intent - si_before
 	if si_gained > 0:
 		player_gained_sword_intent.emit(si_gained)
@@ -290,7 +296,10 @@ func _enemy_attack(attacker: Combatant, value: int, hits: int = 1) -> void:
 		EffectResolver.apply_damage(attacker, player, value)
 	var dmg: int = hp_before - player.hp
 	if dmg > 0:
+		took_damage = true
 		player_damaged.emit(dmg)
+	elif value > 0:
+		RelicEngine.apply_on_block_success(_relics, self)
 	attacker.weak = max(0, attacker.weak - 1)
 
 func _heal(c: Combatant, amount: int) -> void:
