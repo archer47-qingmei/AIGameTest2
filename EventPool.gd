@@ -21,6 +21,16 @@ const EVENTS: Array[String] = [
 	"res://data/events/bu_shi_zhe_yi_shi_de_yan_shen.tres",
 	"res://data/events/tian_di_rong_lu.tres",
 	"res://data/events/xue_ji_tan.tres",
+	"res://data/events/tian_lei_zhu_lin.tres",
+	"res://data/events/wu_zhong_xu_shi.tres",
+	"res://data/events/lan_lu_yao.tres",
+	"res://data/events/jian_zhong_shi_lian.tres",
+	"res://data/events/mo_xiu_dong_fu.tres",
+	"res://data/events/san_gong_chong_xiu.tres",
+	"res://data/events/cang_jing_ge_can_juan.tres",
+	"res://data/events/wu_jin_lei_chi.tres",
+	"res://data/events/hong_shu_pi.tres",
+	"res://data/events/yan_bi_shou_yin.tres",
 ]
 
 static func pick_event(player_state: PlayerState) -> EventData:
