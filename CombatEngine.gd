@@ -20,6 +20,9 @@ signal hits_dealt(enemy_index: int, hp_amounts: Array[int], block_amounts: Array
 signal player_damaged(amount: int)
 signal player_gained_block(amount: int)
 signal player_gained_sword_intent(amount: int)
+signal player_finisher_played
+signal player_heavily_damaged
+signal enemy_dialogue(enemy_index: int, text: String)
 
 var player: Combatant
 var enemies: Array[Combatant] = []
@@ -39,6 +42,8 @@ var _enemy_data_list: Array[EnemyData] = []
 var _relics: Array[RelicData] = []
 var _pending_actions: Array[EnemyActionData] = []
 var _energy_penalty_next_turn: int = 0
+var _heavy_damage_spoken: bool = false
+var _enemy_hp30_spoken: Array[bool] = []
 
 func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_hp: int, max_hp: int, relics: Array[RelicData] = [], initial_energy_cap: int = BASE_ENERGY) -> void:
 	energy_cap = initial_energy_cap
@@ -52,6 +57,8 @@ func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_h
 		c.block = 0
 		enemies.append(c)
 		_enemy_data_list.append(data)
+	_enemy_hp30_spoken.resize(enemies.size())
+	_enemy_hp30_spoken.fill(false)
 
 	player = Combatant.new()
 	player.display_name = "玩家"
@@ -75,6 +82,9 @@ func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_h
 
 func get_enemy_action(i: int) -> EnemyActionData:
 	return _pending_actions[i]
+
+func get_enemy_data(i: int) -> EnemyData:
+	return _enemy_data_list[i]
 
 func _resolve_enemy_actions() -> void:
 	_pending_actions.resize(enemies.size())
@@ -107,6 +117,7 @@ func _resolve_enemy_actions() -> void:
 			doubled.type = action.type
 			doubled.value = action.value * 2
 			doubled.count = action.count
+			doubled.dialogue = action.dialogue
 			_pending_actions[i] = doubled
 		else:
 			_pending_actions[i] = action
@@ -186,6 +197,11 @@ func play_card(card_index: int, target_index: int) -> bool:
 	if bao_nu_count > 0:
 		player.hp = max(0, player.hp - bao_nu_count * 2)
 		player_damaged.emit(bao_nu_count * 2)
+		if not _heavy_damage_spoken and player.hp * 100 < player.max_hp * 30:
+			_heavy_damage_spoken = true
+			player_heavily_damaged.emit()
+	if card.is_finisher:
+		player_finisher_played.emit()
 	hand.remove_at(card_index)
 	if card.is_exhaust:
 		pass
@@ -205,6 +221,9 @@ func end_turn() -> void:
 	if venom_count > 0:
 		player.hp = max(0, player.hp - venom_count)
 		player_damaged.emit(venom_count)
+		if not _heavy_damage_spoken and player.hp * 100 < player.max_hp * 30:
+			_heavy_damage_spoken = true
+			player_heavily_damaged.emit()
 		state_changed.emit()
 		if _check_end():
 			return
@@ -289,6 +308,9 @@ func _start_player_turn() -> void:
 		if ye_huo_count > 0:
 			player.hp = max(0, player.hp - ye_huo_count * 2)
 			player_damaged.emit(ye_huo_count * 2)
+			if not _heavy_damage_spoken and player.hp * 100 < player.max_hp * 30:
+				_heavy_damage_spoken = true
+				player_heavily_damaged.emit()
 	if turn_number == 1:
 		RelicEngine.apply_combat_start(_relics, self)
 	RelicEngine.apply_turn_start(_relics, self)
@@ -367,6 +389,9 @@ func _enemy_attack(attacker: Combatant, value: int, hits: int = 1) -> void:
 	if dmg > 0:
 		took_damage = true
 		player_damaged.emit(dmg)
+		if not _heavy_damage_spoken and player.hp * 100 < player.max_hp * 30:
+			_heavy_damage_spoken = true
+			player_heavily_damaged.emit()
 	elif value > 0:
 		RelicEngine.apply_on_block_success(_relics, self)
 	attacker.weak = max(0, attacker.weak - 1)
@@ -532,6 +557,13 @@ func _do_enemy_turn() -> void:
 					hand.append(_discard_pile.pop_back())
 			_:
 				enemies[i].add_block(action.value)
+		if action.dialogue != "":
+			enemy_dialogue.emit(i, action.dialogue)
+		if not _enemy_hp30_spoken[i] and enemies[i].hp > 0 \
+				and enemies[i].hp * 100 < enemies[i].max_hp * 30:
+			if _enemy_data_list[i].hp_30_dialogue != "":
+				_enemy_hp30_spoken[i] = true
+				enemy_dialogue.emit(i, _enemy_data_list[i].hp_30_dialogue)
 		if data.copies_player_cards \
 				and data.phase2_passive_threshold > 0.0 \
 				and float(enemies[i].hp) / float(enemies[i].max_hp) < data.phase2_passive_threshold \
