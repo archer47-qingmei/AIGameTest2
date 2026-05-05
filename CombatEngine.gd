@@ -187,7 +187,9 @@ func play_card(card_index: int, target_index: int) -> bool:
 		player.hp = max(0, player.hp - bao_nu_count * 2)
 		player_damaged.emit(bao_nu_count * 2)
 	hand.remove_at(card_index)
-	if card.card_type == "功法":
+	if card.is_exhaust:
+		pass
+	elif card.card_type == "功法":
 		_exhaust_pile.append(card)
 	else:
 		_discard_pile.append(card)
