@@ -16,6 +16,7 @@ extends Resource
 @export var target_type: String = "single"
 @export var card_type: String = ""
 @export var is_finisher: bool = false
+@export var is_exhaust: bool = false
 @export var sword_intent_consume_bonus: int = 0
 @export var retain_si_if_target_attacks: bool = false
 var is_upgraded: bool = false
@@ -50,8 +51,13 @@ func get_upgrade_preview_bbcode() -> String:
 	return _format_description(card_name + "+", true)
 
 func _format_description(name: String, show_bonuses: bool, real_dmg: int = -1) -> String:
+	var tags: String = ""
+	if card_type != "":
+		tags += "  [%s]" % card_type
+	if is_exhaust:
+		tags += "  [消耗]"
 	var v: Dictionary = _collect_effects()
-	var desc: String = "%s\n费用:%d" % [name, cost]
+	var desc: String = "%s%s\n费用:%d" % [name, tags, cost]
 	if v.dmg > 0:
 		var dmg_str: String
 		if real_dmg >= 0:
