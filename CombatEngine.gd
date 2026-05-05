@@ -5,6 +5,9 @@ const BASE_ENERGY: int = 3
 const VENOM_CARD: CardData = preload("res://data/cards/venom.tres")
 const CURSE_CARD: CardData = preload("res://data/cards/xin_mo.tres")
 const ZAHUORUMUO_CARD: CardData = preload("res://data/cards/zao_huo_ru_mo.tres")
+const BAO_NU_CARD: CardData = preload("res://data/cards/bao_nu.tres")
+const KONG_JU_CARD: CardData = preload("res://data/cards/kong_ju.tres")
+const BEI_SHANG_CARD: CardData = preload("res://data/cards/bei_shang.tres")
 const ATTACK_TYPES_FOR_CHARGE: Array[String] = [
 	"attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse", "vampiric_attack"
 ]
@@ -141,6 +144,8 @@ func play_card(card_index: int, target_index: int) -> bool:
 		return false
 	if card.cost > energy:
 		return false
+	if card.card_type == "身法" and hand.any(func(c: CardData) -> bool: return c.is_kong_ju):
+		return false
 	energy -= card.cost
 	var block_before := player.block
 	var si_before := player.sword_intent
@@ -167,6 +172,13 @@ func play_card(card_index: int, target_index: int) -> bool:
 	var si_gained := player.sword_intent - si_before
 	if si_gained > 0:
 		player_gained_sword_intent.emit(si_gained)
+	var bao_nu_count: int = 0
+	for c in hand:
+		if c.is_bao_nu:
+			bao_nu_count += 1
+	if bao_nu_count > 0:
+		player.hp = max(0, player.hp - bao_nu_count * 2)
+		player_damaged.emit(bao_nu_count * 2)
 	hand.remove_at(card_index)
 	if card.card_type == "功法":
 		_exhaust_pile.append(card)
@@ -200,6 +212,22 @@ func end_turn() -> void:
 			var victim_idx: int = victims[randi() % victims.size()]
 			_exhaust_pile.append(hand[victim_idx])
 			hand.remove_at(victim_idx)
+	var bei_shang_count: int = 0
+	for c in hand:
+		if c.is_bei_shang:
+			bei_shang_count += 1
+	for _b in bei_shang_count:
+		var non_curse_indices: Array[int] = []
+		for idx in hand.size():
+			var c: CardData = hand[idx]
+			if not c.is_curse and not c.is_zahuorumuo and not c.is_venom \
+					and not c.is_ye_huo and not c.is_bao_nu and not c.is_kong_ju and not c.is_bei_shang:
+				non_curse_indices.append(idx)
+		if non_curse_indices.is_empty():
+			break
+		var victim_idx: int = non_curse_indices[randi() % non_curse_indices.size()]
+		_discard_pile.append(hand[victim_idx])
+		hand.remove_at(victim_idx)
 	for card: CardData in hand:
 		_discard_pile.append(card)
 	hand.clear()
@@ -234,8 +262,25 @@ func _start_player_turn() -> void:
 		if enemies[i].hp > 0:
 			enemies[i].current_intent = get_enemy_action(i).type
 	if turn_number == 1:
+		var ye_huo_count: int = 0
+		for c in _draw_pile:
+			if c.is_ye_huo:
+				ye_huo_count += 1
+		for c in _discard_pile:
+			if c.is_ye_huo:
+				ye_huo_count += 1
+		for c in hand:
+			if c.is_ye_huo:
+				ye_huo_count += 1
+		if ye_huo_count > 0:
+			player.hp = max(0, player.hp - ye_huo_count * 2)
+			player_damaged.emit(ye_huo_count * 2)
+	if turn_number == 1:
 		RelicEngine.apply_combat_start(_relics, self)
 	RelicEngine.apply_turn_start(_relics, self)
+	if player.next_block_halved:
+		player.block = player.block / 2
+		player.next_block_halved = false
 	state_changed.emit()
 
 func _refill_draw_pile_if_needed() -> void:
@@ -277,6 +322,11 @@ func _apply_engine_effects(card: CardData) -> void:
 				player.finisher_block_bonus += effect.value
 			"first_si_block":
 				player.first_si_block_bonus += effect.value
+
+func can_play_card(card: CardData) -> bool:
+	if card.card_type == "身法" and hand.any(func(c: CardData) -> bool: return c.is_kong_ju):
+		return false
+	return true
 
 func draw_cards(n: int) -> void:
 	_draw_cards(n)

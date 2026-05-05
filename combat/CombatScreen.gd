@@ -198,6 +198,8 @@ func _get_card_desc_for_target(card: CardData, enemy_engine_index: int) -> Strin
 
 func _on_card_button_down(card_index: int) -> void:
 	var card: CardData = _engine.hand[card_index]
+	if not _engine.can_play_card(card):
+		return
 	if _engine.energy < card.cost:
 		_shake_card(card_index)
 		return
@@ -277,6 +279,8 @@ func _rebuild_hand() -> void:
 		btn.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 		btn.text = card.get_description()
 		btn.button_down.connect(_on_card_button_down.bind(i))
+		if not _engine.can_play_card(card):
+			btn.modulate = Color(0.6, 0.6, 0.6)
 		_hand_area.add_child(btn)
 		_hand_buttons.append(btn)
 	_layout_hand()
