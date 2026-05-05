@@ -373,12 +373,12 @@ func _on_combat_ended(result: String) -> void:
 func _setup_bubbles() -> void:
 	_player_bubble = SpeechBubble.new()
 	_player_card.add_child(_player_bubble)
-	_player_bubble.position = Vector2(0, -70)
+	_player_bubble.position = Vector2(5, 35)
 	for i in _engine.enemies.size():
 		var b := SpeechBubble.new()
 		var panel := _enemies_container.get_child(i) as Panel
 		panel.add_child(b)
-		b.position = Vector2(0, -70)
+		b.position = Vector2(5, 35)
 		_enemy_bubbles.append(b)
 
 func _show_enter_dialogues() -> void:
