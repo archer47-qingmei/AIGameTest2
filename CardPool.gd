@@ -22,6 +22,19 @@ const RELICS: Array[String] = [
 	"res://data/relics/wu_ming_hu_fu.tres",
 	"res://data/relics/sui_jing_pian.tres",
 	"res://data/relics/bu_san_zhi_nian.tres",
+	"res://data/relics/jie_huo_he_xin.tres",
+	"res://data/relics/ling_gen_can_zhi.tres",
+	"res://data/relics/tong_xin_suo.tres",
+	"res://data/relics/jiu_ri_bi_ji.tres",
+	"res://data/relics/xu_kong_ping.tres",
+	"res://data/relics/wu_xu_xiang_lu.tres",
+	"res://data/relics/fang_shi_zhang_bu.tres",
+	"res://data/relics/si_xian_mu_jie.tres",
+	"res://data/relics/lun_hui_guan_jing.tres",
+	"res://data/relics/hun_si_chan_rao.tres",
+	"res://data/relics/gui_xu_zhi_gu.tres",
+	"res://data/relics/ling_shi_chong.tres",
+	"res://data/relics/wu_ming_zhi_gu.tres",
 ]
 
 const CHEST_RELICS: Array[String] = [
