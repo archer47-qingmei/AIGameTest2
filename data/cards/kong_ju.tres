@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_CardData")
-card_name = "业火"
+card_name = "恐惧"
 cost = 0
 is_curse = true
-is_ye_huo = true
-special_text = "无法通过休息站移除。每次战斗开始时受到 2 点伤害。"
+is_kong_ju = true
+special_text = "无法打出。持有时，无法使用身法牌"
 target_type = "none"

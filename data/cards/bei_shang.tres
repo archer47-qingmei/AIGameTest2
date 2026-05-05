@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource("1_CardData")
-card_name = "业火"
+card_name = "悲伤"
 cost = 0
 is_curse = true
-is_ye_huo = true
-special_text = "无法通过休息站移除。每次战斗开始时受到 2 点伤害。"
+is_bei_shang = true
+special_text = "无法打出。回合结束：弃置 1 张手牌（每张悲伤叠加）"
 target_type = "none"
