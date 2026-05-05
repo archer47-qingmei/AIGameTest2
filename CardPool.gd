@@ -71,3 +71,32 @@ const SWORD_REWARD_CARDS: Array[String] = [
 	"res://data/cards/ren_jian_he_yi.tres",
 	"res://data/cards/yi_sui_xin_fa.tres",
 ]
+
+const GRADE_1_CARDS: Array[String] = [
+	"res://data/cards/bash.tres",
+	"res://data/cards/entangle.tres",
+	"res://data/cards/zhan_tie.tres",
+	"res://data/cards/po_feng.tres",
+	"res://data/cards/ce_bu.tres",
+	"res://data/cards/lian_xi.tres",
+	"res://data/cards/chuan_xin.tres",
+	"res://data/cards/yang_jian_shu.tres",
+	"res://data/cards/lue_ying.tres",
+	"res://data/cards/sui_xing.tres",
+	"res://data/cards/heng_jian.tres",
+	"res://data/cards/lie_kong.tres",
+	"res://data/cards/wu_hen.tres",
+	"res://data/cards/jian_bu.tres",
+	"res://data/cards/jian_qiao.tres",
+	"res://data/cards/jian_qi_ying_ti.tres",
+]
+
+const GRADE_2_CARDS: Array[String] = [
+	"res://data/cards/po_jun.tres",
+	"res://data/cards/wan_jian_gui_zong.tres",
+	"res://data/cards/jian_yu.tres",
+	"res://data/cards/xin_jian.tres",
+	"res://data/cards/jing_hong.tres",
+	"res://data/cards/ren_jian_he_yi.tres",
+	"res://data/cards/yi_sui_xin_fa.tres",
+]
