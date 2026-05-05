@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_atk4"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 4
+
+[sub_resource type="Resource" id="Action_atk6"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 6
+
+[sub_resource type="Resource" id="Action_atk8"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 8
+
+[sub_resource type="Resource" id="Action_atk10"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 10
+
+[sub_resource type="Resource" id="Action_gap"]
+script = ExtResource("2_EnemyActionData")
+type = "wave_gap"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "四九天劫"
+hp = 345
+passive_block_per_turn = 5
+skip_wave_gap_threshold = 0.5
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_atk4"), SubResource("Action_atk4"), SubResource("Action_atk4"), SubResource("Action_atk4"), SubResource("Action_atk4"), SubResource("Action_atk4"), SubResource("Action_atk4"), SubResource("Action_atk4"), SubResource("Action_atk4"), SubResource("Action_gap"), SubResource("Action_atk6"), SubResource("Action_atk6"), SubResource("Action_atk6"), SubResource("Action_atk6"), SubResource("Action_atk6"), SubResource("Action_atk6"), SubResource("Action_atk6"), SubResource("Action_atk6"), SubResource("Action_atk6"), SubResource("Action_gap"), SubResource("Action_atk8"), SubResource("Action_atk8"), SubResource("Action_atk8"), SubResource("Action_atk8"), SubResource("Action_atk8"), SubResource("Action_atk8"), SubResource("Action_atk8"), SubResource("Action_atk8"), SubResource("Action_atk8"), SubResource("Action_gap"), SubResource("Action_atk10"), SubResource("Action_atk10"), SubResource("Action_atk10"), SubResource("Action_atk10"), SubResource("Action_atk10"), SubResource("Action_atk10"), SubResource("Action_atk10"), SubResource("Action_atk10"), SubResource("Action_atk10"), SubResource("Action_gap")])

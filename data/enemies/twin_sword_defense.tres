@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_d1"]
+script = ExtResource("2_EnemyActionData")
+type = "block_all_enemies"
+value = 8
+
+[sub_resource type="Resource" id="Action_d2"]
+script = ExtResource("2_EnemyActionData")
+type = "block_all_enemies"
+value = 8
+
+[sub_resource type="Resource" id="Action_d3"]
+script = ExtResource("2_EnemyActionData")
+type = "block_all_enemies"
+value = 8
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "守剑"
+hp = 90
+death_kills_others = true
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_d1"), SubResource("Action_d2"), SubResource("Action_d3")])

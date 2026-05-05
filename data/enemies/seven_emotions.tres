@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_bao"]
+script = ExtResource("2_EnemyActionData")
+type = "attack_bao_nu"
+value = 8
+count = 1
+
+[sub_resource type="Resource" id="Action_kong"]
+script = ExtResource("2_EnemyActionData")
+type = "attack_kong_ju"
+value = 6
+count = 1
+
+[sub_resource type="Resource" id="Action_bei"]
+script = ExtResource("2_EnemyActionData")
+type = "attack_bei_shang"
+value = 5
+count = 1
+
+[sub_resource type="Resource" id="Action_wild"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 12
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "七情魔"
+hp = 160
+emotion_card_damage_bonus = true
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_bao"), SubResource("Action_kong"), SubResource("Action_bei"), SubResource("Action_wild")])

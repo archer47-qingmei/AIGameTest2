@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_atk10"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 10
+
+[sub_resource type="Resource" id="Action_blk"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 10
+
+[sub_resource type="Resource" id="Action_atk12"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 12
+
+[sub_resource type="Resource" id="Action_pre"]
+script = ExtResource("2_EnemyActionData")
+type = "pre_charge"
+
+[sub_resource type="Resource" id="Action_aoe"]
+script = ExtResource("2_EnemyActionData")
+type = "aoe_all"
+value = 18
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "金丹劫修"
+hp = 175
+gains_strength_from_aoe = true
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_atk10"), SubResource("Action_blk"), SubResource("Action_atk12"), SubResource("Action_pre"), SubResource("Action_aoe")])
