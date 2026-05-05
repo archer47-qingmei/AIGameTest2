@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_jian_zhong_shi_lian"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 11
+value = 0
+probability = 1.0
+card_grade = 2
+relic_grade = 0
+card_type_filter = "招式"
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 4
+value = 15
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 11
+value = 0
+probability = 1.0
+card_grade = 1
+relic_grade = 0
+card_type_filter = "招式"
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 0
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "拔剑"
+result_text = "握住剑柄。冷的。纯的剑意从剑鞘灌进手臂。灼痛。但剑拔出来了。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "感应剑意"
+result_text = "不碰剑。闭上眼睛。那些断剑里残余的东西——淡，但够用。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "远观"
+result_text = "剑冢中间有风在转。你没有进去。"
+effects = [SubResource("e4")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "剑冢试炼"
+mood = "神秘"
+flavor_text = "满地断剑，插在土里。中间一把浮在空中。旁边站着一个残影——不是人，是上一任主人留下的最后一道剑式。他走的时候没有收式。"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 1
+appear_condition_value = 1
+character_requirement = ""

@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_lan_lu_yao"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 22
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 0
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 7
+value = 15
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "迎战"
+result_text = "它吼了一声。那声音不是威胁——像一条看门的狗，只是它守的门早就不在了。"
+effects = [SubResource("e1")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "以灵石开路"
+result_text = "你扔了一袋灵石。它闻了闻。退了半步。"
+effects = [SubResource("e2")]
+cost_gold = 80
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "绕行"
+result_text = "翻过旁边的崖壁。多走了一段路。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "拦路妖"
+mood = "有趣"
+flavor_text = "一棵树变成了妖，站在路中间。不是要拦你——是它本来就站在这儿。你走近的时候它低头看了你一眼。表情不太聪明。"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""
