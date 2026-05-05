@@ -132,6 +132,9 @@ func _reward_card_count() -> int:
 
 func _on_continue_pressed() -> void:
 	if GameManager.is_final_node():
-		GameManager.go_to_win()
+		if GameManager.is_last_realm():
+			GameManager.go_to_win()
+		else:
+			GameManager.advance_realm()
 	else:
 		GameManager.go_to_map()

@@ -145,7 +145,7 @@ func start_debug_run(cards: Array[CardData], extra_relics: Array[RelicData] = []
 	_setup_map()
 
 func _setup_map() -> void:
-	var nodes: Array[NodeData] = MapGenerator.generate()
+	var nodes: Array[NodeData] = MapGenerator.generate(player_state.current_realm)
 	player_state.map_all_nodes.assign(nodes)
 	var start_nodes: Array[NodeData] = []
 	for nd in nodes:
@@ -195,6 +195,18 @@ func get_current_enemy_group() -> EnemyGroupData:
 
 func is_final_node() -> bool:
 	return player_state.current_node.connections.is_empty()
+
+func is_last_realm() -> bool:
+	return player_state.current_realm >= 1  # v0.72.0: 只有筑基+金丹两境界
+
+func advance_realm() -> void:
+	player_state.current_realm += 1
+	player_state.map_all_nodes.clear()
+	player_state.available_nodes.clear()
+	player_state.completed_nodes.clear()
+	player_state.current_node = null
+	pending_card_reward = true
+	_setup_map()
 
 func is_elite_node() -> bool:
 	return player_state.current_node.config.type == NodeConfig.Type.ELITE
