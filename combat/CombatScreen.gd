@@ -116,8 +116,6 @@ func _build_enemy_panels() -> void:
 		btn.anchor_bottom = 1.0
 
 func _refresh_ui() -> void:
-	if _player_bubble:
-		_position_bubbles()
 	for i in _engine.enemies.size():
 		var e: Combatant = _engine.enemies[i]
 		var panel: Panel = _enemies_container.get_child(i) as Panel
@@ -374,17 +372,14 @@ func _on_combat_ended(result: String) -> void:
 
 func _setup_bubbles() -> void:
 	_player_bubble = SpeechBubble.new()
-	add_child(_player_bubble)
+	_player_card.add_child(_player_bubble)
+	_player_bubble.position = Vector2(0, -70)
 	for i in _engine.enemies.size():
 		var b := SpeechBubble.new()
-		add_child(b)
-		_enemy_bubbles.append(b)
-
-func _position_bubbles() -> void:
-	_player_bubble.position = to_local(_player_card.get_global_rect().get_center()) + Vector2(-60, -80)
-	for i in _enemy_bubbles.size():
 		var panel := _enemies_container.get_child(i) as Panel
-		_enemy_bubbles[i].position = to_local(panel.get_global_rect().get_center()) + Vector2(-60, -80)
+		panel.add_child(b)
+		b.position = Vector2(0, -70)
+		_enemy_bubbles.append(b)
 
 func _show_enter_dialogues() -> void:
 	await get_tree().process_frame
