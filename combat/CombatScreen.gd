@@ -373,12 +373,10 @@ func _on_combat_ended(result: String) -> void:
 func _setup_bubbles() -> void:
 	_player_bubble = SpeechBubble.new()
 	add_child(_player_bubble)
-	_enemy_bubbles.resize(_engine.enemies.size())
 	for i in _engine.enemies.size():
 		var b := SpeechBubble.new()
 		add_child(b)
-		_enemy_bubbles[i] = b
-	_position_bubbles.call_deferred()
+		_enemy_bubbles.append(b)
 
 func _position_bubbles() -> void:
 	_player_bubble.position = to_local(_player_card.get_global_rect().get_center()) + Vector2(-60, -80)
@@ -387,6 +385,8 @@ func _position_bubbles() -> void:
 		_enemy_bubbles[i].position = to_local(panel.get_global_rect().get_center()) + Vector2(-60, -80)
 
 func _show_enter_dialogues() -> void:
+	await get_tree().process_frame
+	_position_bubbles()
 	var char := GameManager.player_state.character
 	var line := CharacterDialogue.get_line(char, "enter")
 	if line != "":
@@ -407,7 +407,7 @@ func _on_player_heavily_damaged() -> void:
 		_player_bubble.show_text(line)
 
 func _on_enemy_dialogue(enemy_index: int, text: String) -> void:
-	if enemy_index < _enemy_bubbles.size():
+	if enemy_index >= 0 and enemy_index < _enemy_bubbles.size():
 		_enemy_bubbles[enemy_index].show_text(text)
 
 func _on_view_deck_pressed() -> void:
