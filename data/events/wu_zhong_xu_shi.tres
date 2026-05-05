@@ -1,0 +1,82 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_wu_zhong_xu_shi"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 11
+value = 0
+probability = 1.0
+card_grade = 1
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 2
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 12
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = "res://data/cards/zou_huo_ru_mo.tres"
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 2
+value = 50
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e5"]
+script = ExtResource("3_EFD")
+effect_type = 8
+value = 20
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "进入交易"
+result_text = "你拿了一件灵器，一本功法。摊主收了你的帐——不是灵石。你走出雾的时候手心多了一道裂缝。不疼。就是裂着。"
+effects = [SubResource("e1"), SubResource("e2"), SubResource("e3")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "退回雾中"
+result_text = "退了一步。雾合上。集市没了。灵石少了一半。不记得什么时候给的。"
+effects = [SubResource("e4")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "强行冲破"
+result_text = "提起真气，强行穿过。出来了——身上全是雾刮出来的血口子。"
+effects = [SubResource("e5")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "雾中墟市"
+mood = "惊悚"
+flavor_text = "浓雾。雾的缝隙里你看见一个集市——灯火通明。无面的摊主朝你招手。他不说话。只是等着。"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""

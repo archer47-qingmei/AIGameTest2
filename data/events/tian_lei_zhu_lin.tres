@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_tian_lei_zhu_lin"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 16
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "招式"
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 11
+value = 0
+probability = 1.0
+card_grade = 2
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 0
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "引雷淬剑"
+result_text = "把一张招式牌贴在焦黑的竹子上。雷从竹节传过来，淬了一道。你的手筋被电了一下。然后牌亮了。"
+effects = [SubResource("e1")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "拾取雷击竹"
+result_text = "在地上捡了几片带着雷纹的落叶。它们比你想象的更有力量。"
+effects = [SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "离开"
+result_text = "你没有碰那根竹子。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "天雷竹林"
+mood = "神秘"
+flavor_text = "一片竹林，竹节里困着雷。竹叶落地会爆。一根通体焦黑的竹子站在竹林中心——被劈了不止一次，还在站着。"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""
