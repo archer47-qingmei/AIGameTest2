@@ -116,6 +116,8 @@ func _build_enemy_panels() -> void:
 		btn.anchor_bottom = 1.0
 
 func _refresh_ui() -> void:
+	if _player_bubble:
+		_position_bubbles()
 	for i in _engine.enemies.size():
 		var e: Combatant = _engine.enemies[i]
 		var panel: Panel = _enemies_container.get_child(i) as Panel
@@ -386,7 +388,6 @@ func _position_bubbles() -> void:
 
 func _show_enter_dialogues() -> void:
 	await get_tree().process_frame
-	_position_bubbles()
 	var char := GameManager.player_state.character
 	var line := CharacterDialogue.get_line(char, "enter")
 	if line != "":
