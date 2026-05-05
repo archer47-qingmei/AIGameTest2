@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_jie_huo_he_xin"]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
+
+[resource]
+script = ExtResource("1_RD")
+display_name = "劫火核心"
+description = "一小团暗红色火，没有燃料。烧了太久，烧出了自己的意志。它不烧东西——只烧你体内不需要的那部分修为。不是帮你。是喜欢烧。\n\n你所有未悟道的招式牌 +3 伤害"
+trigger = 4
+effect_type = 17
+value = 3
+price = 250

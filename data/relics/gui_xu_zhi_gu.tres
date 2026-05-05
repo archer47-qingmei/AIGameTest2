@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_gui_xu_zhi_gu"]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
+
+[resource]
+script = ExtResource("1_RD")
+display_name = "归墟指骨"
+description = "一小截骨头。不是人的。它死了很久，但灵力还在骨头里走。像是在跑——已经不知道目的地了，但还在跑。\n\n每场战斗，你的第一张招式牌伤害 +3"
+trigger = 0
+effect_type = 23
+value = 3
+price = 75

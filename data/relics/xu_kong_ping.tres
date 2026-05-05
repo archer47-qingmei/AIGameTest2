@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_xu_kong_ping"]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
+
+[resource]
+script = ExtResource("1_RD")
+display_name = "虚空瓶"
+description = "一只小瓶，瓶口是封死的。瓶里装着的不是丹药——是什么都没有。但你盯着它看的时候，隐约觉得瓶壁那边有人在说话。隔着很厚的空。听不清。\n\n每次进入机缘事件，获得 20 灵石"
+trigger = 0
+effect_type = 21
+value = 20
+price = 150

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_wu_ming_zhi_gu"]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
+
+[resource]
+script = ExtResource("1_RD")
+display_name = "无名之骨"
+description = "一块旧骨头，表面有密密麻麻的刻痕。不是字——是计数。横一道，竖一道。不知道谁刻的。刻了很久。骨头从虚空里漏了出来。\n\n每当你成功格挡一次伤害，获得 1 灵石（一场最多 15）"
+trigger = 0
+effect_type = 25
+value = 1
+price = 250

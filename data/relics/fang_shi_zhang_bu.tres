@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_fang_shi_zhang_bu"]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
+
+[resource]
+script = ExtResource("1_RD")
+display_name = "坊市账簿"
+description = "一本旧账本。全是手写的交易记录：一件灵器换了一个馒头。三十颗灵石换了一枚扣子。一个吻换了一份丹药。账目全平。结算方式不按灵石——按「值不值」。\n\n在坊市购买第一件物品后，第二件半价"
+trigger = 0
+effect_type = 28
+value = 0
+price = 150
