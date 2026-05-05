@@ -235,7 +235,6 @@ func _start_player_turn() -> void:
 			enemies[i].current_intent = get_enemy_action(i).type
 	if turn_number == 1:
 		RelicEngine.apply_combat_start(_relics, self)
-		energy = energy_cap
 	RelicEngine.apply_turn_start(_relics, self)
 	state_changed.emit()
 
