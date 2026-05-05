@@ -187,11 +187,15 @@ static func _assign_types(all: Array[NodeData], realm: int) -> void:
 				if nodes.size() >= 2:
 					nodes[1].config.type = NodeConfig.Type.REST
 					nodes[1].config.enemy_group = null
-			ELITE_START_COL, ELITE_START_COL + 1, ELITE_END_COL:
+			ELITE_START_COL, ELITE_START_COL + 1:
 				nodes.shuffle()
 				nodes[0].config.type = NodeConfig.Type.ELITE
 				nodes[0].config.enemy_group = load(elite_paths[randi() % elite_paths.size()]) as EnemyGroupData
 				nodes[0].config.reward_relic = load(elite_relic_path) as RelicData
+			ELITE_END_COL:
+				for nd: NodeData in nodes:
+					nd.config.type = NodeConfig.Type.REST
+					nd.config.enemy_group = null
 
 	var early_elite_col: int = randi() % (EARLY_ELITE_MAX_COL + 1)
 	var early_nodes: Array = by_col.get(early_elite_col, [])
