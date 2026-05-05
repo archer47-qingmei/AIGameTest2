@@ -14,7 +14,7 @@ func _ready() -> void:
 	_rebuild_ui()
 
 func _rebuild_ui() -> void:
-	_lbl_gold.text = "閲戝竵锛?d" % GameManager.player_state.gold
+	_lbl_gold.text = "灵石：%d" % GameManager.player_state.gold
 	_rebuild_card_list()
 	_rebuild_relic_list()
 
@@ -26,7 +26,7 @@ func _rebuild_card_list() -> void:
 		child.queue_free()
 	for card: CardData in _engine.inventory_cards:
 		var btn := Button.new()
-		btn.text = "%s  [%d閲慮" % [card.get_description(), card.price]
+		btn.text = "%s  [%d灵石]" % [card.get_description(), card.price]
 		btn.disabled = GameManager.player_state.gold < card.price or purchase_blocked
 		btn.pressed.connect(_on_buy_card.bind(card))
 		_card_list.add_child(btn)
@@ -39,7 +39,7 @@ func _rebuild_relic_list() -> void:
 		child.queue_free()
 	for relic: RelicData in _engine.inventory_relics:
 		var btn := Button.new()
-		btn.text = "%s 鈥?%s  [%d閲慮" % [relic.display_name, _relic_effect_text(relic), relic.price]
+		btn.text = "%s —— %s  [%d灵石]" % [relic.display_name, _relic_effect_text(relic), relic.price]
 		btn.disabled = GameManager.player_state.gold < relic.price or purchase_blocked
 		btn.pressed.connect(_on_buy_relic.bind(relic))
 		_relic_list.add_child(btn)
