@@ -1,0 +1,72 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_mo_xiu_dong_fu"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 22
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 2
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 22
+value = 0
+probability = 0.5
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "杀进去"
+result_text = "那东西从洞顶落下，骨翼张开。墙壁上全是抓痕——每一个抓痕都是一个人。"
+effects = [SubResource("e1")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "封死洞口"
+result_text = "在紫火上画了一道封符。火灭了。洞里安静了。洞口多了一件东西——它推出来的。「拿走。别进来。」"
+effects = [SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "偷一件走"
+result_text = "洞口石壁上嵌着一块灵光——你摘了。回头的时候山洞深了一个色号。"
+effects = [SubResource("e3"), SubResource("e4")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "魔修洞府"
+mood = "惊悚"
+flavor_text = "山体上一个洞。洞口烧着两缕紫色的火——不热，是冷的。洞里有东西在爬行。你脑子里插进来一个声音：「你的道心不错。借我。」"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""

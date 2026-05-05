@@ -1,0 +1,81 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_san_gong_chong_xiu"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 8
+value = 15
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 14
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "基础招式"
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 8
+value = 30
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 14
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "基础身法"
+
+[sub_resource type="Resource" id="e5"]
+script = ExtResource("3_EFD")
+effect_type = 3
+value = 10
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "散一层功"
+result_text = "你学着他坐下来。最基础的那些招式开始往外漏。疼。但漏掉之后呼吸变顺了。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "散两层功"
+result_text = "不止招式。身法也散。站起来的时候轻了，也弱了。"
+effects = [SubResource("e3"), SubResource("e4")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "不散"
+result_text = "你看着他。走的时候有一阵风——他身上草叶动了。"
+effects = [SubResource("e5")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "散功重修"
+mood = "感动"
+flavor_text = "山道上有一个人，盘坐着。衣服风化了一半，头发里长出草叶。他在散功。自愿的。手边有一行字：「散了的功不会回来。但忘了改的毛病会。散之前想清楚。」"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 2
+appear_condition_value = 15
+character_requirement = ""
