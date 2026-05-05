@@ -16,6 +16,7 @@ var relics: Array[RelicData] = []
 var gold: int = 0
 var reincarnation_fragments: int = 0
 var energy_cap: int = 3
+var max_deck_size: int = 20
 
 func apply_rest_heal() -> int:
 	last_rest_heal = int(max_hp * REST_HEAL_RATIO)
