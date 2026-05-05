@@ -371,18 +371,17 @@ func _on_combat_ended(result: String) -> void:
 		GameManager.go_to_game_over()
 
 func _setup_bubbles() -> void:
+	var player_vbox := _player_card.get_node("VBoxContainer") as VBoxContainer
 	_player_bubble = SpeechBubble.new()
-	_player_card.add_child(_player_bubble)
-	_player_bubble.position = Vector2(5, 35)
+	player_vbox.add_child(_player_bubble)
 	for i in _engine.enemies.size():
-		var b := SpeechBubble.new()
 		var panel := _enemies_container.get_child(i) as Panel
-		panel.add_child(b)
-		b.position = Vector2(5, 35)
+		var enemy_vbox := panel.get_node("VBoxContainer") as VBoxContainer
+		var b := SpeechBubble.new()
+		enemy_vbox.add_child(b)
 		_enemy_bubbles.append(b)
 
 func _show_enter_dialogues() -> void:
-	await get_tree().process_frame
 	var char := GameManager.player_state.character
 	var line := CharacterDialogue.get_line(char, "enter")
 	if line != "":
