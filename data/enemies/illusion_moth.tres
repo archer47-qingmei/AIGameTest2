@@ -7,6 +7,7 @@
 script = ExtResource("2_EnemyActionData")
 type = "discard_curse"
 value = 1
+display_label = "鳞粉"
 
 [sub_resource type="Resource" id="Action_attack"]
 script = ExtResource("2_EnemyActionData")

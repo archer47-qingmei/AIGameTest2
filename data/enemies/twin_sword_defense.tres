@@ -7,16 +7,19 @@
 script = ExtResource("2_EnemyActionData")
 type = "block_all_enemies"
 value = 8
+display_label = "剑幕"
 
 [sub_resource type="Resource" id="Action_d2"]
 script = ExtResource("2_EnemyActionData")
 type = "block_all_enemies"
 value = 8
+display_label = "剑幕"
 
 [sub_resource type="Resource" id="Action_d3"]
 script = ExtResource("2_EnemyActionData")
 type = "block_all_enemies"
 value = 8
+display_label = "剑幕"
 
 [resource]
 script = ExtResource("1_EnemyData")

@@ -9,6 +9,7 @@ type = "attack"
 value = 9
 weight = 6
 count = 1
+display_label = "直斩"
 
 [sub_resource type="Resource" id="Action_multi"]
 script = ExtResource("2_EnemyActionData")
@@ -16,6 +17,7 @@ type = "multi_attack"
 value = 5
 weight = 3
 count = 2
+display_label = "连斩"
 
 [sub_resource type="Resource" id="Action_charge"]
 script = ExtResource("2_EnemyActionData")

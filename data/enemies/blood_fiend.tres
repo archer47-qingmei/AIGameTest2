@@ -19,12 +19,14 @@ weight = 25
 script = ExtResource("2_EnemyActionData")
 type = "revive_minions"
 weight = 20
+display_label = "分裂"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 8
 weight = 10
+display_label = "血茧"
 
 [resource]
 script = ExtResource("1_EnemyData")

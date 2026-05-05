@@ -7,16 +7,19 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack_weak"
 value = 4
+display_label = "酸液"
 
 [sub_resource type="Resource" id="Action_vuln"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_vulnerable"
 value = 4
+display_label = "毒刺"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 8
+display_label = "卷叶"
 
 [resource]
 script = ExtResource("1_EnemyData")

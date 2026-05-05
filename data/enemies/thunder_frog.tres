@@ -7,16 +7,19 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 5
+display_label = "低鸣"
 
 [sub_resource type="Resource" id="Action_precharge"]
 script = ExtResource("2_EnemyActionData")
 type = "pre_charge"
 value = 0
+display_label = "高压蓄力"
 
 [sub_resource type="Resource" id="Action_attack2"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 14
+display_label = "放雷"
 
 [resource]
 script = ExtResource("1_EnemyData")

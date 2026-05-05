@@ -7,11 +7,13 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 9
+display_label = "压杀"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 10
+display_label = "石盾"
 
 [sub_resource type="Resource" id="Action_steal"]
 script = ExtResource("2_EnemyActionData")
@@ -23,6 +25,7 @@ script = ExtResource("2_EnemyActionData")
 type = "multi_attack"
 value = 7
 count = 2
+display_label = "双重打击"
 
 [resource]
 script = ExtResource("1_EnemyData")

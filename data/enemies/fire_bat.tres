@@ -7,11 +7,13 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
+display_label = "扑击"
 
 [sub_resource type="Resource" id="Action_attack2"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
+display_label = "扑击"
 
 [resource]
 script = ExtResource("1_EnemyData")
