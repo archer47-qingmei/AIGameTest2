@@ -2,6 +2,8 @@ extends Node
 
 enum Phase { MENU, CHAR_SELECT, MAP, COMBAT, REWARD, REST, SHOP, WIN, GAME_OVER, EVENT }
 
+const MAX_REALM: int = 1  # v0.72.0: 筑基+金丹两境界，扩展时修改此值
+
 func _ready() -> void:
 	var font: FontFile = load("res://data/fonts/NotoSansSC-Regular.otf") as FontFile
 	if font:
@@ -197,7 +199,7 @@ func is_final_node() -> bool:
 	return player_state.current_node.connections.is_empty()
 
 func is_last_realm() -> bool:
-	return player_state.current_realm >= 1  # v0.72.0: 只有筑基+金丹两境界
+	return player_state.current_realm >= MAX_REALM
 
 func advance_realm() -> void:
 	player_state.current_realm += 1

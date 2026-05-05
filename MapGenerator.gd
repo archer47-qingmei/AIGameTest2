@@ -52,7 +52,7 @@ const JD_ELITE_GROUP_PATHS: Array[String] = [
 	"res://data/enemy_groups/twin_sword_cultivators.tres",
 ]
 const JD_BOSS_GROUP_PATH: String = "res://data/enemy_groups/single_49_tribulation.tres"
-const JD_ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"
+const JD_ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"  # 暂与筑基境相同，后续替换为金丹专属精英遗物
 const JD_BOSS_REWARD_RELIC_PATH: String = "res://data/relics/iron_armor.tres"
 
 const ROW_BASE_X: Array[float] = [80.0, 240.0, 400.0]
