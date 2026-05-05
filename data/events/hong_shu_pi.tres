@@ -21,7 +21,7 @@ probability = 1.0
 card_grade = 0
 relic_grade = 0
 card_type_filter = ""
-curse_card_path = "res://data/cards/zou_huo_ru_mo.tres"
+curse_card_path = "res://data/cards/zao_huo_ru_mo.tres"
 
 [sub_resource type="Resource" id="e3"]
 script = ExtResource("3_EFD")
