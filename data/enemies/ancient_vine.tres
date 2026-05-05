@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_bind1"]
+script = ExtResource("2_EnemyActionData")
+type = "lock_skill_attack"
+value = 6
+display_label = "缠绕"
+description = "藤蔓收紧——你的剑被扯了一下。造成 6 点伤害，下回合不能打出招式牌。"
+
+[sub_resource type="Resource" id="Action_tighten"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 10
+display_label = "勒紧"
+description = "藤蔓猛地一扯，你在出手之前被打断。造成 10 点伤害。"
+
+[sub_resource type="Resource" id="Action_bind2"]
+script = ExtResource("2_EnemyActionData")
+type = "lock_skill_attack"
+value = 6
+display_label = "缠绕"
+description = "藤蔓再次收紧，你的招式被封锁。造成 6 点伤害，下回合不能打出招式牌。"
+
+[sub_resource type="Resource" id="Action_root"]
+script = ExtResource("2_EnemyActionData")
+type = "block_and_heal"
+value = 16
+count = 10
+display_label = "扎根"
+description = "藤蔓缩回地下，吸干一整个地下灵脉。获得 16 格挡，回复 10 HP。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "远古藤妖"
+hp = 87
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_bind1"), SubResource("Action_tighten"), SubResource("Action_bind2"), SubResource("Action_root")])

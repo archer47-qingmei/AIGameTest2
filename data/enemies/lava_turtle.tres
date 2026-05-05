@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_shell1"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 20
+display_label = "缩壳"
+description = "岩浆壳层层叠加。获得 20 格挡。"
+
+[sub_resource type="Resource" id="Action_shell2"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 10
+display_label = "缩壳"
+description = "再叠一层岩浆壳。获得 10 格挡。"
+
+[sub_resource type="Resource" id="Action_crush"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 20
+display_label = "碾压"
+description = "用前爪踩下来——不是扑，是踩。造成 20 点伤害。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "岩浆龟"
+hp = 103
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_shell1"), SubResource("Action_shell2"), SubResource("Action_crush")])

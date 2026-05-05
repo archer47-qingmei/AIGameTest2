@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_spit"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 14
+weight = 25
+display_label = "喷吐"
+description = "裂隙深处喷出一股气浪。造成 14 点伤害。"
+
+[sub_resource type="Resource" id="Action_suck"]
+script = ExtResource("2_EnemyActionData")
+type = "drain_block"
+value = 8
+weight = 25
+display_label = "吸入"
+description = "裂隙产生真空，你被往前扯了一步——格挡被吸走 8 点。"
+
+[sub_resource type="Resource" id="Action_curse"]
+script = ExtResource("2_EnemyActionData")
+type = "discard_curse"
+value = 1
+weight = 25
+display_label = "反刍"
+description = "裂隙抽搐了一下，翻出一团黑色的东西。往弃牌堆塞 1 张心魔。"
+
+[sub_resource type="Resource" id="Action_strengthen"]
+script = ExtResource("2_EnemyActionData")
+type = "group_strengthen"
+value = 3
+weight = 25
+display_label = "颤栗"
+description = "裂隙扩大——炽烈气息透进来，笼罩全场。场上所有敌人获得 3 力量。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "虚空裂隙"
+hp = 76
+random_actions = true
+escape_after_turns = 5
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_spit"), SubResource("Action_suck"), SubResource("Action_curse"), SubResource("Action_strengthen")])

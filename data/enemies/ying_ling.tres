@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_cry"]
+script = ExtResource("2_EnemyActionData")
+type = "draw_penalty"
+count = 1
+display_label = "啼哭"
+description = "无声的哭泣，你精神垮了一下。下回合少抽 1 张牌。"
+
+[sub_resource type="Resource" id="Action_claw"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 8
+display_label = "抓挠"
+description = "小爪子抓了一把——不是攻击，是在抱。造成 8 点伤害。"
+
+[sub_resource type="Resource" id="Action_vanish"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 10
+display_label = "消失"
+description = "它缩进了一道空间裂隙。获得 10 格挡。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "婴灵"
+hp = 78
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_cry"), SubResource("Action_claw"), SubResource("Action_vanish")])

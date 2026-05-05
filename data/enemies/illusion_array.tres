@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_maze"]
+script = ExtResource("2_EnemyActionData")
+type = "discard_curse"
+value = 2
+display_label = "迷阵"
+description = "往弃牌堆塞 2 张心魔。"
+
+[sub_resource type="Resource" id="Action_trap"]
+script = ExtResource("2_EnemyActionData")
+type = "reduce_energy"
+count = 1
+display_label = "困阵"
+description = "一层无形的灵墙压过来。下回合真气 -1。"
+
+[sub_resource type="Resource" id="Action_kill"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 11
+display_label = "杀阵"
+description = "阵中产生灵力刃，切割过来。造成 11 点伤害。"
+
+[sub_resource type="Resource" id="Action_shrink"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 12
+display_label = "缩阵"
+description = "空间收窄，灵力密度提高。获得 12 格挡。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "幻阵师"
+hp = 80
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_maze"), SubResource("Action_trap"), SubResource("Action_kill"), SubResource("Action_shrink")])

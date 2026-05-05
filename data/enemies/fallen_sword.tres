@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_slash"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 12
+weight = 50
+display_label = "碎剑斩"
+description = "剑身上全是裂纹，每一道裂纹都渗出灵力。造成 12 点伤害。"
+
+[sub_resource type="Resource" id="Action_frenzy"]
+script = ExtResource("2_EnemyActionData")
+type = "multi_attack"
+value = 7
+count = 3
+weight = 25
+display_label = "乱剑"
+description = "他不看剑，挥了三下。连续攻击三次，各造成 7 点伤害。"
+
+[sub_resource type="Resource" id="Action_blood"]
+script = ExtResource("2_EnemyActionData")
+type = "attack_self_damage"
+value = 15
+count = 6
+weight = 20
+display_label = "泣血"
+description = "他吐了一口血，凝成小剑刺来。造成 15 点伤害，自身损失 6 HP。"
+
+[sub_resource type="Resource" id="Action_lucid"]
+script = ExtResource("2_EnemyActionData")
+type = "self_strengthen"
+value = 3
+weight = 5
+display_label = "清醒"
+description = "他的眼神突然聚焦——看到了你，不是幻影。什么都不做，获得 3 力量。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "堕落剑修"
+hp = 90
+random_actions = true
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_slash"), SubResource("Action_frenzy"), SubResource("Action_blood"), SubResource("Action_lucid")])
