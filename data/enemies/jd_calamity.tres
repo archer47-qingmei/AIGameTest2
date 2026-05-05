@@ -36,6 +36,7 @@ type = "aoe_all"
 value = 18
 display_label = "劫雷降临"
 description = "降雷范围覆盖整个战场，对你、自己、场上所有其他怪物造成 18 点伤害。"
+dialogue = "「抬头——」"
 
 [resource]
 script = ExtResource("1_EnemyData")
@@ -43,3 +44,5 @@ display_name = "金丹劫修"
 hp = 175
 gains_strength_from_aoe = true
 actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_atk10"), SubResource("Action_blk"), SubResource("Action_atk12"), SubResource("Action_pre"), SubResource("Action_aoe")])
+on_enter_dialogue = "「我还没渡完。」"
+hp_30_dialogue = "「不比你疼。」"

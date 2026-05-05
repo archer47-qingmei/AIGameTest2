@@ -36,6 +36,7 @@ value = 3
 weight = 5
 display_label = "清醒"
 description = "他的眼神突然聚焦——看到了你，不是幻影。什么都不做，获得 3 力量。"
+dialogue = "「你……是谁？」"
 
 [resource]
 script = ExtResource("1_EnemyData")
@@ -43,3 +44,4 @@ display_name = "堕落剑修"
 hp = 90
 random_actions = true
 actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_slash"), SubResource("Action_frenzy"), SubResource("Action_blood"), SubResource("Action_lucid")])
+on_enter_dialogue = "「……对不起。」"

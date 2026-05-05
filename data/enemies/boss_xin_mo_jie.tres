@@ -15,6 +15,7 @@ script = ExtResource("2_EnemyActionData")
 type = "xin_mo_fanshi"
 display_label = "心魔反噬"
 description = "将你手中随机 1 张牌变为心魔。"
+dialogue = "「记得这个吗。」"
 
 [sub_resource type="Resource" id="Action_p3"]
 script = ExtResource("2_EnemyActionData")
@@ -35,3 +36,5 @@ actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_mirror")]
 phase2_threshold = 0.3
 phase2_passive_threshold = 0.5
 phase2_actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_p3")])
+on_enter_dialogue = "「你认得我吗。」"
+hp_30_dialogue = "「——走。」"

@@ -9,12 +9,14 @@ type = "reduce_energy"
 count = 1
 display_label = "低语"
 description = "一阵极低的嗡鸣——你的真气回路受到干扰。下回合真气 -1。"
+dialogue = "「......」"
 
 [sub_resource type="Resource" id="Action_murmur"]
 script = ExtResource("2_EnemyActionData")
 type = "discard_to_hand"
 display_label = "细语"
 description = "它绕上了手牌——弃牌堆中随机 1 张牌回到你的手中（可能是心魔）。"
+dialogue = "「..外...大...世...合一...」"
 
 [sub_resource type="Resource" id="Action_scream"]
 script = ExtResource("2_EnemyActionData")
@@ -22,6 +24,7 @@ type = "attack"
 value = 14
 display_label = "尖叫"
 description = "声音失控——瞬间音频冲击。造成 14 点伤害。"
+dialogue = "「！！！！」"
 
 [sub_resource type="Resource" id="Action_silence"]
 script = ExtResource("2_EnemyActionData")
