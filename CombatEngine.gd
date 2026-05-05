@@ -416,7 +416,7 @@ func _do_enemy_turn() -> void:
 			"charge":
 				enemies[i].is_charging = true
 			"pre_charge":
-				pass
+				enemies[i].is_charging = true
 			"steal_block":
 				var stolen: int = player.block
 				player.block = 0
