@@ -214,6 +214,7 @@ static func _describe_single(effect: EventEffectData) -> String:
 			var type_str: String = effect.card_type_filter if effect.card_type_filter != "" else ""
 			return pct + "获得随机%s%s牌" % [grade_str, type_str]
 		EventEffectData.EffectType.UPGRADE_CARDS_TYPE:
-			var type_str: String = effect.card_type_filter if effect.card_type_filter != "" else "所有"
-			return pct + "所有%s牌悟道" % type_str
+			if effect.card_type_filter != "":
+				return pct + "所有%s牌悟道" % effect.card_type_filter
+			return pct + "所有牌悟道"
 		_: return ""
