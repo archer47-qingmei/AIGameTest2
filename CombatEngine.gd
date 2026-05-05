@@ -9,7 +9,8 @@ const BAO_NU_CARD: CardData = preload("res://data/cards/bao_nu.tres")
 const KONG_JU_CARD: CardData = preload("res://data/cards/kong_ju.tres")
 const BEI_SHANG_CARD: CardData = preload("res://data/cards/bei_shang.tres")
 const ATTACK_TYPES_FOR_CHARGE: Array[String] = [
-	"attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse", "vampiric_attack"
+	"attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse", "vampiric_attack",
+	"attack_self_damage", "attack_half_next_block", "attack_bao_nu", "attack_kong_ju", "attack_bei_shang", "attack_venom"
 ]
 
 signal state_changed
@@ -94,7 +95,11 @@ func _resolve_enemy_actions() -> void:
 		if data.random_actions:
 			action = _weighted_random_action(action_list)
 		else:
-			action = action_list[(turn_number - 1) % action_list.size()]
+			var action_idx: int = (turn_number - 1) % action_list.size()
+			action = action_list[action_idx]
+			if action.type == "wave_gap" and data.skip_wave_gap_threshold > 0.0 \
+					and float(enemies[i].hp) / float(data.hp) < data.skip_wave_gap_threshold:
+				action = action_list[(action_idx + 1) % action_list.size()]
 		if enemies[i].is_charging and action.type in ATTACK_TYPES_FOR_CHARGE:
 			var doubled := EnemyActionData.new()
 			doubled.type = action.type
@@ -334,7 +339,9 @@ func can_play_card(card: CardData) -> bool:
 	return true
 
 func draw_cards(n: int) -> void:
-	_draw_cards(n)
+	var actual: int = max(0, n - player.draw_reduction)
+	player.draw_reduction = 0
+	_draw_cards(actual)
 
 func _draw_cards(n: int) -> void:
 	for _i in n:
@@ -378,6 +385,8 @@ func _do_enemy_turn() -> void:
 			continue
 		var data: EnemyData = _enemy_data_list[i]
 		enemies[i].block = 0
+		if data.passive_block_per_turn > 0:
+			enemies[i].add_block(data.passive_block_per_turn)
 		enemies[i].vulnerable = max(0, enemies[i].vulnerable - 1)
 		var action: EnemyActionData = get_enemy_action(i)
 		enemies[i].is_charging = false
@@ -449,6 +458,42 @@ func _do_enemy_turn() -> void:
 			"attack_zahuorumuo":
 				_enemy_attack(enemies[i], action.value)
 				_add_zahuorumuo_to_discard(action.count)
+			"attack_self_damage":
+				_enemy_attack(enemies[i], action.value)
+				enemies[i].hp = max(0, enemies[i].hp - action.count)
+			"draw_penalty":
+				player.draw_reduction += action.count
+			"attack_half_next_block":
+				_enemy_attack(enemies[i], action.value)
+				player.next_block_halved = true
+			"block_all_enemies":
+				for j in enemies.size():
+					if enemies[j].hp > 0:
+						enemies[j].add_block(action.value)
+			"aoe_all":
+				_enemy_attack(enemies[i], action.value)
+				for j in enemies.size():
+					if enemies[j].hp > 0:
+						enemies[j].hp = max(0, enemies[j].hp - action.value)
+				if data.gains_strength_from_aoe:
+					enemies[i].strength += 2
+			"attack_bao_nu":
+				_enemy_attack(enemies[i], action.value)
+				for _k in action.count:
+					_discard_pile.append(BAO_NU_CARD.duplicate())
+			"attack_kong_ju":
+				_enemy_attack(enemies[i], action.value)
+				for _k in action.count:
+					_discard_pile.append(KONG_JU_CARD.duplicate())
+			"attack_bei_shang":
+				_enemy_attack(enemies[i], action.value)
+				for _k in action.count:
+					_discard_pile.append(BEI_SHANG_CARD.duplicate())
+			"attack_venom":
+				_enemy_attack(enemies[i], action.value)
+				_add_venoms_to_draw(action.count)
+			"wave_gap":
+				pass
 			_:
 				enemies[i].add_block(action.value)
 		if data.copies_player_cards \
@@ -459,6 +504,11 @@ func _do_enemy_turn() -> void:
 			enemies[i].strength += 3
 
 func _check_end() -> bool:
+	for i in enemies.size():
+		if enemies[i].hp <= 0 and _enemy_data_list[i].death_kills_others:
+			for j in enemies.size():
+				if j != i:
+					enemies[j].hp = 0
 	var any_alive: bool = enemies.any(func(e: Combatant) -> bool: return e.hp > 0)
 	if not any_alive:
 		RelicEngine.apply_combat_end(_relics, self)

@@ -23,6 +23,8 @@ var current_intent: String = ""
 var is_charging: bool = false
 var strength: int = 0
 var first_attack_bonus: int = 0
+var draw_reduction: int = 0
+var next_block_halved: bool = false
 
 func take_damage(amount: int) -> void:
 	if amount <= block:

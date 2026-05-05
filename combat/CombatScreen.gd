@@ -179,6 +179,26 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 			return "意图：心魔反噬"
 		"attack_zahuorumuo":
 			return "意图：攻击 %d + 走火入魔 ×%d" % [val, action.count]
+		"attack_self_damage":
+			return "意图：爆裂 %d" % val
+		"draw_penalty":
+			return "意图：缠绕 -%d抽" % action.count
+		"attack_half_next_block":
+			return "意图：震地 %d" % val
+		"block_all_enemies":
+			return "意图：护盾 +%d格挡" % action.value
+		"aoe_all":
+			return "意图：天劫 %d" % val
+		"attack_bao_nu":
+			return "意图：怒容 %d" % val
+		"attack_kong_ju":
+			return "意图：惧容 %d" % val
+		"attack_bei_shang":
+			return "意图：悲容 %d" % val
+		"attack_venom":
+			return "意图：蛇毒 %d" % val
+		"wave_gap":
+			return "意图：蓄势"
 		"poison":
 			return "意图：投毒 %d" % action.value
 		"discard_curse":
