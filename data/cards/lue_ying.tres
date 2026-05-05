@@ -19,6 +19,6 @@ upgrade_bonus = 1
 script = ExtResource("1_CardData")
 card_name = "掠影"
 cost = 1
-price = 0
+price = 100
 effects = Array[ExtResource("2_CardEffectData")]([SubResource("Effect_damage"), SubResource("Effect_draw")])
 card_type = "招式"

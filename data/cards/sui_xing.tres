@@ -14,6 +14,6 @@ times = 2
 script = ExtResource("1_CardData")
 card_name = "碎星"
 cost = 2
-price = 0
+price = 100
 effects = Array[ExtResource("2_CardEffectData")]([SubResource("Effect_damage")])
 card_type = "招式"
