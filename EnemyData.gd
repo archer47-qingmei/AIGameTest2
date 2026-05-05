@@ -17,3 +17,5 @@ extends Resource
 @export var skip_wave_gap_threshold: float = 0.0
 @export var gains_strength_from_aoe: bool = false
 @export var escape_after_turns: int = 0
+@export var on_enter_dialogue: String = ""
+@export var hp_30_dialogue: String = ""

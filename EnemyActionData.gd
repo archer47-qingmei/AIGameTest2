@@ -7,3 +7,4 @@ extends Resource
 @export var count: int = 1
 @export var display_label: String = ""
 @export var description: String = ""
+@export var dialogue: String = ""
