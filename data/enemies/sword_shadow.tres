@@ -3,32 +3,33 @@
 [ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
 [ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
 
-[sub_resource type="Resource" id="Action_attack"]
+[sub_resource type="Resource" id="Action_atk9"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 9
-weight = 6
-count = 1
+weight = 60
 display_label = "直斩"
+description = "正锋直进，干净利落。造成 9 点伤害。"
 
 [sub_resource type="Resource" id="Action_multi"]
 script = ExtResource("2_EnemyActionData")
 type = "multi_attack"
 value = 5
-weight = 3
 count = 2
+weight = 30
 display_label = "连斩"
+description = "剑式未收，反手再来。连续攻击两次，各造成 5 点伤害。"
 
 [sub_resource type="Resource" id="Action_charge"]
 script = ExtResource("2_EnemyActionData")
 type = "charge"
-value = 0
-weight = 1
-count = 1
+weight = 10
+display_label = "蓄力"
+description = "悬停在空中——剑气越来越亮。下回合攻击伤害翻倍（约 16 点）。"
 
 [resource]
 script = ExtResource("1_EnemyData")
 display_name = "剑气残影"
 hp = 46
 random_actions = true
-actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_attack"), SubResource("Action_multi"), SubResource("Action_charge")])
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_atk9"), SubResource("Action_multi"), SubResource("Action_charge")])

@@ -7,16 +7,22 @@
 script = ExtResource("2_EnemyActionData")
 type = "mirror_attack"
 value = 8
+display_label = "心像"
+description = "使用从你牌组中复制的招式发动攻击——是你自己的影子在打你。"
 
 [sub_resource type="Resource" id="Action_periodic"]
 script = ExtResource("2_EnemyActionData")
 type = "xin_mo_fanshi"
+display_label = "心魔反噬"
+description = "将你手中随机 1 张牌变为心魔。"
 
 [sub_resource type="Resource" id="Action_p3"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_zahuorumuo"
 value = 12
 count = 1
+display_label = "走火"
+description = "HP 低于 30% 后进入走火状态。造成 12 点伤害，往弃牌堆塞 1 张走火入魔。"
 
 [resource]
 script = ExtResource("1_EnemyData")

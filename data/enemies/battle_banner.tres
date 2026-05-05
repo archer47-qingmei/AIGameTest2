@@ -8,12 +8,14 @@ script = ExtResource("2_EnemyActionData")
 type = "group_strengthen"
 value = 3
 display_label = "战鼓"
+description = "旗面无风自鼓。场上所有友方获得 3 力量。"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
 type = "group_block"
 value = 6
 display_label = "壁垒"
+description = "旗杆插地，周围出现一圈灵力屏障。场上所有友方获得 6 格挡。"
 
 [resource]
 script = ExtResource("1_EnemyData")

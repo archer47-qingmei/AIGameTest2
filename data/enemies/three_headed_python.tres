@@ -7,33 +7,45 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 15
+display_label = "攻首"
+description = "攻首（红眼）张嘴咬来，黏液滴落。造成 15 点伤害。"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 15
+display_label = "防首"
+description = "防首（青鳞）闭眼静听，鳞片外翻。获得 15 格挡。"
 
 [sub_resource type="Resource" id="Action_curse_p1"]
 script = ExtResource("2_EnemyActionData")
 type = "discard_curse"
 value = 2
+display_label = "毒首"
+description = "毒首（紫舌）吐出紫雾。往弃牌堆塞 2 张心魔。"
 
 [sub_resource type="Resource" id="Action_attack_curse"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_curse"
 value = 15
 count = 1
+display_label = "攻首"
+description = "攻首张嘴咬来，心魔随之蔓延。造成 15 点伤害，往弃牌堆塞 1 张心魔。"
 
 [sub_resource type="Resource" id="Action_block_curse"]
 script = ExtResource("2_EnemyActionData")
 type = "block_curse"
 value = 15
 count = 1
+display_label = "防首"
+description = "防首格挡，毒首趁机偷袭。获得 15 格挡，往弃牌堆塞 1 张心魔。"
 
 [sub_resource type="Resource" id="Action_curse_p2"]
 script = ExtResource("2_EnemyActionData")
 type = "discard_curse"
 value = 3
+display_label = "毒首"
+description = "毒首在血量低时失控——浓紫色雾气大量涌出。往弃牌堆塞 3 张心魔。"
 
 [resource]
 script = ExtResource("1_EnemyData")

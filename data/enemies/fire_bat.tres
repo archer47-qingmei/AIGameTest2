@@ -8,12 +8,14 @@ script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "扑击"
+description = "翅膀边缘是暗红色的火。俯冲撞击，造成 7 点伤害。"
 
 [sub_resource type="Resource" id="Action_attack2"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "扑击"
+description = "翅膀边缘是暗红色的火。俯冲撞击，造成 7 点伤害。"
 
 [resource]
 script = ExtResource("1_EnemyData")

@@ -9,17 +9,22 @@ type = "vampiric_attack"
 value = 10
 count = 5
 weight = 45
+display_label = "吸血"
+description = "一团暗红色的雾扑来，吸走你的灵力。造成 10 点伤害，回复造成伤害 50% 的血量。"
 
 [sub_resource type="Resource" id="Action_devour"]
 script = ExtResource("2_EnemyActionData")
 type = "devour_minion"
 weight = 25
+display_label = "噬子"
+description = "吃掉一只小血煞，补充自身。回复 20 HP，获得 3 力量。"
 
 [sub_resource type="Resource" id="Action_revive"]
 script = ExtResource("2_EnemyActionData")
 type = "revive_minions"
 weight = 20
 display_label = "分裂"
+description = "从自身分裂出 2 只小血煞，自身损失 5 HP。"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
@@ -27,6 +32,7 @@ type = "block"
 value = 8
 weight = 10
 display_label = "血茧"
+description = "在自己体外形成一层血膜。获得 8 格挡。"
 
 [resource]
 script = ExtResource("1_EnemyData")

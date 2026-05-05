@@ -7,26 +7,36 @@
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 9
+display_label = "蜷身"
+description = "蜷缩身体，石膜外翻。获得 9 格挡。"
 
 [sub_resource type="Resource" id="Action_attack1"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 8
+display_label = "砸下"
+description = "抬臂砸下来——速度慢，但力大。造成 8 点伤害。"
 
 [sub_resource type="Resource" id="Action_block2"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 9
+display_label = "蜷身"
+description = "蜷缩身体，石膜外翻。获得 9 格挡。"
 
 [sub_resource type="Resource" id="Action_charge"]
 script = ExtResource("2_EnemyActionData")
 type = "charge"
 value = 0
+display_label = "蓄力"
+description = "双臂同时举起——正在蓄力。下回合攻击伤害翻倍。"
 
 [sub_resource type="Resource" id="Action_attack2"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
+display_label = "砸下"
+description = "顿了一拍——双臂砸下。造成 14 点伤害（蓄力翻倍后）。"
 
 [resource]
 script = ExtResource("1_EnemyData")

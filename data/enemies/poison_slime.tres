@@ -8,21 +8,24 @@ script = ExtResource("2_EnemyActionData")
 type = "attack_weak"
 value = 4
 display_label = "酸液"
+description = "喷吐腐蚀液。造成 4 点伤害，施加虚弱（下回合攻击力 -25%）。"
 
-[sub_resource type="Resource" id="Action_vuln"]
+[sub_resource type="Resource" id="Action_venom"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_vulnerable"
 value = 4
 display_label = "毒刺"
+description = "叶片边缘的尖刺弹出。造成 4 点伤害，使目标易伤（受伤+25%）。"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 8
 display_label = "卷叶"
+description = "叶片层层卷起保护茎秆。获得 8 格挡。"
 
 [resource]
 script = ExtResource("1_EnemyData")
 display_name = "毒涎草"
 hp = 51
-actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_weak"), SubResource("Action_vuln"), SubResource("Action_block")])
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_weak"), SubResource("Action_venom"), SubResource("Action_block")])

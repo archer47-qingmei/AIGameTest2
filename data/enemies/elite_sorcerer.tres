@@ -8,17 +8,21 @@ script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 9
 display_label = "压杀"
+description = "石臂砸下。造成 9 点伤害。"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 10
 display_label = "石盾"
+description = "石妖残余的本能——石肤外翻。获得 10 格挡。"
 
 [sub_resource type="Resource" id="Action_steal"]
 script = ExtResource("2_EnemyActionData")
 type = "steal_block"
 value = 0
+display_label = "夺舍"
+description = "夺取你所有的格挡，自身获得等量格挡。若你没有格挡，自身获得 3 力量。"
 
 [sub_resource type="Resource" id="Action_multi"]
 script = ExtResource("2_EnemyActionData")
@@ -26,6 +30,7 @@ type = "multi_attack"
 value = 7
 count = 2
 display_label = "双重打击"
+description = "两只手臂同时挥来。连续攻击两次，各造成 7 点伤害。"
 
 [resource]
 script = ExtResource("1_EnemyData")

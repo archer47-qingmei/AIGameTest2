@@ -8,16 +8,21 @@ script = ExtResource("2_EnemyActionData")
 type = "discard_curse"
 value = 1
 display_label = "鳞粉"
+description = "翅膀一抖，淡紫色鳞粉飘下来。往弃牌堆塞 1 张心魔。"
 
 [sub_resource type="Resource" id="Action_attack"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 5
+display_label = "俯冲"
+description = "俯冲，翅膀边缘划过来。造成 5 点伤害。"
 
 [sub_resource type="Resource" id="Action_block"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 6
+display_label = "气旋"
+description = "悬停，急速扇翅，鳞粉在身周形成气旋。获得 6 格挡。"
 
 [resource]
 script = ExtResource("1_EnemyData")

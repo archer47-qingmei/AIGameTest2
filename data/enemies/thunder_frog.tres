@@ -3,26 +3,28 @@
 [ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
 [ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
 
-[sub_resource type="Resource" id="Action_attack1"]
+[sub_resource type="Resource" id="Action_low"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 5
 display_label = "低鸣"
+description = "背上雷纹轻轻一跳。造成 5 点伤害。"
 
-[sub_resource type="Resource" id="Action_precharge"]
+[sub_resource type="Resource" id="Action_charge"]
 script = ExtResource("2_EnemyActionData")
 type = "pre_charge"
-value = 0
 display_label = "高压蓄力"
+description = "背上雷纹开始发光——光越来越亮。正在蓄力，下回合攻击伤害翻倍。"
 
-[sub_resource type="Resource" id="Action_attack2"]
+[sub_resource type="Resource" id="Action_burst"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 14
 display_label = "放雷"
+description = "蛙口一张——蓝白色电弧灌满整个战场。造成 14 点伤害（蓄力后 28 点）。"
 
 [resource]
 script = ExtResource("1_EnemyData")
 display_name = "雷蛙"
 hp = 56
-actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_attack1"), SubResource("Action_precharge"), SubResource("Action_attack2")])
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_low"), SubResource("Action_charge"), SubResource("Action_burst")])

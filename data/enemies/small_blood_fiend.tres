@@ -7,6 +7,8 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 5
+display_label = "扑咬"
+description = "微小的血雾扑来。造成 5 点伤害。"
 
 [resource]
 script = ExtResource("1_EnemyData")

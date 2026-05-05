@@ -8,12 +8,14 @@ script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 12
 display_label = "铁幕"
+description = "铜皮外翻，形成一层新膜。获得 12 格挡。"
 
 [sub_resource type="Resource" id="Action_attack"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 10
 display_label = "铁拳"
+description = "沉重的铜臂砸下。造成 10 点伤害。"
 
 [resource]
 script = ExtResource("1_EnemyData")
