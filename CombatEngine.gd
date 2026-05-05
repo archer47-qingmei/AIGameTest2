@@ -10,7 +10,8 @@ const KONG_JU_CARD: CardData = preload("res://data/cards/kong_ju.tres")
 const BEI_SHANG_CARD: CardData = preload("res://data/cards/bei_shang.tres")
 const ATTACK_TYPES_FOR_CHARGE: Array[String] = [
 	"attack", "attack_weak", "attack_vulnerable", "multi_attack", "attack_curse", "vampiric_attack",
-	"attack_self_damage", "attack_half_next_block", "attack_bao_nu", "attack_kong_ju", "attack_bei_shang", "attack_venom"
+	"attack_self_damage", "attack_half_next_block", "attack_bao_nu", "attack_kong_ju", "attack_bei_shang", "attack_venom",
+	"lock_skill_attack", "block_then_attack", "attack_retrieve_discard"
 ]
 
 signal state_changed
@@ -37,6 +38,7 @@ var _exhaust_pile: Array[CardData] = []
 var _enemy_data_list: Array[EnemyData] = []
 var _relics: Array[RelicData] = []
 var _pending_actions: Array[EnemyActionData] = []
+var _energy_penalty_next_turn: int = 0
 
 func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_hp: int, max_hp: int, relics: Array[RelicData] = [], initial_energy_cap: int = BASE_ENERGY) -> void:
 	energy_cap = initial_energy_cap
@@ -245,6 +247,7 @@ func end_turn() -> void:
 		_start_player_turn()
 
 func _start_player_turn() -> void:
+	player.skill_locked = false
 	player.played_style_this_turn = false
 	player.gained_sword_intent_this_turn = false
 	player.sword_intent = mini(
@@ -254,7 +257,8 @@ func _start_player_turn() -> void:
 	player.next_turn_sword_intent = 0
 	player.weak = max(0, player.weak - 1)
 	turn_number += 1
-	energy = energy_cap
+	energy = max(0, energy_cap - _energy_penalty_next_turn)
+	_energy_penalty_next_turn = 0
 	player.block = 0
 	_draw_hand()
 	if player.draw_per_turn > 0:
@@ -336,6 +340,8 @@ func can_play_card(card: CardData) -> bool:
 		return false
 	if card.card_type == "身法" and hand.any(func(c: CardData) -> bool: return c.is_kong_ju):
 		return false
+	if player.skill_locked and card.card_type == "招式":
+		return false
 	return true
 
 func draw_cards(n: int) -> void:
@@ -384,6 +390,10 @@ func _do_enemy_turn() -> void:
 		if enemies[i].hp <= 0:
 			continue
 		var data: EnemyData = _enemy_data_list[i]
+		enemies[i].turns_alive += 1
+		if data.escape_after_turns > 0 and enemies[i].turns_alive >= data.escape_after_turns:
+			enemies[i].hp = 0
+			continue
 		enemies[i].block = 0
 		if data.passive_block_per_turn > 0:
 			enemies[i].add_block(data.passive_block_per_turn)
@@ -494,6 +504,30 @@ func _do_enemy_turn() -> void:
 				_add_venoms_to_draw(action.count)
 			"wave_gap":
 				pass
+			"lock_skill_attack":
+				player.skill_locked = true
+				_enemy_attack(enemies[i], action.value)
+			"block_and_heal":
+				enemies[i].add_block(action.value)
+				_heal(enemies[i], action.count)
+			"self_strengthen":
+				enemies[i].strength += action.value
+			"drain_block":
+				player.block = max(0, player.block - action.value)
+			"reduce_energy":
+				_energy_penalty_next_turn += action.count
+			"discard_to_hand":
+				if not _discard_pile.is_empty():
+					var idx: int = randi() % _discard_pile.size()
+					hand.append(_discard_pile[idx])
+					_discard_pile.remove_at(idx)
+			"block_then_attack":
+				enemies[i].add_block(action.value)
+				_enemy_attack(enemies[i], action.count)
+			"attack_retrieve_discard":
+				_enemy_attack(enemies[i], action.value)
+				if not _discard_pile.is_empty():
+					hand.append(_discard_pile.pop_back())
 			_:
 				enemies[i].add_block(action.value)
 		if data.copies_player_cards \

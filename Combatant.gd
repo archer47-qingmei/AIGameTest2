@@ -12,10 +12,10 @@ var sword_intent_cap: int = 10
 var sword_intent_damage_bonus: int = 1
 var draw_per_turn: int = 0
 var sword_intent_retain: bool = false
-var sword_intent_block_bonus: int = 0  # 心剑：打身法时每层剑意额外+N格挡
+var sword_intent_block_bonus: int = 0
 var played_style_this_turn: bool = false
 var gained_sword_intent_this_turn: bool = false
-var first_si_block_bonus: int = 0  # 意随心发：每回合首次获得剑意时+N格挡
+var first_si_block_bonus: int = 0
 var next_turn_sword_intent: int = 0
 var next_turn_draw: int = 0
 var finisher_block_bonus: int = 0
@@ -25,6 +25,8 @@ var strength: int = 0
 var first_attack_bonus: int = 0
 var draw_reduction: int = 0
 var next_block_halved: bool = false
+var skill_locked: bool = false
+var turns_alive: int = 0
 
 func take_damage(amount: int) -> void:
 	if amount <= block:

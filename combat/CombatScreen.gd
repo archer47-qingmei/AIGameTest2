@@ -150,7 +150,8 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 			"attack", "multi_attack", "attack_weak", "attack_vulnerable",
 			"attack_self_damage", "aoe_all", "attack_bao_nu", "attack_kong_ju",
 			"attack_bei_shang", "attack_venom", "vampiric_attack", "attack_zahuorumuo",
-			"attack_half_next_block", "mirror_attack"
+			"attack_half_next_block", "mirror_attack",
+			"lock_skill_attack", "block_then_attack", "attack_retrieve_discard"
 		]
 		if action.type in ATTACK_TYPES:
 			return "意图：%s %d" % [action.display_label, val]

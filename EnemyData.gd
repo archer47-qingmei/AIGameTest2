@@ -16,3 +16,4 @@ extends Resource
 @export var death_kills_others: bool = false
 @export var skip_wave_gap_threshold: float = 0.0
 @export var gains_strength_from_aoe: bool = false
+@export var escape_after_turns: int = 0
