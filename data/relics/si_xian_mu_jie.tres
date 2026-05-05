@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_si_xian_mu_jie"]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_si_xian_mu_jie"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 
 [resource]
 script = ExtResource("1_RD")
 display_name = "丝线母结"
-description = "一截丝线的末梢，断口处自己收束成了一个结。它一直在微颤——极低极慢的颤。像是丝线的另一端，有人在拉。\n\n坊市额外提供 1 件遗物（整局仅一次）"
+description = "坊市额外提供 1 件遗物（整局仅一次）\n\n一截丝线的末梢，断口处自己收束成了一个结。它一直在微颤——极低极慢的颤。像是丝线的另一端，有人在拉。"
 trigger = 0
 effect_type = 29
 value = 1

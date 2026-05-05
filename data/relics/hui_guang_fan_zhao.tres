@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "回光返照"
-description = "一段极短的时间里，所有东西都变得非常清楚。你打出的每一拳都是最后一拳，所以每一拳都是最重的。代价早就付了——是你当初换来这件东西的那十分之二的命。\n\n每回合开始若 HP 低于 30%，获得 3 点真气。最大血量 -20%（立即生效）"
+description = "每回合开始若 HP 低于 30%，获得 3 点真气。最大血量 -20%（立即生效）\n\n一段极短的时间里，所有东西都变得非常清楚。你打出的每一拳都是最后一拳，所以每一拳都是最重的。代价早就付了——是你当初换来这件东西的那十分之二的命。"
 trigger = 1
 effect_type = 13
 value = 3

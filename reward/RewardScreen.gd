@@ -1,4 +1,4 @@
-extends Control
+﻿extends Control
 
 enum State { LIST, CARD_PICK }
 
@@ -25,7 +25,7 @@ func _ready() -> void:
 	_btn_gold.pressed.connect(_on_gold_pressed)
 
 	_btn_card = Button.new()
-	_btn_card.text = "卡牌"
+	_btn_card.text = "鍗＄墝"
 	_vbox.add_child(_btn_card)
 	_btn_card.pressed.connect(_on_card_btn_pressed)
 
@@ -34,7 +34,7 @@ func _ready() -> void:
 	_card_container.hide()
 
 	_btn_continue = Button.new()
-	_btn_continue.text = "继续"
+	_btn_continue.text = "缁х画"
 	_vbox.add_child(_btn_continue)
 	_btn_continue.pressed.connect(_on_continue_pressed)
 
@@ -54,7 +54,7 @@ func _show_list() -> void:
 	else:
 		var relic: RelicData = GameManager.pending_relic
 		if relic != null:
-			_btn_relic.text = "%s — %s" % [relic.display_name, _relic_effect_text(relic)]
+			_btn_relic.text = "%s 鈥?%s" % [relic.display_name, _relic_effect_text(relic)]
 			_btn_relic.show()
 		else:
 			_btn_relic.hide()
@@ -64,25 +64,25 @@ func _show_list() -> void:
 	else:
 		var amount: int = GameManager.pending_gold
 		if amount > 0:
-			_btn_gold.text = "拾取 %d 金币" % amount
+			_btn_gold.text = "鎷惧彇 %d 閲戝竵" % amount
 			_btn_gold.show()
 		else:
 			_btn_gold.hide()
 
 func _relic_effect_text(relic: RelicData) -> String:
 	var parts := relic.description.split("\n\n")
-	return parts[-1]
+	return parts[0]
 
 func _on_relic_pressed() -> void:
-	_btn_relic.text = "%s — %s" % [GameManager.pending_relic.display_name, _relic_effect_text(GameManager.pending_relic)]
+	_btn_relic.text = "%s 鈥?%s" % [GameManager.pending_relic.display_name, _relic_effect_text(GameManager.pending_relic)]
 	GameManager.collect_relic()
 	_btn_relic.disabled = true
-	_btn_relic.text += " ✓"
+	_btn_relic.text += " 鉁?
 
 func _on_gold_pressed() -> void:
 	GameManager.collect_gold(GameManager.pending_gold)
 	_btn_gold.disabled = true
-	_btn_gold.text += " ✓"
+	_btn_gold.text += " 鉁?
 
 func _on_card_btn_pressed() -> void:
 	_state = State.CARD_PICK
@@ -107,18 +107,18 @@ func _build_card_options() -> void:
 		btn.pressed.connect(_on_card_selected.bind(card))
 		_card_container.add_child(btn)
 	var btn_skip: Button = Button.new()
-	btn_skip.text = "跳过"
+	btn_skip.text = "璺宠繃"
 	btn_skip.pressed.connect(_on_skipped)
 	_card_container.add_child(btn_skip)
 
 func _on_card_selected(card: CardData) -> void:
 	GameManager.player_state.deck.append(card.duplicate())
-	_btn_card.text = "卡牌 ✓"
+	_btn_card.text = "鍗＄墝 鉁?
 	_btn_card.disabled = true
 	_show_list()
 
 func _on_skipped() -> void:
-	_btn_card.text = "卡牌（已跳过）"
+	_btn_card.text = "鍗＄墝锛堝凡璺宠繃锛?
 	_btn_card.disabled = true
 	_show_list()
 

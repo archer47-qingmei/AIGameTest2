@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_hun_si_chan_rao"]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_hun_si_chan_rao"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 
 [resource]
 script = ExtResource("1_RD")
 display_name = "魂丝缠绕"
-description = "一截半透明的丝线，极细极韧。不是你要它——是它缠上你的。顺着你的经脉往上爬。不冷。只是轻轻的。像有人在很远的地方，用手指点着你的脉搏在默念什么。\n\n每当你打出招式牌，获得 1 点格挡"
+description = "每当你打出招式牌，获得 1 点格挡\n\n一截半透明的丝线，极细极韧。不是你要它——是它缠上你的。顺着你的经脉往上爬。不冷。只是轻轻的。像有人在很远的地方，用手指点着你的脉搏在默念什么。"
 trigger = 0
 effect_type = 22
 value = 1

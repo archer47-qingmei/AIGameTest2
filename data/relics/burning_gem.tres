@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "断弦丝"
-description = "一截极细的丝线，不到一寸长，两头断面。无人知道它来自哪里。佩在身上时真气运行会变顺——它在极低极慢地微颤。像是在共振什么。另一头很远。\n\n每场战斗首回合，真气 +1"
+description = "每场战斗首回合，真气 +1\n\n一截极细的丝线，不到一寸长，两头断面。无人知道它来自哪里。佩在身上时真气运行会变顺——它在极低极慢地微颤。像是在共振什么。另一头很远。"
 trigger = 0
 effect_type = 0
 value = 1

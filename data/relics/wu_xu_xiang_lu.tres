@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_wu_xu_xiang_lu"]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_wu_xu_xiang_lu"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 
 [resource]
 script = ExtResource("1_RD")
 display_name = "雾墟香炉"
-description = "一只铜制小手炉，没有盖。炉膛里有一缕烟，不散。烟雾偶尔聚成一张脸——然后又散开。它不是你认识的人。但你每一次看，它都在看你。\n\n坊市物品价格 -15%"
+description = "坊市物品价格 -15%\n\n一只铜制小手炉，没有盖。炉膛里有一缕烟，不散。烟雾偶尔聚成一张脸——然后又散开。它不是你认识的人。但你每一次看，它都在看你。"
 trigger = 0
 effect_type = 27
 value = 15

@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "无名修士的护符"
-description = "一块旧布巾，折成三角形，边缘缝过好几针。布上有岩缝的尘和某种铁锈的气味。它垫过一个人的手掌——一个在崖壁上攀了很久的人。他的手劲还在布上。\n\n整局首次 HP 低于 50% 时，回复 8 HP（一次性）"
+description = "整局首次 HP 低于 50% 时，回复 8 HP（一次性）\n\n一块旧布巾，折成三角形，边缘缝过好几针。布上有岩缝的尘和某种铁锈的气味。它垫过一个人的手掌——一个在崖壁上攀了很久的人。他的手劲还在布上。"
 trigger = 1
 effect_type = 15
 value = 8

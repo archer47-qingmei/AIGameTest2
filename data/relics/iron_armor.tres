@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "旧甲魄"
-description = "一块旧甲片，不成形状了。上面有十七个凿穿的孔。是挡下来的，不是穿过去的——因为孔的内壁是平的。穿着它的人一直在挡，挡了很久，才把它卸下来。它记着那十七次。\n\n每回合开始时，获得 4 点格挡"
+description = "每回合开始时，获得 4 点格挡\n\n一块旧甲片，不成形状了。上面有十七个凿穿的孔。是挡下来的，不是穿过去的——因为孔的内壁是平的。穿着它的人一直在挡，挡了很久，才把它卸下来。它记着那十七次。"
 trigger = 1
 effect_type = 2
 value = 4

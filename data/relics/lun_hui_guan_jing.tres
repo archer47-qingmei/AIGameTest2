@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_lun_hui_guan_jing"]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_lun_hui_guan_jing"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 
 [resource]
 script = ExtResource("1_RD")
 display_name = "轮回观镜"
-description = "一块手板大、从山体上自然剥落的矿石。晶面上映的不是当前——是你上一次。你没死的那次。你差点赢的那次。你走错了一招的那次。一遍一遍。\n\n你在选择卡牌奖励时多 1 个选项"
+description = "你在选择卡牌奖励时多 1 个选项\n\n一块手板大、从山体上自然剥落的矿石。晶面上映的不是当前——是你上一次。你没死的那次。你差点赢的那次。你走错了一招的那次。一遍一遍。"
 trigger = 0
 effect_type = 26
 value = 1

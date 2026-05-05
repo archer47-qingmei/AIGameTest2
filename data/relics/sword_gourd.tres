@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "养剑葫"
-description = "一只细长的葫芦，从某棵死树上摘下来的。葫芦里装的不是酒——是一把飞剑曾经住过的气息。飞剑走了，气留下来。它比剑本身活得更久。\n\n每场战斗开始，获得 3 层剑意"
+description = "每场战斗开始，获得 3 层剑意\n\n一只细长的葫芦，从某棵死树上摘下来的。葫芦里装的不是酒——是一把飞剑曾经住过的气息。飞剑走了，气留下来。它比剑本身活得更久。"
 trigger = 0
 effect_type = 4
 value = 3

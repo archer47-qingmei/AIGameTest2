@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "丹心镜"
-description = "一枚贴在胸前的小铜镜。不是照脸的——把它放在丹田位置，它会微震。你乱的时候它静，你累了它震。不是法器。是一面烧出来的镜子。烧它的人金丹已经碎了。\n\n每场战斗开始时，额外摸 2 张牌"
+description = "每场战斗开始时，额外摸 2 张牌\n\n一枚贴在胸前的小铜镜。不是照脸的——把它放在丹田位置，它会微震。你乱的时候它静，你累了它震。不是法器。是一面烧出来的镜子。烧它的人金丹已经碎了。"
 trigger = 0
 effect_type = 3
 value = 2

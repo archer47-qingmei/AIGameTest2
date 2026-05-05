@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "碎丹"
-description = "一粒残破的金丹碎片，棱角都是裂的。曾经完整过，但那时候的主人已经不在了。你把它碎的那面朝内——让它磨着自己，让你的经脉跑得更快。\n\n真气上限 +1。每场战斗开始时受到 6 点伤害"
+description = "真气上限 +1。每场战斗开始时受到 6 点伤害\n\n一粒残破的金丹碎片，棱角都是裂的。曾经完整过，但那时候的主人已经不在了。你把它碎的那面朝内——让它磨着自己，让你的经脉跑得更快。"
 trigger = 0
 effect_type = 6
 value = 1

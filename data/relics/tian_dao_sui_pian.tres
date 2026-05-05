@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "天道碎片"
-description = "一片从天幕上坠落下来的晶片，通透如镜，但里面映的不是周围的景——是空的。贴近时，你的真气自己就顺着它走了，不需要你推。代价是你已经不在意别人卖什么了。\n\n每回合多抽 1 张牌。不能购买遗物"
+description = "每回合多抽 1 张牌。不能购买遗物\n\n一片从天幕上坠落下来的晶片，通透如镜，但里面映的不是周围的景——是空的。贴近时，你的真气自己就顺着它走了，不需要你推。代价是你已经不在意别人卖什么了。"
 trigger = 1
 effect_type = 3
 value = 1

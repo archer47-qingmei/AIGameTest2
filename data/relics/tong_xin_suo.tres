@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_tong_xin_suo"]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_tong_xin_suo"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 
 [resource]
 script = ExtResource("1_RD")
 display_name = "同心锁"
-description = "两块可以分开的灵石，永远在寻找对方。你把其中一块放在牌组末端，它在往前爬——不知道要去哪里，但一直在爬。\n\n装备时，随机复制牌组中 1 张牌加入牌组"
+description = "装备时，随机复制牌组中 1 张牌加入牌组\n\n两块可以分开的灵石，永远在寻找对方。你把其中一块放在牌组末端，它在往前爬——不知道要去哪里，但一直在爬。"
 trigger = 4
 effect_type = 19
 value = 1

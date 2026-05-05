@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_ling_gen_can_zhi"]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_ling_gen_can_zhi"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 
 [resource]
 script = ExtResource("1_RD")
 display_name = "灵根残枝"
-description = "一截枯了的灵脉。已经死了。但你摸它的时候，内部的灵气经络还在走——一圈一圈。像死掉的树还在打年轮。\n\n你所有功法牌的真气消耗 -1（最低 1）"
+description = "你所有功法牌的真气消耗 -1（最低 1）\n\n一截枯了的灵脉。已经死了。但你摸它的时候，内部的灵气经络还在走——一圈一圈。像死掉的树还在打年轮。"
 trigger = 4
 effect_type = 18
 value = 1

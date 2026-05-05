@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_jiu_ri_bi_ji"]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_jiu_ri_bi_ji"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 
 [resource]
 script = ExtResource("1_RD")
 display_name = "旧日笔迹"
-description = "一本薄册。前几页全是基础错误——一个人从零开始自学五行功法的笔记。后几页另起一种笔迹，把前面每一行错的都改过来了。两种笔迹不是同一个人。改错的那个人没有名字。\n\n牌组上限 +2"
+description = "牌组上限 +2\n\n一本薄册。前几页全是基础错误——一个人从零开始自学五行功法的笔记。后几页另起一种笔迹，把前面每一行错的都改过来了。两种笔迹不是同一个人。改错的那个人没有名字。"
 trigger = 4
 effect_type = 20
 value = 2

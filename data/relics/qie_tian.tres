@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
 
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "窃天"
-description = "一枚没有主人的令牌，天道级的铸法。你不知道从哪里捡来的，但它已经认主了。认主之后，你进坊市时，书商不跟你说话了——不是怕你，是不想卖给你。\n\n真气上限 +1。不能从坊市购买卡牌"
+description = "真气上限 +1。不能从坊市购买卡牌\n\n一枚没有主人的令牌，天道级的铸法。你不知道从哪里捡来的，但它已经认主了。认主之后，你进坊市时，书商不跟你说话了——不是怕你，是不想卖给你。"
 trigger = 0
 effect_type = 6
 value = 1

@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_ling_shi_chong"]
+﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_ling_shi_chong"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 
 [resource]
 script = ExtResource("1_RD")
 display_name = "灵石虫"
-description = "一只拇指大的虫子，后半截身体已经变成了灵石。从石缝里挖出来的时候它在睡觉。醒了，没走。蹲在你肩上。偶尔啃你灵石上沾的杂质。不咬人。\n\n战斗结束时，若你本场战斗没有受到伤害，获得 8 灵石"
+description = "战斗结束时，若你本场战斗没有受到伤害，获得 8 灵石\n\n一只拇指大的虫子，后半截身体已经变成了灵石。从石缝里挖出来的时候它在睡觉。醒了，没走。蹲在你肩上。偶尔啃你灵石上沾的杂质。不咬人。"
 trigger = 3
 effect_type = 24
 value = 8
