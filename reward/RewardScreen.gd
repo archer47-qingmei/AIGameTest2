@@ -64,7 +64,7 @@ func _show_list() -> void:
 	else:
 		var amount: int = GameManager.pending_gold
 		if amount > 0:
-			_btn_gold.text = "领取 %d 金币" % amount
+			_btn_gold.text = "领取 %d 灵石" % amount
 			_btn_gold.show()
 		else:
 			_btn_gold.hide()
