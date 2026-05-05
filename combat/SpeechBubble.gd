@@ -19,15 +19,15 @@ func _ready() -> void:
 	add_theme_stylebox_override("normal", style)
 	add_theme_color_override("font_color", Color.WHITE)
 	horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	visible = false
+	add_theme_font_size_override("font_size", 13)
+	custom_minimum_size = Vector2(0, 32)
+	modulate.a = 0.0
 
 func show_text(new_text: String) -> void:
 	text = new_text
-	visible = true
-	modulate.a = 1.0
 	if _tween and _tween.is_running():
 		_tween.kill()
+	modulate.a = 1.0
 	_tween = create_tween()
 	_tween.tween_interval(DISPLAY_SECONDS)
 	_tween.tween_property(self, "modulate:a", 0.0, 0.3)
-	_tween.tween_callback(func(): visible = false)

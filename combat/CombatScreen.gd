@@ -374,11 +374,13 @@ func _setup_bubbles() -> void:
 	var player_vbox := _player_card.get_node("VBoxContainer") as VBoxContainer
 	_player_bubble = SpeechBubble.new()
 	player_vbox.add_child(_player_bubble)
+	_player_bubble.show_text("▶TEST▶")
 	for i in _engine.enemies.size():
 		var panel := _enemies_container.get_child(i) as Panel
 		var enemy_vbox := panel.get_node("VBoxContainer") as VBoxContainer
 		var b := SpeechBubble.new()
 		enemy_vbox.add_child(b)
+		b.show_text("▶TEST" + str(i) + "▶")
 		_enemy_bubbles.append(b)
 
 func _show_enter_dialogues() -> void:
