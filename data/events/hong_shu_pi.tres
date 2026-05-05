@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_hong_shu_pi"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 3
+value = 15
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 12
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+curse_card_path = "res://data/cards/zou_huo_ru_mo.tres"
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 1
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "蹲下来看剑痕"
+result_text = "你看了很久。那个劈歪的角度——是手抖的。她知道自己的手在抖，所以往青苔那边偏了半寸。不是砍歪了。是她怕剑伤到别的东西。你站起来。手里攥着小半块怀里的烤红薯——已经不热了。你放在糕屑旁边。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "拾起布条"
+result_text = "把那条青色布条叠好，收进怀里。道法书上没写为什么要这样做。你的手指在叠的时候比平时抖了一点——不是冷。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "红薯皮"
+mood = "安静"
+flavor_text = "山道拐角的地上有一小撮碎桂花糕的糕屑。蚂蚁正在搬。旁边有一道剑痕——劈歪了，刮到了山壁上不该被刮的青苔。握剑的那个人手在抖。但剑没偏。糕屑旁边还有一截布条，是洗白了的青色道袍。布条上有血迹。血是新的。但她还在往上走。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = "law"

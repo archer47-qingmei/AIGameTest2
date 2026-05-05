@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_yan_bi_shou_yin"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 11
+value = 0
+probability = 1.0
+card_grade = 1
+relic_grade = 0
+card_type_filter = "招式"
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 9
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 2
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "跟着指印往上攀"
+result_text = "你抠着那些指印往上爬。到了一半，发现有一道指印特别深——那个人在这里停了一下。不是累了。是风吹过来的时候有桂花的味道。他停了一下。然后继续往上。"
+effects = [SubResource("e1")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "在岩壁上多按一个手印"
+result_text = "你把自己的手印按在旁边。现在这一面崖壁上有两个攀过的人。他下次再路过这儿会看到的。"
+effects = [SubResource("e2")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "岩壁上的手印"
+mood = "有趣"
+flavor_text = "一面直立的崖壁，上面有一串徒手攀爬的手印。每一道指印都嵌进了岩石表面——不是真气凿的，是手指硬抠进去的。你认得这种指法。你以前也用这种方式攀岩。但指印比你大一号。"
+choices = [SubResource("c1"), SubResource("c2")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = "body"
