@@ -18,6 +18,9 @@ func _ready() -> void:
 	all_paths.append_array(MapGenerator.JD_MID_GROUP_PATHS)
 	all_paths.append_array(MapGenerator.JD_ELITE_GROUP_PATHS)
 	all_paths.append(MapGenerator.JD_BOSS_GROUP_PATH)
+	all_paths.append_array(MapGenerator.YY_EARLY_GROUP_PATHS)
+	all_paths.append_array(MapGenerator.YY_MID_GROUP_PATHS)
+	all_paths.append_array(MapGenerator.YY_ELITE_GROUP_PATHS)
 	for path in all_paths:
 		var group: EnemyGroupData = load(path) as EnemyGroupData
 		var parts: PackedStringArray = PackedStringArray()

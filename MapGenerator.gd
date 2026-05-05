@@ -55,6 +55,29 @@ const JD_BOSS_GROUP_PATH: String = "res://data/enemy_groups/single_49_tribulatio
 const JD_ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"  # 暂与筑基境相同，后续替换为金丹专属精英遗物
 const JD_BOSS_REWARD_RELIC_PATH: String = "res://data/relics/iron_armor.tres"
 
+const YY_EARLY_GROUP_PATHS: Array[String] = [
+	"res://data/enemy_groups/single_ying_ling.tres",
+	"res://data/enemy_groups/single_ancient_vine.tres",
+	"res://data/enemy_groups/single_void_rift.tres",
+	"res://data/enemy_groups/single_fallen_sword.tres",
+	"res://data/enemy_groups/single_lava_turtle.tres",
+	"res://data/enemy_groups/single_illusion_array.tres",
+]
+const YY_MID_GROUP_PATHS: Array[String] = [
+	"res://data/enemy_groups/single_fallen_sword.tres",
+	"res://data/enemy_groups/single_lava_turtle.tres",
+	"res://data/enemy_groups/single_illusion_array.tres",
+	"res://data/enemy_groups/single_void_rift.tres",
+]
+const YY_ELITE_GROUP_PATHS: Array[String] = [
+	"res://data/enemy_groups/single_six_arm_demon.tres",
+	"res://data/enemy_groups/single_tribulation_remnant.tres",
+	"res://data/enemy_groups/single_void_whisper.tres",
+]
+const YY_BOSS_GROUP_PATH: String = "res://data/enemy_groups/single_49_tribulation.tres"
+const YY_ELITE_REWARD_RELIC_PATH: String = "res://data/relics/burning_gem.tres"
+const YY_BOSS_REWARD_RELIC_PATH: String = "res://data/relics/iron_armor.tres"
+
 const ROW_BASE_X: Array[float] = [80.0, 240.0, 400.0]
 const ROW_OFFSET_RANGE: float = 25.0
 const COL_BASE_Y: float = 1500.0
@@ -64,8 +87,18 @@ const COL_OFFSET_RANGE: float = 20.0
 static func generate(realm: int = 0) -> Array[NodeData]:
 	var node_grid: Dictionary = {}
 
-	var boss_group_path: String = JD_BOSS_GROUP_PATH if realm == 1 else BOSS_GROUP_PATH
-	var boss_reward_path: String = JD_BOSS_REWARD_RELIC_PATH if realm == 1 else BOSS_REWARD_RELIC_PATH
+	var boss_group_path: String
+	var boss_reward_path: String
+	match realm:
+		1:
+			boss_group_path = JD_BOSS_GROUP_PATH
+			boss_reward_path = JD_BOSS_REWARD_RELIC_PATH
+		2:
+			boss_group_path = YY_BOSS_GROUP_PATH
+			boss_reward_path = YY_BOSS_REWARD_RELIC_PATH
+		_:
+			boss_group_path = BOSS_GROUP_PATH
+			boss_reward_path = BOSS_REWARD_RELIC_PATH
 
 	var boss := NodeData.new()
 	boss.config = NodeConfig.new()
@@ -113,8 +146,18 @@ static func _make_node(col: int, row: int) -> NodeData:
 	return nd
 
 static func _assign_types(all: Array[NodeData], realm: int) -> void:
-	var elite_paths: Array[String] = JD_ELITE_GROUP_PATHS if realm == 1 else ELITE_GROUP_PATHS
-	var elite_relic_path: String = JD_ELITE_REWARD_RELIC_PATH if realm == 1 else ELITE_REWARD_RELIC_PATH
+	var elite_paths: Array[String]
+	var elite_relic_path: String
+	match realm:
+		1:
+			elite_paths = JD_ELITE_GROUP_PATHS
+			elite_relic_path = JD_ELITE_REWARD_RELIC_PATH
+		2:
+			elite_paths = YY_ELITE_GROUP_PATHS
+			elite_relic_path = YY_ELITE_REWARD_RELIC_PATH
+		_:
+			elite_paths = ELITE_GROUP_PATHS
+			elite_relic_path = ELITE_REWARD_RELIC_PATH
 
 	var by_col: Dictionary = {}
 	for nd: NodeData in all:
@@ -159,8 +202,18 @@ static func _assign_types(all: Array[NodeData], realm: int) -> void:
 		early_nodes[0].config.reward_relic = load(elite_relic_path) as RelicData
 
 static func _random_combat_group(col: int, realm: int) -> EnemyGroupData:
-	var early_paths: Array[String] = JD_EARLY_GROUP_PATHS if realm == 1 else EARLY_GROUP_PATHS
-	var mid_paths: Array[String] = JD_MID_GROUP_PATHS if realm == 1 else MID_GROUP_PATHS
+	var early_paths: Array[String]
+	var mid_paths: Array[String]
+	match realm:
+		1:
+			early_paths = JD_EARLY_GROUP_PATHS
+			mid_paths = JD_MID_GROUP_PATHS
+		2:
+			early_paths = YY_EARLY_GROUP_PATHS
+			mid_paths = YY_MID_GROUP_PATHS
+		_:
+			early_paths = EARLY_GROUP_PATHS
+			mid_paths = MID_GROUP_PATHS
 	var paths: Array[String] = early_paths if col <= 3 else mid_paths
 	return load(paths[randi() % paths.size()]) as EnemyGroupData
 

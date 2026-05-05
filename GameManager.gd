@@ -2,7 +2,7 @@ extends Node
 
 enum Phase { MENU, CHAR_SELECT, MAP, COMBAT, REWARD, REST, SHOP, WIN, GAME_OVER, EVENT }
 
-const MAX_REALM: int = 1  # v0.72.0: 筑基+金丹两境界，扩展时修改此值
+const MAX_REALM: int = 2  # v0.73.0: 筑基+金丹+元婴三境界
 
 func _ready() -> void:
 	var font: FontFile = load("res://data/fonts/NotoSansSC-Regular.otf") as FontFile
