@@ -39,6 +39,8 @@ var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
 var _dragging_card_index: int = -1
 var _info_panel: InfoPanel
+var _player_bubble: SpeechBubble
+var _enemy_bubbles: Array[SpeechBubble] = []
 
 func _ready() -> void:
 	_lbl_player_hp.add_theme_font_size_override("font_size", 18)
@@ -71,6 +73,11 @@ func _ready() -> void:
 	_drag_layer.target_changed.connect(_on_drag_target_changed)
 	_info_panel = InfoPanel.new()
 	add_child(_info_panel)
+	_setup_bubbles()
+	_engine.player_finisher_played.connect(_on_player_finisher_played)
+	_engine.player_heavily_damaged.connect(_on_player_heavily_damaged)
+	_engine.enemy_dialogue.connect(_on_enemy_dialogue)
+	_show_enter_dialogues.call_deferred()
 	_refresh_ui()
 
 func _build_enemy_panels() -> void:
@@ -351,6 +358,9 @@ func _on_combat_ended(result: String) -> void:
 		(panel.get_node("BtnOverlay") as Button).disabled = true
 	if result == "victory":
 		_lbl_result.text = "胜利！"
+		var vic_line := CharacterDialogue.get_line(GameManager.player_state.character, "victory")
+		if vic_line != "":
+			_player_bubble.show_text(vic_line)
 	_lbl_result.visible = true
 	if result == "victory":
 		if GameManager.is_final_node():
@@ -359,6 +369,46 @@ func _on_combat_ended(result: String) -> void:
 			_btn_get_reward.visible = true
 	else:
 		GameManager.go_to_game_over()
+
+func _setup_bubbles() -> void:
+	_player_bubble = SpeechBubble.new()
+	add_child(_player_bubble)
+	_enemy_bubbles.resize(_engine.enemies.size())
+	for i in _engine.enemies.size():
+		var b := SpeechBubble.new()
+		add_child(b)
+		_enemy_bubbles[i] = b
+	_position_bubbles.call_deferred()
+
+func _position_bubbles() -> void:
+	_player_bubble.position = to_local(_player_card.get_global_rect().get_center()) + Vector2(-60, -80)
+	for i in _enemy_bubbles.size():
+		var panel := _enemies_container.get_child(i) as Panel
+		_enemy_bubbles[i].position = to_local(panel.get_global_rect().get_center()) + Vector2(-60, -80)
+
+func _show_enter_dialogues() -> void:
+	var char := GameManager.player_state.character
+	var line := CharacterDialogue.get_line(char, "enter")
+	if line != "":
+		_player_bubble.show_text(line)
+	for i in _engine.enemies.size():
+		var d: String = _engine.get_enemy_data(i).on_enter_dialogue
+		if d != "":
+			_enemy_bubbles[i].show_text(d)
+
+func _on_player_finisher_played() -> void:
+	var line := CharacterDialogue.get_line(GameManager.player_state.character, "finisher")
+	if line != "":
+		_player_bubble.show_text(line)
+
+func _on_player_heavily_damaged() -> void:
+	var line := CharacterDialogue.get_line(GameManager.player_state.character, "heavy_damage")
+	if line != "":
+		_player_bubble.show_text(line)
+
+func _on_enemy_dialogue(enemy_index: int, text: String) -> void:
+	if enemy_index < _enemy_bubbles.size():
+		_enemy_bubbles[enemy_index].show_text(text)
 
 func _on_view_deck_pressed() -> void:
 	var draw_pile := _engine.get_draw_pile()
