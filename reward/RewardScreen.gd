@@ -1,4 +1,4 @@
-﻿extends Control
+extends Control
 
 enum State { LIST, CARD_PICK }
 

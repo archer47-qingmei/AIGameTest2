@@ -1,4 +1,4 @@
-﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_lun_hui_guan_jing"]
+[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_lun_hui_guan_jing"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 

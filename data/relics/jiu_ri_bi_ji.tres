@@ -1,4 +1,4 @@
-﻿[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_jiu_ri_bi_ji"]
+[gd_resource type="Resource" script_class="RelicData" format=3 uid="uid://rl_jiu_ri_bi_ji"]
 
 [ext_resource type="Script" path="res://RelicData.gd" id="1_RD"]
 

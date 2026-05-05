@@ -1,4 +1,4 @@
-﻿extends Control
+extends Control
 
 @onready var _lbl_gold: Label = $VBoxContainer/LblGold
 @onready var _card_list: VBoxContainer = $VBoxContainer/CardList
