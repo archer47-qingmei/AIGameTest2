@@ -1,0 +1,63 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_cang_jing_ge_can_juan"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 18
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 11
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 13
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "誊抄"
+result_text = "行囊里有纸和墨。残卷上的字你认识——你的牌组里有一张和它同源。你把剩下的补齐了。"
+effects = [SubResource("e1")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "默记"
+result_text = "没有纸。把字看进眼里。一两个字跟你走了。"
+effects = [SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "烧掉"
+result_text = "把残卷堆起来。火光照亮了整个藏经阁。灰飞上去。手边少了一些东西。"
+effects = [SubResource("e3")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "藏经阁残卷"
+mood = "安静"
+flavor_text = "废弃的藏经阁。书还在——大部分是空的。不是纸被撕了，是字从纸上走掉了。角落有一册残卷，上面的字在微弱地跳动。像脉搏。"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 0
+appear_condition_value = 0
+character_requirement = ""

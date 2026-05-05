@@ -1,0 +1,90 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://ev_wu_jin_lei_chi"]
+
+[ext_resource type="Script" path="res://EventData.gd" id="1_ED"]
+[ext_resource type="Script" path="res://EventChoiceData.gd" id="2_ECD"]
+[ext_resource type="Script" path="res://EventEffectData.gd" id="3_EFD"]
+
+[sub_resource type="Resource" id="e1"]
+script = ExtResource("3_EFD")
+effect_type = 4
+value = 25
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e2"]
+script = ExtResource("3_EFD")
+effect_type = 17
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "招式"
+
+[sub_resource type="Resource" id="e3"]
+script = ExtResource("3_EFD")
+effect_type = 4
+value = 10
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="e4"]
+script = ExtResource("3_EFD")
+effect_type = 16
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "招式"
+
+[sub_resource type="Resource" id="e5"]
+script = ExtResource("3_EFD")
+effect_type = 16
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = "招式"
+
+[sub_resource type="Resource" id="e6"]
+script = ExtResource("3_EFD")
+effect_type = 0
+value = 0
+probability = 1.0
+card_grade = 0
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c1"]
+script = ExtResource("2_ECD")
+button_text = "走入池心"
+result_text = "踩进那道焦痕。雷从脚底灌上来，穿过全身。你所有招式都亮了。但身体不是装雷的容器——烧了很多地方。"
+effects = [SubResource("e1"), SubResource("e2")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c2"]
+script = ExtResource("2_ECD")
+button_text = "池边吸收"
+result_text = "不进去。蹲在河边，手伸进石缝里接了两道小雷。手烧黑了。但有两招在抖——不是疼。"
+effects = [SubResource("e3"), SubResource("e4"), SubResource("e5")]
+cost_gold = 0
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "观望"
+result_text = "没靠近。走了。雷在身后响了几下——像在叫你，又像在道别。"
+effects = [SubResource("e6")]
+cost_gold = 0
+
+[resource]
+script = ExtResource("1_ED")
+display_name = "无尽雷池"
+mood = "有趣"
+flavor_text = "一片枯河床，里面没有水——全是雷。储在石缝里。河床中央的石头融了一部分。石头上有一双人形的焦痕。看起来那人站在里面的时候很痛。但他站了。"
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
+appear_condition = 5
+appear_condition_value = 2
+character_requirement = ""
