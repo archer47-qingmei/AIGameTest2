@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_peck"]
+script = ExtResource("2_EnemyActionData")
+type = "multi_attack"
+value = 6
+count = 2
+weight = 40
+
+[sub_resource type="Resource" id="Action_dive"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 13
+weight = 35
+
+[sub_resource type="Resource" id="Action_soar"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 9
+weight = 25
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "双头鹫"
+hp = 76
+random_actions = true
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_peck"), SubResource("Action_dive"), SubResource("Action_soar")])

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_blk"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 14
+
+[sub_resource type="Resource" id="Action_shake"]
+script = ExtResource("2_EnemyActionData")
+type = "attack_half_next_block"
+value = 8
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "护山灵兽"
+hp = 83
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_blk"), SubResource("Action_shake")])

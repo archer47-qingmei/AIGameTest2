@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_charge1"]
+script = ExtResource("2_EnemyActionData")
+type = "charge"
+
+[sub_resource type="Resource" id="Action_charge2"]
+script = ExtResource("2_EnemyActionData")
+type = "charge"
+
+[sub_resource type="Resource" id="Action_burst"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 11
+
+[sub_resource type="Resource" id="Action_atk1"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 7
+
+[sub_resource type="Resource" id="Action_atk2"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 7
+
+[sub_resource type="Resource" id="Action_atk3"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 7
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "火灵"
+hp = 67
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_charge1"), SubResource("Action_charge2"), SubResource("Action_burst"), SubResource("Action_atk1"), SubResource("Action_atk2"), SubResource("Action_atk3")])

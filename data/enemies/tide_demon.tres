@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_atk"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 12
+
+[sub_resource type="Resource" id="Action_blk"]
+script = ExtResource("2_EnemyActionData")
+type = "block"
+value = 12
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "潮汐妖"
+hp = 65
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_atk"), SubResource("Action_blk")])
