@@ -153,6 +153,8 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 			"attack_half_next_block", "mirror_attack",
 			"lock_skill_attack", "block_then_attack", "attack_retrieve_discard"
 		]
+		if action.type == "multi_attack":
+			return "意图：%s %d ×%d" % [action.display_label, val, action.count]
 		if action.type in ATTACK_TYPES:
 			return "意图：%s %d" % [action.display_label, val]
 		return "意图：%s" % action.display_label

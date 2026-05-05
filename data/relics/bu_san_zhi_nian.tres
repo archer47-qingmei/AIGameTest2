@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_RelicData")
 display_name = "不散执念"
-description = "整局首次在战斗中死亡时，以 1 HP 复活（触发后断裂）\n\n一段极强极完整的魂记，压在一滴透明的晶体里。晶体里封着一句话。不是道法。不是功法。是一句话。写的人已经不在了。"
+description = "整局首次在战斗中死亡时，以 50% HP 复活（触发后断裂）\n\n一段极强极完整的魂记，压在一滴透明的晶体里。晶体里封着一句话。不是道法。不是功法。是一句话。写的人已经不在了。"
 trigger = 0
 effect_type = 16
-value = 0
+value = 50
 price = 150

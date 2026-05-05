@@ -551,7 +551,7 @@ func _check_end() -> bool:
 	if player.hp <= 0:
 		for r: RelicData in _relics:
 			if r.effect_type == RelicData.EffectType.PREVENT_DEATH_ONCE and not r.used:
-				player.hp = 1
+				player.hp = maxi(1, int(player.max_hp * r.value / 100)) if r.value > 0 else 1
 				r.used = true
 				return false
 		combat_ended.emit("game_over")
