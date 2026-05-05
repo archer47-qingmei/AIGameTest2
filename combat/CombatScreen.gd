@@ -371,22 +371,20 @@ func _on_combat_ended(result: String) -> void:
 		GameManager.go_to_game_over()
 
 func _setup_bubbles() -> void:
-	# 诊断1：直接在根节点加普通 Label
-	var diag := Label.new()
-	diag.text = "DIAG-OK"
-	diag.position = Vector2(10, 10)
-	add_child(diag)
-	# 诊断2：SpeechBubble 加到根节点
+	var player_vbox := _player_card.get_node("VBoxContainer") as VBoxContainer
+	if player_vbox == null:
+		return
 	_player_bubble = SpeechBubble.new()
-	add_child(_player_bubble)
-	_player_bubble.position = Vector2(10, 40)
-	_player_bubble.show_text("▶BUBBLE▶")
-	# 敌人气泡
+	player_vbox.add_child(_player_bubble)
 	for i in _engine.enemies.size():
+		var panel := _enemies_container.get_child(i) as Panel
+		if panel == null:
+			continue
+		var enemy_vbox := panel.get_node("VBoxContainer") as VBoxContainer
+		if enemy_vbox == null:
+			continue
 		var b := SpeechBubble.new()
-		add_child(b)
-		b.position = Vector2(10, 70 + i * 40)
-		b.show_text("▶ENEMY" + str(i) + "▶")
+		enemy_vbox.add_child(b)
 		_enemy_bubbles.append(b)
 
 func _show_enter_dialogues() -> void:
