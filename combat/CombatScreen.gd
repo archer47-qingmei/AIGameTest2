@@ -39,6 +39,7 @@ var _engine: CombatEngine
 var _hand_buttons: Array[Button] = []
 var _dragging_card_index: int = -1
 var _info_panel: InfoPanel
+var _bubble_layer: CanvasLayer
 var _player_bubble: SpeechBubble
 var _enemy_bubbles: Array[SpeechBubble] = []
 
@@ -371,23 +372,23 @@ func _on_combat_ended(result: String) -> void:
 		GameManager.go_to_game_over()
 
 func _setup_bubbles() -> void:
-	var player_vbox := _player_card.get_node("VBoxContainer") as VBoxContainer
-	if player_vbox == null:
-		return
+	_bubble_layer = CanvasLayer.new()
+	_bubble_layer.layer = 2
+	add_child(_bubble_layer)
 	_player_bubble = SpeechBubble.new()
-	player_vbox.add_child(_player_bubble)
+	_bubble_layer.add_child(_player_bubble)
 	for i in _engine.enemies.size():
-		var panel := _enemies_container.get_child(i) as Panel
-		if panel == null:
-			continue
-		var enemy_vbox := panel.get_node("VBoxContainer") as VBoxContainer
-		if enemy_vbox == null:
-			continue
 		var b := SpeechBubble.new()
-		enemy_vbox.add_child(b)
+		_bubble_layer.add_child(b)
 		_enemy_bubbles.append(b)
 
 func _show_enter_dialogues() -> void:
+	var pr := _player_card.get_global_rect()
+	_player_bubble.position = Vector2(pr.position.x, pr.position.y - 60)
+	for i in _enemy_bubbles.size():
+		var panel := _enemies_container.get_child(i) as Panel
+		var er := panel.get_global_rect()
+		_enemy_bubbles[i].position = Vector2(er.position.x, er.position.y - 60)
 	var char := GameManager.player_state.character
 	var line := CharacterDialogue.get_line(char, "enter")
 	if line != "":

@@ -25,6 +25,7 @@ func _ready() -> void:
 
 func show_text(new_text: String) -> void:
 	text = new_text
+	size = get_combined_minimum_size()
 	if _tween and _tween.is_running():
 		_tween.kill()
 	modulate.a = 1.0
