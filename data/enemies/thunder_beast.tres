@@ -9,6 +9,7 @@ type = "attack"
 value = 10
 weight = 55
 display_label = "雷爪"
+description = "前爪裹着一层电弧。造成 10 点伤害。"
 
 [sub_resource type="Resource" id="Action_multi"]
 script = ExtResource("2_EnemyActionData")
@@ -17,6 +18,7 @@ value = 4
 count = 2
 weight = 25
 display_label = "连锁闪电"
+description = "电弧在两爪间跳跃，连续打出。连续攻击两次，各造成 4 点伤害。"
 
 [sub_resource type="Resource" id="Action_atk16"]
 script = ExtResource("2_EnemyActionData")
@@ -24,12 +26,14 @@ type = "attack"
 value = 16
 weight = 15
 display_label = "雷暴"
+description = "全身电光爆闪，随机劈出。造成 16 点伤害。"
 
 [sub_resource type="Resource" id="Action_idle"]
 script = ExtResource("2_EnemyActionData")
 type = "no_action"
 weight = 5
 display_label = "短路"
+description = "皮毛间的电弧突然短路，抽搐了一下。什么都不做。"
 
 [resource]
 script = ExtResource("1_EnemyData")

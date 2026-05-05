@@ -5,22 +5,25 @@
 
 [sub_resource type="Resource" id="Action_zao"]
 script = ExtResource("2_EnemyActionData")
-type = "discard_zahuorumuo"
+type = "attack_zahuorumuo"
 value = 0
 count = 1
 display_label = "蛇瞳"
+description = "瞳孔竖线缩成一条，精神侵蚀。往弃牌堆塞 1 张走火入魔。"
 
-[sub_resource type="Resource" id="Action_bite"]
+[sub_resource type="Resource" id="Action_atk"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "蛇吻"
+description = "不是吻——是咬。造成 7 点伤害。"
 
-[sub_resource type="Resource" id="Action_wrap"]
+[sub_resource type="Resource" id="Action_draw"]
 script = ExtResource("2_EnemyActionData")
 type = "draw_penalty"
 count = 1
 display_label = "蛇缠"
+description = "蛇尾从地面卷上你的脚踝。下回合少抽 1 张牌。"
 
 [sub_resource type="Resource" id="Action_venom"]
 script = ExtResource("2_EnemyActionData")
@@ -28,9 +31,10 @@ type = "attack_venom"
 value = 9
 count = 1
 display_label = "蛇毒"
+description = "咬住不放——毒液灌入。造成 9 点伤害，往弃牌堆塞 1 张毒。"
 
 [resource]
 script = ExtResource("1_EnemyData")
 display_name = "魅蛇妖"
 hp = 63
-actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_zao"), SubResource("Action_bite"), SubResource("Action_wrap"), SubResource("Action_venom")])
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_zao"), SubResource("Action_atk"), SubResource("Action_draw"), SubResource("Action_venom")])

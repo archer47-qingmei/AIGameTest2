@@ -1,29 +1,32 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="EnemyData" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
 [ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
 
-[sub_resource type="Resource" id="Action_a1"]
+[sub_resource type="Resource" id="Action_atk1"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 11
 display_label = "剑刺"
+description = "左位剑修，剑刺出——是两人共修三十年的剑法。造成 11 点伤害。"
 
-[sub_resource type="Resource" id="Action_a2"]
+[sub_resource type="Resource" id="Action_atk2"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 11
 display_label = "剑刺"
+description = "左位剑修，剑刺出——是两人共修三十年的剑法。造成 11 点伤害。"
 
-[sub_resource type="Resource" id="Action_a3"]
+[sub_resource type="Resource" id="Action_atk3"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 11
 display_label = "剑刺"
+description = "左位剑修，剑刺出——是两人共修三十年的剑法。造成 11 点伤害。"
 
 [resource]
 script = ExtResource("1_EnemyData")
 display_name = "攻剑"
-hp = 90
+hp = 180
 death_kills_others = true
-actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_a1"), SubResource("Action_a2"), SubResource("Action_a3")])
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_atk1"), SubResource("Action_atk2"), SubResource("Action_atk3")])

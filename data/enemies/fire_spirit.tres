@@ -6,34 +6,42 @@
 [sub_resource type="Resource" id="Action_charge1"]
 script = ExtResource("2_EnemyActionData")
 type = "charge"
+display_label = "蓄火"
+description = "火光大盛——正在积蓄火力。"
 
 [sub_resource type="Resource" id="Action_charge2"]
 script = ExtResource("2_EnemyActionData")
 type = "charge"
+display_label = "蓄火"
+description = "火光大盛——正在积蓄火力。"
 
 [sub_resource type="Resource" id="Action_burst"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 11
 display_label = "爆燃"
+description = "火从身体中心爆开。造成 22 点伤害（蓄力翻倍后）。"
 
 [sub_resource type="Resource" id="Action_atk1"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "余烬"
+description = "火焰退为暗红色，持续灼烧。造成 7 点伤害。"
 
 [sub_resource type="Resource" id="Action_atk2"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "余烬"
+description = "火焰退为暗红色，持续灼烧。造成 7 点伤害。"
 
 [sub_resource type="Resource" id="Action_atk3"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "余烬"
+description = "火焰退为暗红色，持续灼烧。造成 7 点伤害。"
 
 [resource]
 script = ExtResource("1_EnemyData")

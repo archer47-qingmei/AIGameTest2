@@ -7,11 +7,13 @@
 script = ExtResource("2_EnemyActionData")
 type = "charge"
 display_label = "吸纳"
+description = "吸收周围散逸的灵气。正在蓄力，下回合攻击翻倍。"
 
 [sub_resource type="Resource" id="Action_charge2"]
 script = ExtResource("2_EnemyActionData")
 type = "charge"
 display_label = "充能"
+description = "碎片内部的灵力波开始加快——光从金色变白。正在蓄力，下回合攻击翻倍。"
 
 [sub_resource type="Resource" id="Action_burst"]
 script = ExtResource("2_EnemyActionData")
@@ -19,24 +21,28 @@ type = "attack_self_damage"
 value = 9
 count = 5
 display_label = "绽放"
+description = "碎片炸开，释放全部蓄积的灵力。造成 18 点伤害（蓄力翻倍后），自身损失 5 HP。"
 
 [sub_resource type="Resource" id="Action_atk1"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "余烬"
+description = "残余灵力迸发。造成 7 点伤害。"
 
 [sub_resource type="Resource" id="Action_atk2"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "余烬"
+description = "残余灵力迸发。造成 7 点伤害。"
 
 [sub_resource type="Resource" id="Action_atk3"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
 display_label = "余烬"
+description = "残余灵力迸发。造成 7 点伤害。"
 
 [resource]
 script = ExtResource("1_EnemyData")

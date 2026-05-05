@@ -7,25 +7,35 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 4
+display_label = "天雷"
+description = "劫云落下一道雷——第一波，每道造成 4 点伤害。"
 
 [sub_resource type="Resource" id="Action_atk6"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 6
+display_label = "天雷"
+description = "劫云落下一道雷——第二波，每道造成 6 点伤害。"
 
 [sub_resource type="Resource" id="Action_atk8"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 8
+display_label = "天雷"
+description = "劫云落下一道雷——第三波，每道造成 8 点伤害。"
 
 [sub_resource type="Resource" id="Action_atk10"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 10
+display_label = "天雷"
+description = "劫云落下一道雷——第四波，每道造成 10 点伤害。"
 
 [sub_resource type="Resource" id="Action_gap"]
 script = ExtResource("2_EnemyActionData")
 type = "wave_gap"
+display_label = "蓄势"
+description = "劫云蓄力间隙——短暂停止落雷。此回合为最佳输出窗口。"
 
 [resource]
 script = ExtResource("1_EnemyData")

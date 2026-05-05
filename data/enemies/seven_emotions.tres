@@ -9,6 +9,7 @@ type = "attack_bao_nu"
 value = 8
 count = 1
 display_label = "怒容"
+description = "三张脸中，怒的那张睁开。造成 8 点伤害，往弃牌堆塞 1 张暴怒（打出任何牌时额外失去 2 HP）。"
 
 [sub_resource type="Resource" id="Action_kong"]
 script = ExtResource("2_EnemyActionData")
@@ -16,6 +17,7 @@ type = "attack_kong_ju"
 value = 6
 count = 1
 display_label = "惧容"
+description = "三张脸中，惧的那张睁开。造成 6 点伤害，往弃牌堆塞 1 张恐惧（不能打出身法牌）。"
 
 [sub_resource type="Resource" id="Action_bei"]
 script = ExtResource("2_EnemyActionData")
@@ -23,12 +25,14 @@ type = "attack_bei_shang"
 value = 5
 count = 1
 display_label = "悲容"
+description = "三张脸中，悲的那张睁开。造成 5 点伤害，往弃牌堆塞 1 张悲伤（回合结束弃 1 张手牌）。"
 
 [sub_resource type="Resource" id="Action_wild"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 12
 display_label = "狂态"
+description = "三张脸同时睁开——在狂笑。造成 12 点伤害。"
 
 [resource]
 script = ExtResource("1_EnemyData")

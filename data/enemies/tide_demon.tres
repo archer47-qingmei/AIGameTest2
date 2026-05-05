@@ -8,12 +8,14 @@ script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 12
 display_label = "涨潮冲击"
+description = "涨潮形态——身体立起，水柱冲来。造成 12 点伤害。"
 
 [sub_resource type="Resource" id="Action_blk"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 12
 display_label = "退潮回流"
+description = "退潮形态——散成一片水面，化为防御。获得 12 格挡。"
 
 [resource]
 script = ExtResource("1_EnemyData")

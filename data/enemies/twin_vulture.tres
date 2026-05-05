@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
 [ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
 
-[sub_resource type="Resource" id="Action_peck"]
+[sub_resource type="Resource" id="Action_double"]
 script = ExtResource("2_EnemyActionData")
 type = "multi_attack"
 value = 6
 count = 2
 weight = 40
 display_label = "双啄"
+description = "两头交替啄击。连续攻击两次，各造成 6 点伤害。"
 
 [sub_resource type="Resource" id="Action_dive"]
 script = ExtResource("2_EnemyActionData")
@@ -17,17 +18,27 @@ type = "attack"
 value = 13
 weight = 35
 display_label = "俯冲"
+description = "从高空俯冲，双爪同时抓。造成 13 点伤害。"
 
-[sub_resource type="Resource" id="Action_soar"]
+[sub_resource type="Resource" id="Action_rise"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 9
-weight = 25
+weight = 15
 display_label = "升空"
+description = "猛地拉升，暂离战场。获得 9 格挡，下回合俯冲伤害提升至 18 点。"
+
+[sub_resource type="Resource" id="Action_shriek"]
+script = ExtResource("2_EnemyActionData")
+type = "group_strengthen"
+value = 2
+weight = 10
+display_label = "尖啸"
+description = "两头发出一高一低的和声。场上所有敌人获得 2 力量。"
 
 [resource]
 script = ExtResource("1_EnemyData")
 display_name = "双头鹫"
 hp = 76
 random_actions = true
-actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_peck"), SubResource("Action_dive"), SubResource("Action_soar")])
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_double"), SubResource("Action_dive"), SubResource("Action_rise"), SubResource("Action_shriek")])

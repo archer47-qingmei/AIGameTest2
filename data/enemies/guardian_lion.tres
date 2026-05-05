@@ -8,15 +8,17 @@ script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 14
 display_label = "石壁"
+description = "石狮身上亮起残旧护宗阵纹。获得 14 格挡。"
 
-[sub_resource type="Resource" id="Action_shake"]
+[sub_resource type="Resource" id="Action_atk"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_half_next_block"
 value = 8
 display_label = "震地"
+description = "前爪踏地——石头从脚底往上弹。造成 8 点伤害，你下回合格挡减半。"
 
 [resource]
 script = ExtResource("1_EnemyData")
 display_name = "护山灵兽"
 hp = 83
-actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_blk"), SubResource("Action_shake")])
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_blk"), SubResource("Action_atk")])
