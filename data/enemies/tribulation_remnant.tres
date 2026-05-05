@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_spread"]
+script = ExtResource("2_EnemyActionData")
+type = "aoe_all"
+value = 6
+display_label = "蔓延"
+description = "火舌四散，战场中一切可燃物被点燃。对全场所有单位（含自身）造成 6 点伤害。"
+
+[sub_resource type="Resource" id="Action_rise"]
+script = ExtResource("2_EnemyActionData")
+type = "self_strengthen"
+value = 4
+display_label = "升腾"
+description = "火势遇风窜高，愈演愈烈。获得 4 力量。"
+
+[sub_resource type="Resource" id="Action_burst"]
+script = ExtResource("2_EnemyActionData")
+type = "multi_attack"
+value = 8
+count = 3
+display_label = "爆燃"
+description = "三道火柱从地面冲出。连续攻击三次，各造成 8 点伤害。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "天劫余烬"
+hp = 190
+gains_strength_from_aoe = true
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_spread"), SubResource("Action_rise"), SubResource("Action_burst")])

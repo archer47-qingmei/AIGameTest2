@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_whisper"]
+script = ExtResource("2_EnemyActionData")
+type = "reduce_energy"
+count = 1
+display_label = "低语"
+description = "一阵极低的嗡鸣——你的真气回路受到干扰。下回合真气 -1。"
+
+[sub_resource type="Resource" id="Action_murmur"]
+script = ExtResource("2_EnemyActionData")
+type = "discard_to_hand"
+display_label = "细语"
+description = "它绕上了手牌——弃牌堆中随机 1 张牌回到你的手中（可能是心魔）。"
+
+[sub_resource type="Resource" id="Action_scream"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 14
+display_label = "尖叫"
+description = "声音失控——瞬间音频冲击。造成 14 点伤害。"
+
+[sub_resource type="Resource" id="Action_silence"]
+script = ExtResource("2_EnemyActionData")
+type = "reduce_energy"
+count = 1
+display_label = "沉默"
+description = "它突然全静了下来——你的真气回路抽了一下。下回合真气 -1。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "虚空低语"
+hp = 180
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_whisper"), SubResource("Action_murmur"), SubResource("Action_scream"), SubResource("Action_silence")])

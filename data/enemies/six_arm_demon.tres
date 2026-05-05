@@ -1,0 +1,70 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://EnemyData.gd" id="1_EnemyData"]
+[ext_resource type="Script" path="res://EnemyActionData.gd" id="2_EnemyActionData"]
+
+[sub_resource type="Resource" id="Action_xie_jian"]
+script = ExtResource("2_EnemyActionData")
+type = "multi_attack"
+value = 10
+count = 2
+weight = 16
+display_label = "邪剑"
+description = "邪剑挥出——两道剑气连续斩来，分别计算格挡。各造成 10 点伤害。"
+
+[sub_resource type="Resource" id="Action_mo_dao"]
+script = ExtResource("2_EnemyActionData")
+type = "attack_half_next_block"
+value = 16
+weight = 16
+display_label = "魔刀"
+description = "魔刀劈下，刀意入骨。造成 16 点伤害，你下回合格挡减半。"
+
+[sub_resource type="Resource" id="Action_yao_qiang"]
+script = ExtResource("2_EnemyActionData")
+type = "attack"
+value = 22
+weight = 16
+display_label = "妖枪"
+description = "妖枪刺出——单点最强一击。造成 22 点伤害。"
+
+[sub_resource type="Resource" id="Action_gui_dun"]
+script = ExtResource("2_EnemyActionData")
+type = "block_then_attack"
+value = 18
+count = 6
+weight = 16
+display_label = "鬼盾"
+description = "持鬼盾格挡，反手回击。获得 18 格挡，造成 6 点伤害。"
+
+[sub_resource type="Resource" id="Action_duan_yue"]
+script = ExtResource("2_EnemyActionData")
+type = "attack_vulnerable"
+value = 13
+weight = 16
+display_label = "断钺"
+description = "断钺劈下，破开防御。造成 13 点伤害，施加 1 层易伤。"
+
+[sub_resource type="Resource" id="Action_can_gou"]
+script = ExtResource("2_EnemyActionData")
+type = "attack_retrieve_discard"
+value = 8
+weight = 16
+display_label = "残钩"
+description = "残钩撕裂，顺手钩走你的一件东西。造成 8 点伤害，从你弃牌堆随机取 1 张牌到手中。"
+
+[sub_resource type="Resource" id="Action_switch"]
+script = ExtResource("2_EnemyActionData")
+type = "self_strengthen"
+value = 2
+display_label = "换兵"
+description = "切换兵器，血气上涌。获得 2 力量。"
+
+[resource]
+script = ExtResource("1_EnemyData")
+display_name = "六臂天魔"
+hp = 210
+random_actions = true
+periodic_interval = 2
+periodic_action = SubResource("Action_switch")
+actions = Array[ExtResource("2_EnemyActionData")]([SubResource("Action_xie_jian"), SubResource("Action_mo_dao"), SubResource("Action_yao_qiang"), SubResource("Action_gui_dun"), SubResource("Action_duan_yue"), SubResource("Action_can_gou")])
