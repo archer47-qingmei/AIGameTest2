@@ -84,6 +84,7 @@ func go_to_reward() -> void:
 
 func go_to_event() -> void:
 	current_phase = Phase.EVENT
+	RelicEngine.apply_on_event_enter(player_state.relics, player_state)
 	get_tree().change_scene_to_file("res://event/EventScreen.tscn")
 
 func go_to_rest() -> void:

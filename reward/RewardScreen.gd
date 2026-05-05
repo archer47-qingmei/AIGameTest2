@@ -97,7 +97,10 @@ func _build_card_options() -> void:
 	for child in _card_container.get_children():
 		_card_container.remove_child(child)
 		child.free()
-	var options: Array[CardData] = RewardEngine.get_options(GameManager.player_state.character)
+	var options: Array[CardData] = RewardEngine.get_options(
+		GameManager.player_state.character,
+		_reward_card_count()
+	)
 	for card: CardData in options:
 		var btn: Button = Button.new()
 		btn.text = card.get_description()
@@ -118,6 +121,14 @@ func _on_skipped() -> void:
 	_btn_card.text = "卡牌（已跳过）"
 	_btn_card.disabled = true
 	_show_list()
+
+func _reward_card_count() -> int:
+	var count: int = 3
+	for r: RelicData in GameManager.player_state.relics:
+		if r.effect_type == RelicData.EffectType.EXTRA_REWARD_CARD or \
+		   (r.has_effect_b and r.effect_type_b == RelicData.EffectType.EXTRA_REWARD_CARD):
+			count += r.value
+	return count
 
 func _on_continue_pressed() -> void:
 	if GameManager.is_final_node():

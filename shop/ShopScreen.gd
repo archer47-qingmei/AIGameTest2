@@ -9,7 +9,7 @@ var _engine: ShopEngine
 
 func _ready() -> void:
 	_engine = ShopEngine.new()
-	_engine.generate()
+	_engine.generate(GameManager.player_state)
 	_btn_leave.pressed.connect(GameManager.go_to_map)
 	_rebuild_ui()
 

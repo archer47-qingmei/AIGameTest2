@@ -471,4 +471,6 @@ func _build_status_row(row: HBoxContainer, combatant: Combatant) -> void:
 		row.add_child(btn)
 
 func _on_proceed() -> void:
+	if _engine.combat_gold > 0:
+		GameManager.player_state.gold += _engine.combat_gold
 	GameManager.end_combat(_engine.player.hp)

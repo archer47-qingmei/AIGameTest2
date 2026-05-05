@@ -1,7 +1,7 @@
 class_name RewardEngine
 extends RefCounted
 
-static func get_options(character: String) -> Array[CardData]:
+static func get_options(character: String, count: int = 3) -> Array[CardData]:
 	var pool_paths: Array[String] = []
 	match character:
 		"sword":
@@ -15,7 +15,7 @@ static func get_options(character: String) -> Array[CardData]:
 		if card != null:
 			pool.append(card)
 	pool.shuffle()
-	return pool.slice(0, mini(3, pool.size()))
+	return pool.slice(0, mini(count, pool.size()))
 
 static func get_gold_reward(is_elite: bool, is_final: bool) -> int:
 	if is_final:
