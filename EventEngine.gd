@@ -104,6 +104,8 @@ static func _apply_effect(effect: EventEffectData, player_state: PlayerState) ->
 					"心魔": remove = c.is_curse
 					"走火入魔": remove = c.is_zahuorumuo
 					"诅咒": remove = c.is_curse or c.is_zahuorumuo
+					"基础招式": remove = (c.card_type == "招式" and not c.is_upgraded)
+					"基础身法": remove = (c.card_type == "身法" and not c.is_upgraded)
 					_: remove = (c.card_type == effect.card_type_filter)
 				if not remove:
 					new_deck.append(c)
@@ -124,6 +126,27 @@ static func _apply_effect(effect: EventEffectData, player_state: PlayerState) ->
 			for _i in count:
 				var idx: int = randi() % player_state.deck.size()
 				player_state.deck.remove_at(idx)
+		EventEffectData.EffectType.GAIN_CARD:
+			var pool: Array[String] = []
+			match effect.card_grade:
+				2: pool = CardPool.GRADE_2_CARDS
+				1: pool = CardPool.GRADE_1_CARDS
+				_: pool = CardPool.CARDS
+			if effect.card_type_filter != "":
+				var filtered: Array[String] = []
+				for path in pool:
+					var c: CardData = load(path) as CardData
+					if c != null and c.card_type == effect.card_type_filter:
+						filtered.append(path)
+				pool = filtered
+			if pool.is_empty():
+				return
+			var card: CardData = (load(pool[randi() % pool.size()]) as CardData).duplicate()
+			player_state.deck.append(card)
+		EventEffectData.EffectType.UPGRADE_CARDS_TYPE:
+			for c: CardData in player_state.deck:
+				if not c.is_upgraded and (effect.card_type_filter == "" or c.card_type == effect.card_type_filter):
+					c.upgrade()
 		EventEffectData.EffectType.COMBAT_ELITE_STUB:
 			pass
 		_:
@@ -144,6 +167,10 @@ static func get_eligible_cards(deck: Array[CardData], effect: EventEffectData) -
 				matches = card.is_zahuorumuo
 			"诅咒":
 				matches = card.is_curse or card.is_zahuorumuo
+			"基础招式":
+				matches = (card.card_type == "招式" and not card.is_upgraded)
+			"基础身法":
+				matches = (card.card_type == "身法" and not card.is_upgraded)
 			_:
 				matches = card.card_type == effect.card_type_filter
 		if matches:
@@ -178,4 +205,15 @@ static func _describe_single(effect: EventEffectData) -> String:
 		EventEffectData.EffectType.LOSE_RELIC_RANDOM: return pct + "失去随机遗物"
 		EventEffectData.EffectType.GAIN_ENERGY_CAP: return pct + "真气上限永久 +%d" % effect.value
 		EventEffectData.EffectType.REMOVE_CARDS_RANDOM: return pct + "随机移除 %d 张牌" % effect.value
+		EventEffectData.EffectType.GAIN_CARD:
+			var grade_str: String
+			match effect.card_grade:
+				2: grade_str = "仙品"
+				1: grade_str = "灵品"
+				_: grade_str = "凡品"
+			var type_str: String = effect.card_type_filter if effect.card_type_filter != "" else ""
+			return pct + "获得随机%s%s牌" % [grade_str, type_str]
+		EventEffectData.EffectType.UPGRADE_CARDS_TYPE:
+			var type_str: String = effect.card_type_filter if effect.card_type_filter != "" else "所有"
+			return pct + "所有%s牌悟道" % type_str
 		_: return ""
