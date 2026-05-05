@@ -99,6 +99,7 @@ func _build_enemy_panels() -> void:
 		btn.name = "BtnOverlay"
 		btn.flat = true
 		btn.disabled = true
+		btn.pressed.connect(_on_intent_pressed.bind(i))
 		panel.add_child(btn)
 
 		_enemies_container.add_child(panel)
@@ -123,7 +124,7 @@ func _refresh_ui() -> void:
 			var action: EnemyActionData = _engine.get_enemy_action(i)
 			lbl_info.text = "%s\nHP:%d/%d 挡:%d" % [e.display_name, e.hp, e.max_hp, e.block]
 			lbl_intent.text = _intent_text(action, e)
-			btn.disabled = true
+			btn.disabled = (action == null or action.description == "")
 		_build_status_row(status_row, e)
 	_lbl_player_hp.text = "生命：%d / %d" % [_engine.player.hp, _engine.player.max_hp]
 	_lbl_player_block.text = "格挡：%d" % _engine.player.block
@@ -503,6 +504,13 @@ func _build_status_row(row: HBoxContainer, combatant: Combatant) -> void:
 		var info := GameText.get_buff_info("vulnerable")
 		btn.pressed.connect(_info_panel.show_info.bind(info["name"], info["description"]))
 		row.add_child(btn)
+
+func _on_intent_pressed(enemy_index: int) -> void:
+	var action: EnemyActionData = _engine.get_enemy_action(enemy_index)
+	if action == null or action.description == "":
+		return
+	var title: String = action.display_label if action.display_label != "" else "意图"
+	_info_panel.show_info(title, action.description)
 
 func _on_proceed() -> void:
 	if _engine.combat_gold > 0:
