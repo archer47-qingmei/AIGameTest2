@@ -8,23 +8,27 @@ script = ExtResource("2_EnemyActionData")
 type = "attack_bao_nu"
 value = 8
 count = 1
+display_label = "怒容"
 
 [sub_resource type="Resource" id="Action_kong"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_kong_ju"
 value = 6
 count = 1
+display_label = "惧容"
 
 [sub_resource type="Resource" id="Action_bei"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_bei_shang"
 value = 5
 count = 1
+display_label = "悲容"
 
 [sub_resource type="Resource" id="Action_wild"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 12
+display_label = "狂态"
 
 [resource]
 script = ExtResource("1_EnemyData")

@@ -7,11 +7,13 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 12
+display_label = "涨潮冲击"
 
 [sub_resource type="Resource" id="Action_blk"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 12
+display_label = "退潮回流"
 
 [resource]
 script = ExtResource("1_EnemyData")

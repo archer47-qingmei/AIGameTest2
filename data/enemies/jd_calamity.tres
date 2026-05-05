@@ -7,25 +7,30 @@
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 10
+display_label = "残雷掌"
 
 [sub_resource type="Resource" id="Action_blk"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 10
+display_label = "护体雷罡"
 
 [sub_resource type="Resource" id="Action_atk12"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 12
+display_label = "残雷掌"
 
 [sub_resource type="Resource" id="Action_pre"]
 script = ExtResource("2_EnemyActionData")
 type = "pre_charge"
+display_label = "天劫预警"
 
 [sub_resource type="Resource" id="Action_aoe"]
 script = ExtResource("2_EnemyActionData")
 type = "aoe_all"
 value = 18
+display_label = "劫雷降临"
 
 [resource]
 script = ExtResource("1_EnemyData")

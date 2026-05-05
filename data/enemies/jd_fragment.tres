@@ -24,16 +24,19 @@ display_label = "绽放"
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
+display_label = "余烬"
 
 [sub_resource type="Resource" id="Action_atk2"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
+display_label = "余烬"
 
 [sub_resource type="Resource" id="Action_atk3"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
+display_label = "余烬"
 
 [resource]
 script = ExtResource("1_EnemyData")

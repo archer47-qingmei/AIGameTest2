@@ -144,6 +144,16 @@ func _refresh_ui() -> void:
 func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 	var base: int = action.value + e.strength
 	var val: int = int(base * 0.75) if e.weak > 0 else base
+	if action.display_label != "":
+		const ATTACK_TYPES: Array[String] = [
+			"attack", "multi_attack", "attack_weak", "attack_vulnerable",
+			"attack_self_damage", "aoe_all", "attack_bao_nu", "attack_kong_ju",
+			"attack_bei_shang", "attack_venom", "vampiric_attack", "attack_zahuorumuo",
+			"attack_half_next_block", "mirror_attack"
+		]
+		if action.type in ATTACK_TYPES:
+			return "意图：%s %d" % [action.display_label, val]
+		return "意图：%s" % action.display_label
 	match action.type:
 		"attack":
 			return "意图：攻击 %d" % val
@@ -156,8 +166,6 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 		"steal_block":
 			return "意图：夺舍"
 		"charge":
-			if action.display_label != "":
-				return "意图：%s" % action.display_label
 			return "意图：蓄力"
 		"pre_charge":
 			return "意图：蓄力"
@@ -182,8 +190,6 @@ func _intent_text(action: EnemyActionData, e: Combatant) -> String:
 		"attack_zahuorumuo":
 			return "意图：攻击 %d + 走火入魔 ×%d" % [val, action.count]
 		"attack_self_damage":
-			if action.display_label != "":
-				return "意图：%s %d" % [action.display_label, val]
 			return "意图：爆裂 %d" % val
 		"draw_penalty":
 			return "意图：缠绕 -%d抽" % action.count

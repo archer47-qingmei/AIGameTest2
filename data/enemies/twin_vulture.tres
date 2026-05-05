@@ -9,18 +9,21 @@ type = "multi_attack"
 value = 6
 count = 2
 weight = 40
+display_label = "双啄"
 
 [sub_resource type="Resource" id="Action_dive"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 13
 weight = 35
+display_label = "俯冲"
 
 [sub_resource type="Resource" id="Action_soar"]
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 9
 weight = 25
+display_label = "升空"
 
 [resource]
 script = ExtResource("1_EnemyData")

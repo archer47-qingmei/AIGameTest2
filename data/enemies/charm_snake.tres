@@ -8,22 +8,26 @@ script = ExtResource("2_EnemyActionData")
 type = "discard_zahuorumuo"
 value = 0
 count = 1
+display_label = "蛇瞳"
 
 [sub_resource type="Resource" id="Action_bite"]
 script = ExtResource("2_EnemyActionData")
 type = "attack"
 value = 7
+display_label = "蛇吻"
 
 [sub_resource type="Resource" id="Action_wrap"]
 script = ExtResource("2_EnemyActionData")
 type = "draw_penalty"
 count = 1
+display_label = "蛇缠"
 
 [sub_resource type="Resource" id="Action_venom"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_venom"
 value = 9
 count = 1
+display_label = "蛇毒"
 
 [resource]
 script = ExtResource("1_EnemyData")

@@ -7,11 +7,13 @@
 script = ExtResource("2_EnemyActionData")
 type = "block"
 value = 14
+display_label = "石壁"
 
 [sub_resource type="Resource" id="Action_shake"]
 script = ExtResource("2_EnemyActionData")
 type = "attack_half_next_block"
 value = 8
+display_label = "震地"
 
 [resource]
 script = ExtResource("1_EnemyData")
