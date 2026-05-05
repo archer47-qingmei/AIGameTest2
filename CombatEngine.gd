@@ -269,6 +269,9 @@ func _start_player_turn() -> void:
 		for c in _discard_pile:
 			if c.is_ye_huo:
 				ye_huo_count += 1
+		for c in _exhaust_pile:
+			if c.is_ye_huo:
+				ye_huo_count += 1
 		for c in hand:
 			if c.is_ye_huo:
 				ye_huo_count += 1
@@ -324,6 +327,8 @@ func _apply_engine_effects(card: CardData) -> void:
 				player.first_si_block_bonus += effect.value
 
 func can_play_card(card: CardData) -> bool:
+	if card.is_curse or card.is_zahuorumuo:
+		return false
 	if card.card_type == "身法" and hand.any(func(c: CardData) -> bool: return c.is_kong_ju):
 		return false
 	return true
