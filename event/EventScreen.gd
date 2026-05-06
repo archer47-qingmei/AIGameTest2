@@ -31,7 +31,12 @@ func _populate_event() -> void:
 	flavor_label.text = _current_event.flavor_text
 	for child in choices_container.get_children():
 		child.queue_free()
+	var has_extra_choice := RelicEngine.has_effect(
+		GameManager.player_state.relics, RelicData.EffectType.EXTRA_EVENT_CHOICE
+	)
 	for choice in _current_event.choices:
+		if choice.is_hidden and not has_extra_choice:
+			continue
 		var btn := Button.new()
 		btn.text = choice.button_text
 		var available: bool = EventEngine.check_choice_available(choice, GameManager.player_state)

@@ -36,12 +36,29 @@ result_text = "你知道这不是幻觉。但今天不想停。"
 effects = []
 cost_gold = 0
 
+[sub_resource type="Resource" id="e_h3"]
+script = ExtResource("3_EFD")
+effect_type = 11
+value = 0
+probability = 1.0
+card_grade = 1
+relic_grade = 0
+card_type_filter = ""
+
+[sub_resource type="Resource" id="c3"]
+script = ExtResource("2_ECD")
+button_text = "沉入回忆"
+result_text = "你坐在那块石头上，闭上眼睛。很久之后你睁开眼——有什么从前世跟过来了。你的行囊里多了一张东西。"
+effects = [SubResource("e_h3")]
+cost_gold = 0
+is_hidden = true
+
 [resource]
 script = ExtResource("1_ED")
 display_name = "似曾相识"
 mood = "感动"
 flavor_text = "一段毫无特征的山道。你踩在一块石头上——缺了一个角。那个角的形状你认识。不是这一世。"
-choices = [SubResource("c1"), SubResource("c2")]
+choices = [SubResource("c1"), SubResource("c2"), SubResource("c3")]
 appear_condition = 0
 appear_condition_value = 0
 character_requirement = ""
