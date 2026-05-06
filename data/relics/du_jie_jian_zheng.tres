@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "渡劫见证"
+description = "每场战斗，前 2 次受到的伤害减半。\n\n一块被雷劈过的石头，劈口已经愈合，只剩下一道细细的纹路。拿在手里，感觉不到重量。"
+trigger = 0
+effect_type = 33
+value = 2
+price = 100

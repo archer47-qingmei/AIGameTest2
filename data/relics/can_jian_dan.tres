@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "残剑胆"
+description = "每打出终结技，获得 2 点力量。\n\n一粒胆石，从某把断剑的护手里取出来的。护手已经没了，剑也没了。只有这粒胆石还在，摸起来微微烫手。"
+trigger = 0
+effect_type = 31
+value = 2
+price = 100

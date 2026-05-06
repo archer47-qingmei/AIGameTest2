@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "回风铃"
+description = "每回合结束，若本回合未打出招式牌，获得 4 点格挡。\n\n一串风铃，只在没有风的时候响。声音很轻，像是远处的回声。"
+trigger = 2
+effect_type = 30
+value = 4
+price = 100

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "执念砂"
+description = "每打出第 5 张牌，获得 1 点真气。\n\n一把细沙，装在小布袋里。沙粒数量永远是同一个数字——每次数完都是这样。没有人解释过为什么。"
+trigger = 0
+effect_type = 32
+value = 5
+price = 50

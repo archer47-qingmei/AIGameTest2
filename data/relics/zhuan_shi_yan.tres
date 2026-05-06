@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "转世眼"
+description = "战斗开始时，显示所有敌人的最大 HP。\n\n一枚干瘪的眼球，泡在盐水里。看上去像是人的，但瞳孔的方向不对。每次拿出来，你都觉得它在看别处。"
+trigger = 0
+effect_type = 37
+value = 0
+price = 100

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "褪色记忆"
+description = "机缘事件的选择多显示 1 个。\n\n一张泛黄的纸片，上面的字已经几乎看不清。但有人用指甲在空白处划过，留下了一条淡淡的痕迹——那条痕迹你认识。"
+trigger = 0
+effect_type = 36
+value = 1
+price = 50

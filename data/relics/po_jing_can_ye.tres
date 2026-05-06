@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "破境残页"
+description = "战斗开始时，你所有基础招式 +2 伤害。\n\n半张被撕掉的功法残页。剩下的半张找不到了。留下来的这半张有一行字还能看清——写的是「往前」。"
+trigger = 4
+effect_type = 17
+value = 2
+price = 50

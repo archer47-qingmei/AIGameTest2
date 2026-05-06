@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "回春藤"
+description = "HP 首次降到 50% 以下时，自动回复 30% 最大 HP。\n\n一截枯藤，有人在上面刻了一个「活」字。刻完就枯了。但捏着它的时候，掌心会微微发热。"
+trigger = 1
+effect_type = 34
+value = 30
+price = 100

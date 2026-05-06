@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://RelicData.gd" id="1_RelicData"]
+
+[resource]
+script = ExtResource("1_RelicData")
+display_name = "守心木"
+description = "你手中的毒不再在回合结束时对你造成伤害。\n\n一截磨光的木头，摸起来像是有人握了很多年。木纹里嵌着一些黑色的东西——是墨，还是焦，说不清楚。"
+trigger = 2
+effect_type = 35
+value = 0
+price = 50
