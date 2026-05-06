@@ -395,6 +395,26 @@ func _show_enter_dialogues() -> void:
 		var d: String = _engine.get_enemy_data(i).on_enter_dialogue
 		if d != "":
 			_enemy_bubbles[i].show_text(d)
+	for relic in GameManager.player_state.relics:
+		if relic.effect_type == RelicData.EffectType.SHOW_ENEMY_MAX_HP:
+			_show_enemy_max_hp_labels()
+			break
+
+func _show_enemy_max_hp_labels() -> void:
+	for i in _engine.enemies.size():
+		var panel := _enemies_container.get_child(i) as Panel
+		var er := panel.get_global_rect()
+		var lbl := Label.new()
+		lbl.text = "MAX:%d" % _engine.enemies[i].max_hp
+		lbl.z_index = 10
+		lbl.add_theme_color_override("font_color", Color.YELLOW)
+		lbl.add_theme_font_size_override("font_size", 13)
+		add_child(lbl)
+		lbl.global_position = Vector2(er.position.x + er.size.x * 0.5, er.position.y - 80)
+		var tw := lbl.create_tween()
+		tw.tween_interval(4.0)
+		tw.tween_property(lbl, "modulate:a", 0.0, 0.5)
+		tw.tween_callback(lbl.queue_free)
 
 func _on_player_finisher_played() -> void:
 	var line := CharacterDialogue.get_line(GameManager.player_state.character, "finisher")
