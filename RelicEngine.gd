@@ -13,6 +13,30 @@ static func apply_turn_end(relics: Array[RelicData], engine: CombatEngine) -> vo
 static func apply_combat_end(relics: Array[RelicData], engine: CombatEngine) -> void:
 	_apply_for_trigger(relics, RelicData.Trigger.COMBAT_END, engine)
 
+static func has_effect(relics: Array[RelicData], effect_type: RelicData.EffectType) -> bool:
+	for relic: RelicData in relics:
+		if relic.effect_type == effect_type:
+			return true
+		if relic.has_effect_b and relic.effect_type_b == effect_type:
+			return true
+	return false
+
+static func apply_on_finisher(relics: Array[RelicData], engine: CombatEngine) -> void:
+	for relic: RelicData in relics:
+		if relic.effect_type == RelicData.EffectType.STRENGTH_ON_FINISHER:
+			_apply_effect(relic.effect_type, relic.value, engine)
+		if relic.has_effect_b and relic.effect_type_b == RelicData.EffectType.STRENGTH_ON_FINISHER:
+			_apply_effect(relic.effect_type_b, relic.value_b, engine)
+
+static func apply_on_card_played(relics: Array[RelicData], engine: CombatEngine, cards_played_total: int) -> void:
+	for relic: RelicData in relics:
+		if relic.effect_type == RelicData.EffectType.ENERGY_PER_N_CARDS:
+			if cards_played_total % relic.value == 0:
+				engine.energy += 1
+		if relic.has_effect_b and relic.effect_type_b == RelicData.EffectType.ENERGY_PER_N_CARDS:
+			if cards_played_total % relic.value_b == 0:
+				engine.energy += 1
+
 static func apply_on_equip(relic: RelicData, player_state: PlayerState) -> void:
 	if relic.trigger == RelicData.Trigger.ON_EQUIP:
 		_apply_equip_effect(relic.effect_type, relic.value, player_state)
@@ -79,6 +103,20 @@ static func _apply_effect(effect_type: RelicData.EffectType, value: int, engine:
 		RelicData.EffectType.GOLD_IF_NO_DAMAGE:
 			if not engine.took_damage:
 				engine.combat_gold += value
+		RelicData.EffectType.BLOCK_ON_TURN_END_NO_ATTACK:
+			if not engine.player.played_style_this_turn:
+				engine.player.add_block(value)
+		RelicData.EffectType.STRENGTH_ON_FINISHER:
+			engine.player.strength += value
+		RelicData.EffectType.HEAL_HP_PERCENT_ONCE_LOW:
+			if relic == null or relic.used:
+				return
+			if engine.player.hp * 100 < engine.player.max_hp * 50:
+				var heal: int = engine.player.max_hp * value / 100
+				engine.player.hp = mini(engine.player.hp + heal, engine.player.max_hp)
+				relic.used = true
+		RelicData.EffectType.ENERGY_PER_N_CARDS:
+			pass
 
 static func _apply_equip_effect(effect_type: RelicData.EffectType, value: int, player_state: PlayerState) -> void:
 	match effect_type:
