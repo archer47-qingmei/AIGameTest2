@@ -31,10 +31,10 @@ static func apply_on_finisher(relics: Array[RelicData], engine: CombatEngine) ->
 static func apply_on_card_played(relics: Array[RelicData], engine: CombatEngine, cards_played_total: int) -> void:
 	for relic: RelicData in relics:
 		if relic.effect_type == RelicData.EffectType.ENERGY_PER_N_CARDS:
-			if cards_played_total % relic.value == 0:
+			if cards_played_total > 0 and cards_played_total % relic.value == 0:
 				engine.energy += 1
 		if relic.has_effect_b and relic.effect_type_b == RelicData.EffectType.ENERGY_PER_N_CARDS:
-			if cards_played_total % relic.value_b == 0:
+			if cards_played_total > 0 and cards_played_total % relic.value_b == 0:
 				engine.energy += 1
 
 static func apply_on_equip(relic: RelicData, player_state: PlayerState) -> void:
