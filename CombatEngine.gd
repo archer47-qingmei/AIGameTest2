@@ -395,6 +395,11 @@ func _enemy_attack(attacker: Combatant, value: int, hits: int = 1) -> void:
 			actual_value = value / 2
 			_damage_reduction_hits += 1
 			break
+		if relic.has_effect_b and relic.effect_type_b == RelicData.EffectType.REDUCE_FIRST_N_DAMAGE \
+				and _damage_reduction_hits < relic.value_b:
+			actual_value = value / 2
+			_damage_reduction_hits += 1
+			break
 	var hp_before: int = player.hp
 	for _h in hits:
 		EffectResolver.apply_damage(attacker, player, actual_value)
