@@ -43,6 +43,8 @@ var _relics: Array[RelicData] = []
 var _pending_actions: Array[EnemyActionData] = []
 var _energy_penalty_next_turn: int = 0
 var _heavy_damage_spoken: bool = false
+var _cards_played_this_combat: int = 0
+var _damage_reduction_hits: int = 0
 var _enemy_hp30_spoken: Array[bool] = []
 
 func setup(initial_deck: Array[CardData], enemy_group: EnemyGroupData, initial_hp: int, max_hp: int, relics: Array[RelicData] = [], initial_energy_cap: int = BASE_ENERGY) -> void:
@@ -202,7 +204,10 @@ func play_card(card_index: int, target_index: int) -> bool:
 			player_heavily_damaged.emit()
 	if card.is_finisher:
 		player_finisher_played.emit()
+		RelicEngine.apply_on_finisher(_relics, self)
 	hand.remove_at(card_index)
+	_cards_played_this_combat += 1
+	RelicEngine.apply_on_card_played(_relics, self, _cards_played_this_combat)
 	if card.is_exhaust:
 		pass
 	elif card.card_type == "功法":
@@ -214,11 +219,12 @@ func play_card(card_index: int, target_index: int) -> bool:
 	return true
 
 func end_turn() -> void:
+	var suppress_curse := RelicEngine.has_effect(_relics, RelicData.EffectType.SUPPRESS_CURSE_DAMAGE)
 	var venom_count: int = 0
 	for card: CardData in hand:
 		if card.is_venom:
 			venom_count += 1
-	if venom_count > 0:
+	if not suppress_curse and venom_count > 0:
 		player.hp = max(0, player.hp - venom_count)
 		player_damaged.emit(venom_count)
 		if not _heavy_damage_spoken and player.hp * 100 < player.max_hp * 30:
@@ -382,9 +388,16 @@ func _draw_cards(n: int) -> void:
 		hand.append(card)
 
 func _enemy_attack(attacker: Combatant, value: int, hits: int = 1) -> void:
+	var actual_value := value
+	for relic: RelicData in _relics:
+		if relic.effect_type == RelicData.EffectType.REDUCE_FIRST_N_DAMAGE \
+				and _damage_reduction_hits < relic.value:
+			actual_value = value / 2
+			_damage_reduction_hits += 1
+			break
 	var hp_before: int = player.hp
 	for _h in hits:
-		EffectResolver.apply_damage(attacker, player, value)
+		EffectResolver.apply_damage(attacker, player, actual_value)
 	var dmg: int = hp_before - player.hp
 	if dmg > 0:
 		took_damage = true
